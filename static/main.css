@@ -1,0 +1,31 @@
+body {
+    width: 197mm;
+    height: 148mm;
+    border: 1px solid black;
+}
+
+#upper_container {
+    height: 64px;
+    padding: 15px;
+}
+
+#lower_container {
+    background-color: blue;
+    height: 123mm;
+}
+
+#create_dimension_btn {
+    width: 150px;
+    height: 40px;
+    border: 2px solid black;
+    border-radius: 5px;
+    /*position: relative;
+    top: 15px;
+    left: 25px;*/
+    text-align: center;
+}
+
+#create_dimension_btn_label {
+    position: relative;
+    top: 9px;
+}
