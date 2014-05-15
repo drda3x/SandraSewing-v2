@@ -68,14 +68,13 @@ body {
 }
 .current_dim:hover .sub_menu {
     display: inline;
+}
+.sub_menu {
+    display: none;
     left: 137px;
     margin-top: -7px;
     position: absolute;
     top: auto;
-}
-.sub_menu {
-    position: absolute;
-    top: -1000px;
 }
 .sub_menu_list {
     list-style: none;
