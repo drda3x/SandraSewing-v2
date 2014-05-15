@@ -1,31 +1,77 @@
-body {
-    width: 197mm;
-    height: 148mm;
-    border: 1px solid black;
-}
 
+body {
+    border: 1px solid #000000;
+    height: 148mm;
+    width: 197mm;
+}
 #upper_container {
     height: 64px;
     padding: 15px;
 }
-
 #lower_container {
-    background-color: blue;
     height: 123mm;
 }
-
 #create_dimension_btn {
-    width: 150px;
-    height: 40px;
-    border: 2px solid black;
+    border: 2px solid #000000;
     border-radius: 5px;
-    /*position: relative;
-    top: 15px;
-    left: 25px;*/
+    height: 40px;
+    padding: 6px 25px 10px 7px;
     text-align: center;
+    width: 167px;
+    cursor: pointer;
+}
+
+#create_dimension_btn:hover {
+    background-color: #E6E6E6;
 }
 
 #create_dimension_btn_label {
+    padding: 0 0 0 17px;
+}
+#items_menu {
+    margin-left: 51px;
     position: relative;
-    top: 9px;
+    top: 5px;
+}
+.items_menu_item {
+    border: 2px solid #000000;
+    border-radius: 6px;
+    display: inline-block;
+    height: 22px;
+    margin: 0 22px;
+    padding: 3px 5px;
+    text-align: center;
+    width: 61px;
+    cursor: pointer;
+}
+
+.items_menu_item:hover {
+    background-color: #E6E6E6;
+}
+
+#dimensions_menu {
+    margin-left: 16px;
+}
+#dimensions {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+}
+.current_dim {
+    border-left: 2px solid;
+    border-right: 2px solid;
+    border-top: 2px solid;
+    display: table;
+    height: 26px;
+    padding: 5px 0 0 13px;
+    width: 137px;
+    cursor: pointer;
+}
+
+.current_dim:hover {
+    background-color: #E6E6E6;
+}
+
+.last_dim {
+    border-bottom: 2px solid;
 }
