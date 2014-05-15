@@ -14,17 +14,15 @@ body {
 #create_dimension_btn {
     border: 2px solid #000000;
     border-radius: 5px;
+    cursor: pointer;
     height: 40px;
     padding: 6px 25px 10px 7px;
     text-align: center;
     width: 167px;
-    cursor: pointer;
 }
-
 #create_dimension_btn:hover {
     background-color: #E6E6E6;
 }
-
 #create_dimension_btn_label {
     padding: 0 0 0 17px;
 }
@@ -36,19 +34,17 @@ body {
 .items_menu_item {
     border: 2px solid #000000;
     border-radius: 6px;
+    cursor: pointer;
     display: inline-block;
     height: 22px;
     margin: 0 22px;
     padding: 3px 5px;
     text-align: center;
     width: 61px;
-    cursor: pointer;
 }
-
 .items_menu_item:hover {
     background-color: #E6E6E6;
 }
-
 #dimensions_menu {
     margin-left: 16px;
 }
@@ -61,17 +57,43 @@ body {
     border-left: 2px solid;
     border-right: 2px solid;
     border-top: 2px solid;
+    cursor: pointer;
     display: table;
     height: 26px;
     padding: 5px 0 0 13px;
     width: 137px;
-    cursor: pointer;
 }
-
 .current_dim:hover {
     background-color: #E6E6E6;
 }
-
+.current_dim:hover .sub_menu {
+    display: inline;
+    left: 137px;
+    margin-top: -7px;
+    position: absolute;
+    top: auto;
+}
+.sub_menu {
+    position: absolute;
+    top: -1000px;
+}
+.sub_menu_list {
+    list-style: none;
+}
+.sub_menu_item {
+    border-left: 2px solid;
+    border-right: 2px solid;
+    border-top: 2px solid;
+    cursor: pointer;
+    display: table;
+    height: 26px;
+    padding: 5px 0 0 1px;
+    text-align: center;
+    width: 73px;
+}
+.sub_menu_item:hover {
+    background-color: #E6E6E6;
+}
 .last_dim {
     border-bottom: 2px solid;
 }
