@@ -5,11 +5,24 @@ body {
     width: 197mm;
 }
 #upper_container {
-    height: 64px;
+    height: 14px;
     padding: 15px;
 }
 #lower_container {
-    height: 123mm;
+    height: 515px;
+}
+#left {
+    display: inline-table;
+    height: inherit;
+    width: 20%;
+    z-index: 1;
+}
+#right {
+    display: inline-table;
+    height: 121px;
+    position: relative;
+    width: 76%;
+    z-index: 1;
 }
 #create_dimension_btn {
     border: 2px solid #000000;
@@ -67,7 +80,7 @@ body {
     background-color: #E6E6E6;
 }
 .current_dim:hover .sub_menu {
-    display: inline;
+    display: inline-block;
 }
 .sub_menu {
     display: none;
@@ -76,10 +89,12 @@ body {
     position: absolute;
     top: auto;
 }
+
 .sub_menu_list {
-    list-style: none;
+    list-style: none outside none;
 }
 .sub_menu_item {
+    background: none repeat scroll 0 0 #FFFFFF;
     border-left: 2px solid;
     border-right: 2px solid;
     border-top: 2px solid;
@@ -89,10 +104,28 @@ body {
     padding: 5px 0 0 1px;
     text-align: center;
     width: 73px;
+    z-index: 99;
 }
 .sub_menu_item:hover {
     background-color: #E6E6E6;
 }
 .last_dim {
     border-bottom: 2px solid;
+}
+#calc_results {
+    margin: 20px 0 0 17px;
+    width: inherit;
+}
+#results {
+    border: 1px solid #000000;
+    border-collapse: collapse;
+    width: inherit;
+}
+#results th {
+    border: 1px solid #000000;
+}
+#results td {
+    border: 1px solid #000000;
+    height: 22.5px;
+    width: 15px;
 }
