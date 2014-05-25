@@ -10,6 +10,7 @@ body {
 }
 #lower_container {
     height: 515px;
+    position: relative;
 }
 #left {
     display: inline-table;
@@ -33,9 +34,6 @@ body {
     text-align: center;
     width: 167px;
 }
-#create_dimension_btn:hover {
-    background-color: #E6E6E6;
-}
 #create_dimension_btn_label {
     padding: 0 0 0 17px;
 }
@@ -55,9 +53,6 @@ body {
     text-align: center;
     width: 61px;
 }
-.items_menu_item:hover {
-    background-color: #E6E6E6;
-}
 #dimensions_menu {
     margin-left: 16px;
 }
@@ -76,7 +71,8 @@ body {
     padding: 5px 0 0 13px;
     width: 137px;
 }
-.current_dim:hover {
+
+.hover_class:hover{
     background-color: #E6E6E6;
 }
 .current_dim:hover .sub_menu {
@@ -105,9 +101,6 @@ body {
     width: 73px;
     z-index: 99;
 }
-.sub_menu_item:hover {
-    background-color: #E6E6E6;
-}
 .last_dim {
     border-bottom: 2px solid;
 }
@@ -133,4 +126,27 @@ body {
     width: 100%;
     height: 100%;
     background-color: blue;
+    position: relative;
+}
+
+#buttons_block {
+    position: absolute;
+    top: 340px;
+}
+
+.algbtn {
+    width: 75px;
+    height: 25px;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    padding: 0 4px;
+    cursor: pointer;
+}
+
+#btn_lft {
+    margin-left: 44px;
+}
+
+#btn_rt {
+    margin-left: 340px;
 }
