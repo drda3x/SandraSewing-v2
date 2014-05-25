@@ -84,8 +84,7 @@ body {
 }
 .sub_menu {
     display: none;
-    left: 137px;
-    margin-top: -7px;
+    left: 120px;
     position: absolute;
     top: auto;
 }
