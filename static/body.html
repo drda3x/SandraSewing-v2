@@ -1,0 +1,99 @@
+<div id="upper_container">
+        <span id="create_dimension_btn" class="hover_class" ng-controller="AddNewCtrl" ng-click="add()">
+            <span id="create_dimension_btn_label">Создать мерку</span>
+        </span>
+        <span id="items_menu">
+            <span class="items_menu_item hover_class">Рубашка</span>
+            <span class="items_menu_item hover_class">Брюки</span>
+            <span class="items_menu_item hover_class">Платье</span>
+            <span class="items_menu_item hover_class">Юбка</span>
+        </span>
+</div>
+<div id="lower_container">
+    <div id="left">
+        <div id="dimensions_menu">
+            <ul id="dimensions">
+                <li class="current_dim hover_class">
+                    Мерка 1
+                    <div class="sub_menu">
+                        <img class="sub_menu_list" src="img/pen.png " />
+                        <img class="sub_menu_list" src="img/x.png " />
+                    </div>
+                </li>
+                <li class="current_dim hover_class">
+                    Мерка 2
+                    <div class="sub_menu">
+                        <img class="sub_menu_list" src="img/pen.png " />
+                        <img class="sub_menu_list" src="img/x.png " />
+                    </div>
+                </li>
+                <li class="current_dim last_dim hover_class">
+                    Мерка 3
+                    <div class="sub_menu">
+                        <img class="sub_menu_list" src="img/pen.png " />
+                        <img class="sub_menu_list" src="img/x.png " />
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="right">
+        <div id="calc_results">
+            <table id="results">
+                <thead>
+                <tr><th colspan="7">Результаты расчетов</th></tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Р1</td>
+                    <td>Р1</td>
+                    <td>Р1</td>
+                    <td>Р1</td>
+                    <td>Р1</td>
+                    <td>Р1</td>
+                    <td>Р1</td>
+                </tr>
+                <tr>
+                    <td>Р1</td>
+                    <td>Р1</td>
+                    <td>Р1</td>
+                    <td>Р1</td>
+                    <td>Р1</td>
+                    <td>Р1</td>
+                    <td>Р1</td>
+                </tr>
+                <tr>
+                    <td colspan="7">Длинна вытачки = </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="algpattern">
+            <div class="steps_menu">
+                <div class="top algsteps hover_class">Шаг 1</div>
+                <div class="algsteps hover_class">Шаг 2</div>
+                <div class="algsteps hover_class">Шаг 3</div>
+            </div>
+            <p class="alg">
+                фываыавфыаыфа
+                фывафыафываыфа
+                ыфвафыафыавфыва
+                фывафыафыафыавфы
+                афыафыафыаыфвафываыф
+                афыафыафыафыафы
+                авфыафыафыафыавфыа
+                фыафыафывафыавфыафыва
+                фывафыавфывафыавфыаф
+                ывафыафыавфыафывафыва
+                фыафыафыафыавфыафыав
+                фыафыафыавфыафыафыафыа
+                фыавфывафыавфыавфыавфыавфы
+                вафыафыафыафывафывафыа
+            </p>
+            <div id="buttons_block">
+                <span id="btn_lft" class="algbtn hover_class">Назад</span>
+                <span id="btn_rt" class="algbtn hover_class">Вперед</span>
+            </div>
+        </div>
+    </div>
+</div>

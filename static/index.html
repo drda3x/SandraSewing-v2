@@ -1,16 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="s_sewing">
 <head>
     <meta charset="utf-8" />
     <title>SandraSewing v2.0</title>
     <link rel="stylesheet" type="text/css" href="./css/main.css"/>
     <script type="text/javascript" src="./js/angular.min.js"></script>
+    <script type="text/javascript" src="./js/ss_logic.js"></script>
+    <style type="text/css">
+        /*.hidden {display: none}*/
+    </style>
 </head>
 <body>
     <div id="upper_container">
-        <span id="create_dimension_btn" class="hover_class">
+        <span mdr id="create_dimension_btn" class="hover_class" ng-click="openAddWindow()">
             <span id="create_dimension_btn_label">Создать мерку</span>
         </span>
+        <span mydir></span>
         <span id="items_menu">
             <span class="items_menu_item hover_class">Рубашка</span>
             <span class="items_menu_item hover_class">Брюки</span>
@@ -104,6 +109,11 @@
                     <span id="btn_rt" class="algbtn hover_class">Вперед</span>
                 </div>
             </div>
+        </div>
+    </div>
+    <div id="addNewDimension">
+        <div id="addNewDimensionWindow">
+            <h1>Название мерки</h1>
         </div>
     </div>
 </body>
