@@ -1,0 +1,15 @@
+<ul id="dimensions"> 
+    <li class="current_dim hover_class" ng-repeat="dim in dimensions"> 
+        {{dim.name}} 
+        <div class="sub_menu">
+            <img class="sub_menu_list" src="img/pen.png " ng-click="addNewDim='visible'" />
+            <img class="sub_menu_list" src="img/x.png " /> 
+        </div>
+        </li> 
+    <li class="current_dim last_dim hover_class">{{last_element.name}} 
+        <div class="sub_menu">
+            <img class="sub_menu_list" src="img/pen.png " ng-click="addNewDim='visible'" />
+            <img class="sub_menu_list" src="img/x.png " />
+            </div> 
+        </li>
+</ul>

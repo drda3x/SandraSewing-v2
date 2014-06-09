@@ -210,3 +210,11 @@ body {
     width: 725px;
     z-index: 1001;
 }
+
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: block;
+}

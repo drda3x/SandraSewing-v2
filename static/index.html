@@ -12,10 +12,9 @@
 </head>
 <body>
     <div id="upper_container">
-        <span mdr id="create_dimension_btn" class="hover_class" ng-click="openAddWindow()">
+        <span id="create_dimension_btn" class="hover_class" ng-click="addNewDim='visible'">
             <span id="create_dimension_btn_label">Создать мерку</span>
         </span>
-        <span mydir></span>
         <span id="items_menu">
             <span class="items_menu_item hover_class">Рубашка</span>
             <span class="items_menu_item hover_class">Брюки</span>
@@ -25,31 +24,7 @@
     </div>
     <div id="lower_container">
         <div id="left">
-            <div id="dimensions_menu">
-                <ul id="dimensions">
-                    <li class="current_dim hover_class">
-                        Мерка 1
-                        <div class="sub_menu">
-                            <img class="sub_menu_list" src="img/pen.png " />
-                            <img class="sub_menu_list" src="img/x.png " />
-                        </div>
-                    </li>
-                    <li class="current_dim hover_class">
-                        Мерка 2
-                        <div class="sub_menu">
-                            <img class="sub_menu_list" src="img/pen.png " />
-                            <img class="sub_menu_list" src="img/x.png " />
-                        </div>
-                    </li>
-                    <li class="current_dim last_dim hover_class">
-                        Мерка 3
-                        <div class="sub_menu">
-                            <img class="sub_menu_list" src="img/pen.png " />
-                            <img class="sub_menu_list" src="img/x.png " />
-                        </div>
-                    </li>
-                </ul>
-            </div>
+            <div dimmenu id="dimensions_menu"></div>
         </div>
         <div id="right">
             <div id="calc_results">
@@ -111,9 +86,9 @@
             </div>
         </div>
     </div>
-    <div id="addNewDimension">
-        <div id="addNewDimensionWindow">
-            <h1>Название мерки</h1>
+    <div id="addNewDimension" class="hidden" ng-class="addNewDim">
+        <div id="addNewDimensionWindow" ng-click="addNewDim='hidden'">
+            <input type="text" placeholder="Название мерки"/>
         </div>
     </div>
 </body>
