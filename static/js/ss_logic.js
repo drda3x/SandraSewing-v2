@@ -27,23 +27,13 @@ angular.module('s_sewing',[])
                 }
             }
         })
-    .directive('dimmenu', function() {
-        return {
-            scope: {},
-            controller:function($scope) {
-                $scope.dimensions = [
-                    {name:'Мерка 1'},
-                    {name:'Мерка 2'},
-                    {name:'Мерка 3'}
-                ];
-                $scope.last_element = $scope.dimensions[$scope.dimensions.length-1];
-                $scope.dimensions.length--;
 
-                $scope.alert = function($element) {
-                    console.log($element);
-                }
-            },
-            templateUrl: './templates/dimension_menu.html',
-            replace: false
-        }
-    })
+function DimensionsCtrl($scope) {
+    $scope.dimensions = [
+        {name: 'Мерка 1'},
+        {name: 'Мерка 2'},
+        {name: 'Мерка 3'}
+    ]
+    $scope.last_dimension = $scope.dimensions[$scope.dimensions.length-1];
+    $scope.dimensions.length--;
+}

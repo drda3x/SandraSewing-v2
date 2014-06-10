@@ -24,7 +24,23 @@
     </div>
     <div id="lower_container">
         <div id="left">
-            <div dimmenu id="dimensions_menu"></div>
+            <div dimmenu id="dimensions_menu">
+                <ul id="dimensions" ng-controller="DimensionsCtrl">
+                    <li class="current_dim hover_class" ng-repeat="dim in dimensions">
+                        {{dim.name}}
+                        <div class="sub_menu">
+                            <img class="sub_menu_list" src="img/pen.png " ng-click="addNewDim='visible'" />
+                            <img class="sub_menu_list" src="img/x.png " />
+                        </div>
+                    </li>
+                    <li class="current_dim last_dim hover_class">{{last_dimension.name}}
+                        <div class="sub_menu">
+                            <img class="sub_menu_list" src="img/pen.png " ng-click="addNewDim='visible'" />
+                            <img class="sub_menu_list" src="img/x.png " />
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
         <div id="right">
             <div id="calc_results">
