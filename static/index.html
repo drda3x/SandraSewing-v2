@@ -10,9 +10,9 @@
         /*.hidden {display: none}*/
     </style>
 </head>
-<body>
+<body main-directive>
     <div id="upper_container">
-        <span id="create_dimension_btn" class="hover_class" ng-click="addNewDim='visible'">
+        <span id="create_dimension_btn" class="hover_class" ng-click="changeWindow('dim')">
             <span id="create_dimension_btn_label">Создать мерку</span>
         </span>
         <span id="items_menu">
@@ -23,88 +23,11 @@
         </span>
     </div>
     <div id="lower_container">
-        <div id="left">
-            <div dimmenu id="dimensions_menu">
-                <ul id="dimensions" ng-controller="DimensionsCtrl">
-                    <li class="current_dim hover_class" ng-repeat="dim in dimensions">
-                        {{dim.name}}
-                        <div class="sub_menu">
-                            <img class="sub_menu_list" src="img/pen.png " ng-click="addNewDim='visible'" />
-                            <img class="sub_menu_list" src="img/x.png " />
-                        </div>
-                    </li>
-                    <li class="current_dim last_dim hover_class">{{last_dimension.name}}
-                        <div class="sub_menu">
-                            <img class="sub_menu_list" src="img/pen.png " ng-click="addNewDim='visible'" />
-                            <img class="sub_menu_list" src="img/x.png " />
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div id="right">
-            <div id="calc_results">
-                <table id="results">
-                    <thead>
-                        <tr><th colspan="7">Результаты расчетов</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Р1</td>
-                            <td>Р1</td>
-                            <td>Р1</td>
-                            <td>Р1</td>
-                            <td>Р1</td>
-                            <td>Р1</td>
-                            <td>Р1</td>
-                        </tr>
-                        <tr>
-                            <td>Р1</td>
-                            <td>Р1</td>
-                            <td>Р1</td>
-                            <td>Р1</td>
-                            <td>Р1</td>
-                            <td>Р1</td>
-                            <td>Р1</td>
-                        </tr>
-                        <tr>
-                            <td colspan="7">Длинна вытачки = </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div id="algpattern">
-                <div class="steps_menu">
-                    <div class="top algsteps hover_class">Шаг 1</div>
-                    <div class="algsteps hover_class">Шаг 2</div>
-                    <div class="algsteps hover_class">Шаг 3</div>
-                </div>
-                <p class="alg">
-                    фываыавфыаыфа
-                    фывафыафываыфа
-                    ыфвафыафыавфыва
-                    фывафыафыафыавфы
-                    афыафыафыаыфвафываыф
-                    афыафыафыафыафы
-                    авфыафыафыафыавфыа
-                    фыафыафывафыавфыафыва
-                    фывафыавфывафыавфыаф
-                    ывафыафыавфыафывафыва
-                    фыафыафыафыавфыафыав
-                    фыафыафыавфыафыафыафыа
-                    фыавфывафыавфыавфыавфыавфы
-                    вафыафыафыафывафывафыа
-                </p>
-                <div id="buttons_block">
-                    <span id="btn_lft" class="algbtn hover_class">Назад</span>
-                    <span id="btn_rt" class="algbtn hover_class">Вперед</span>
-                </div>
-            </div>
-        </div>
     </div>
-    <div id="addNewDimension" class="hidden" ng-class="addNewDim">
-        <div id="addNewDimensionWindow" ng-click="addNewDim='hidden'">
+    <div id="addNewDimension" ng-show="true">
+        <div id="addNewDimensionWindow">
             <input type="text" placeholder="Название мерки"/>
+            <input type="button" value="Закрыть" ng-click="changeWindow('main')"/>
         </div>
     </div>
 </body>
