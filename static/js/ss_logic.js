@@ -5,11 +5,13 @@
         return {
             restrict: 'A',
             controller: function($scope) {
-                $scope.currentWindow = 'main';
 
-                $scope.changeWindow = function(window) {
-                    $scope.currentWindow = window;
-                }
+                $scope.appWindows = {
+                    currentWindow: 'main',
+                    changeCurrent: function(window) {
+                        this.currentWindow = window;
+                    }
+                };
             }
         };
     });

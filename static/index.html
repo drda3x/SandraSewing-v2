@@ -12,7 +12,7 @@
 </head>
 <body main-directive>
     <div id="upper_container">
-        <span id="create_dimension_btn" class="hover_class" ng-click="changeWindow('dim')">
+        <span id="create_dimension_btn" class="hover_class" ng-click="appWindows.changeCurrent('dim')">
             <span id="create_dimension_btn_label">Создать мерку</span>
         </span>
         <span id="items_menu">
@@ -24,10 +24,10 @@
     </div>
     <div id="lower_container">
     </div>
-    <div id="addNewDimension" ng-show="true">
+    <div id="addNewDimension" ng-show="appWindows.currentWindow === dim">
         <div id="addNewDimensionWindow">
             <input type="text" placeholder="Название мерки"/>
-            <input type="button" value="Закрыть" ng-click="changeWindow('main')"/>
+            <input type="button" value="Закрыть" ng-click="appWindows.changeCurrent('main')"/>
         </div>
     </div>
 </body>
