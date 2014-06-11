@@ -218,3 +218,11 @@ body {
 .visible {
     display: block;
 }
+
+#addNewDimensionWindow {
+    padding: 10px;
+}
+
+#addNewDimensionWindow input {
+    display: block;
+}

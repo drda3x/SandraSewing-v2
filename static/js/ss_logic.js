@@ -2,6 +2,7 @@
     var app = angular.module('s_sewing', []);
 
     // Директивы
+    // Директива поведения главного контейнера (body)
     app.directive('mainDirective', function() {
         return {
             restrict: 'A',
@@ -19,16 +20,21 @@
         };
     });
 
+    // Директива поведения меню с мерками
     app.directive('dimensions', function() {
         return {
             restrict: 'E',
             controller: function($scope) {
                 $scope.dimensions_menu = {
+
+                    // Список - мерки
                     items: [
-                        {name: 'Мерка 1'},
-                        {name: 'Мерка 2'},
-                        {name: 'Мерка 3'}
+                        {id: 1, name: 'Мерка 1'},
+                        {id: 2,name: 'Мерка 2'},
+                        {id: 3,name: 'Мерка 3'}
                     ],
+
+                    // Объект для манипуляций со списком
                     render_conf: {
                         c_index: 0,
                         isLast: function() {
@@ -39,7 +45,23 @@
                                 this.c_index++;
                             }
                         },
-                        addNewItem: function() {}
+
+                        // Метод для добавления новых элементов
+                        addNewItem: function() {},
+
+                        // Метод для удаления элементов
+                        removeItem: function(item) {
+                            var items = $scope.dimensions_menu.items;
+
+                            // Проходим по списку и удаляем нужный нам элемент
+                            for(var i= 0, j= items.length; i<j; i++) {
+                                if(items[i].id == item.id) {
+                                    items.splice(i,1);
+                                    break;
+                                }
+                            }
+                        }
+
                     }
                 };
 
@@ -48,6 +70,13 @@
             templateUrl: './templates/dimension_menu.html',
             replace: true
         }
+    });
+
+    app.directive('newDimensionWindow', function() {
+        return {
+            restrict: 'E',
+            templateUrl: './templates/dimension_window.html'
+        };
     });
 
     // Контроллеры
