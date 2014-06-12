@@ -56,8 +56,15 @@
                                     break;
                                 }
                             }
+                        },
+                        selectedItem: null,
+                        select: function(item) {
+                            this.selectedItem = item.id;
+                        },
+                        isSelected: function(item) {
+                            var b = item.id == this.selectedItem;
+                            return b;
                         }
-
                     }
                 };
 
@@ -77,7 +84,7 @@
                     dimensions: global.dimensions,
                     create_or_update: function() {
                         if(!this.dimensions.currentItem.id) {
-                            this.dimensions.currentItem.id = this.dimensions.items.length;
+                            this.dimensions.currentItem.id = this.dimensions.items.length+1;
                             this.dimensions.items.push(this.dimensions.currentItem);
                         } else {
                             console.log('cr');

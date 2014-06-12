@@ -66,10 +66,10 @@ body {
 }
 
 #dimensions {
+    border-bottom: 2px solid;
     list-style: none outside none;
     margin: 0px;
     padding: 0px;
-    border-bottom: 2px solid;
 }
 
 .current_dim {
@@ -221,9 +221,15 @@ body {
 }
 
 #addNewDimensionWindow {
+    border: 1px solid;
     padding: 10px;
 }
 
-#addNewDimensionWindow input {
-    display: block;
+.active {
+    background-color: #E6E6E6;
+}
+
+#dim_name {
+    height: 30px;
+    width: 200px;
 }
