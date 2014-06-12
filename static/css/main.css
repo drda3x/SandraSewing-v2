@@ -17,7 +17,7 @@ body {
 #left {
     display: inline-table;
     height: inherit;
-    width: 20%;
+    width: 23%;
     z-index: 1;
 }
 
@@ -69,6 +69,7 @@ body {
     list-style: none outside none;
     margin: 0px;
     padding: 0px;
+    border-bottom: 2px solid;
 }
 
 .current_dim {

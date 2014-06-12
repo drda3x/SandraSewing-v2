@@ -1,6 +1,17 @@
 (function() {
     var app = angular.module('s_sewing', []);
 
+    var global = {
+        dimensions: {
+            items: [
+                {id: 1, name: 'Мерка 1'},
+                {id: 2, name: 'Мерка 2'},
+                {id: 3, name: 'Мерка 3'}
+            ],
+            currentItem: null
+        }
+    };
+
     // Директивы
     // Директива поведения главного контейнера (body)
     app.directive('mainDirective', function() {
@@ -10,8 +21,10 @@
 
                 $scope.appWindows = {
                     currentWindow: 'main',
-                    changeCurrent: function(window) {
+                    changeCurrent: function(window, item) {
                         this.currentWindow = window;
+                        global.dimensions.currentItem = item;
+                        var e;
                     }
                 };
 
@@ -25,33 +38,16 @@
         return {
             restrict: 'E',
             controller: function($scope) {
-                $scope.dimensions_menu = {
+                $scope.dimensionsMenuCtrl = {
 
                     // Список - мерки
-                    items: [
-                        {id: 1, name: 'Мерка 1'},
-                        {id: 2,name: 'Мерка 2'},
-                        {id: 3,name: 'Мерка 3'}
-                    ],
+                    items: global.dimensions.items,
 
                     // Объект для манипуляций со списком
                     render_conf: {
-                        c_index: 0,
-                        isLast: function() {
-                            if (this.c_index == $scope.dimensions_menu.items.length-1) {
-                                this.c_index = 0;
-                                return 'last_dim';
-                            } else {
-                                this.c_index++;
-                            }
-                        },
-
-                        // Метод для добавления новых элементов
-                        addNewItem: function() {},
-
                         // Метод для удаления элементов
                         removeItem: function(item) {
-                            var items = $scope.dimensions_menu.items;
+                            var items = $scope.dimensionsMenuCtrl.items;
 
                             // Проходим по списку и удаляем нужный нам элемент
                             for(var i= 0, j= items.length; i<j; i++) {
@@ -75,7 +71,22 @@
     app.directive('newDimensionWindow', function() {
         return {
             restrict: 'E',
-            templateUrl: './templates/dimension_window.html'
+            templateUrl: './templates/dimension_window.html',
+            controller: function($scope) {
+                $scope.dimWindowCtrl = {
+                    dimensions: global.dimensions,
+                    create_or_update: function() {
+                        if(!this.dimensions.currentItem.id) {
+                            this.dimensions.currentItem.id = this.dimensions.items.length;
+                            this.dimensions.items.push(this.dimensions.currentItem);
+                        } else {
+                            console.log('cr');
+                        }
+
+                        return true;
+                    }
+                };
+            }
         };
     });
 

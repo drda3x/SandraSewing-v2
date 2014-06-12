@@ -1,10 +1,10 @@
 <div id="dimensions_menu">
-    <ul id="dimensions">
-        <li class="current_dim hover_class" ng-repeat="dim in dimensions_menu.items" ng-class="dimensions_menu.render_conf.isLast()">
+    <ul id="dimensions" ng-show="dimensionsMenuCtrl.items.length > 0">
+        <li class="current_dim hover_class" ng-repeat="dim in dimensionsMenuCtrl.items">
             {{dim.name}}
             <div class="sub_menu">
-                <img class="sub_menu_list" src="img/pen.png " ng-click="appWindows.changeCurrent('dim')"/>
-                <img class="sub_menu_list" src="img/x.png " ng-click="dimensions_menu.render_conf.removeItem(dim)"/>
+                <img class="sub_menu_list" src="img/pen.png " ng-click="appWindows.changeCurrent('dim', dim)"/>
+                <img class="sub_menu_list" src="img/x.png " ng-click="dimensionsMenuCtrl.render_conf.removeItem(dim)"/>
             </div>
         </li>
     </ul>

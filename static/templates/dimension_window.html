@@ -1,7 +1,7 @@
-<div id="addNewDimension" ng-show="appWindows.currentWindow == 'dim'">
+<div id="addNewDimension" ng-show="appWindows.currentWindow == 'dim'" ng-click="dimWindowCtrl.foo()">
     <div id="addNewDimensionWindow">
-        <input type="text" placeholder="Название мерки"/>
-        <input type="button" value="Сохранить">
+        <input type="text" placeholder="Название мерки" ng-model="dimWindowCtrl.dimensions.currentItem.name"/>
+        <input type="button" value="Сохранить" ng-click="dimWindowCtrl.create_or_update() && appWindows.changeCurrent('main')">
         <input type="button" value="Закрыть" ng-click="appWindows.changeCurrent('main')"/>
     </div>
 </div>
