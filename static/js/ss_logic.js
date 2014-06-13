@@ -8,7 +8,15 @@
                 {id: 2, name: 'Мерка 2'},
                 {id: 3, name: 'Мерка 3'}
             ],
-            currentItem: null
+            currentItem: null,
+            create: function(name) {
+                this.items.push(
+                    {
+                        name: name,
+                        id: this.items.length+1
+                    }
+                );
+            }
         }
     };
 
@@ -24,7 +32,9 @@
                     changeCurrent: function(window, item) {
                         this.currentWindow = window;
                         global.dimensions.currentItem = item;
-                        var e;
+                        if(global.Ctrls.dimensionWindowCtrl) {
+                            global.Ctrls.dimensionWindowCtrl.init(item);
+                        }
                     }
                 };
 
@@ -75,24 +85,84 @@
         }
     });
 
+    var dimWindowCtrl = {
+        dimensions: global.dimensions,
+        c_name: ((global.dimensions.currentItem) ? global.dimensions.currentItem.name : null),
+        create_or_update: function() {
+            if(this.dimensions.currentItem && !this.dimensions.currentItem.id && this.dimensions.currentItem.name.length > 0) {
+                this.dimensions.currentItem.id = this.dimensions.items.length+1;
+                this.dimensions.items.push(this.dimensions.currentItem);
+            }
+
+            return true;
+        }
+    };
+
+/*    var dimWinCtrl = {
+        dimensions: global.dimensions,
+        create_or_update: function() {
+            if(this.dimensions.currentItem && !this.dimensions.currentItem.id && this.dimensions.currentItem.name.length > 0) {
+                this.dimensions.currentItem.id = this.dimensions.items.length+1;
+                this.dimensions.items.push(this.dimensions.currentItem);
+            }
+
+            return true;
+        }
+    };*/
+
+    var dimWinCtrl = {
+        models: {
+            itemName: null,
+            item: null
+        },
+        init: function(item) {
+            this.models.itemName = (item) ? item.name : null;
+            this.models.item = item;
+        },
+        create_or_update: function() {
+            if(this.models.itemName && this.models.itemName.length > 0) {
+                if(!this.models.item) {
+                    global.dimensions.create(this.models.itemName);
+                } else {
+                    this.models.item.name = this.models.itemName;
+                }
+            }
+            return true;
+        }
+    };
+
     app.directive('newDimensionWindow', function() {
         return {
             restrict: 'E',
             templateUrl: './templates/dimension_window.html',
             controller: function($scope) {
-                $scope.dimWindowCtrl = {
-                    dimensions: global.dimensions,
+                var dimWindowCtrl = {
+                    models: {
+                        itemName: null,
+                        item: null
+                    },
+                    init: function(item) {
+                        this.models.itemName = (item) ? item.name : null;
+                        this.models.item = item;
+                    },
                     create_or_update: function() {
-                        if(!this.dimensions.currentItem.id) {
-                            this.dimensions.currentItem.id = this.dimensions.items.length+1;
-                            this.dimensions.items.push(this.dimensions.currentItem);
-                        } else {
-                            console.log('cr');
+                        if(this.models.itemName && this.models.itemName.length > 0) {
+                            if(!this.models.item) {
+                                global.dimensions.create(this.models.itemName);
+                            } else {
+                                this.models.item.name = this.models.itemName;
+                            }
                         }
-
                         return true;
                     }
                 };
+
+                if(!global.Ctrls) {
+                    global.Ctrls = {}
+                }
+
+                global.Ctrls.dimensionWindowCtrl = dimWindowCtrl;
+                $scope.dimWindowCtrl = dimWindowCtrl;
             }
         };
     });
