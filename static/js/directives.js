@@ -1,20 +1,27 @@
-(function() {
+/**
+ *  Angular-директивы и связующие объектры
+ */
+
+(function(window) {
     var app = angular.module('s_sewing', []);
 
     var global = {
         dimensions: {
-            items: [
-                {id: 1, name: 'Мерка 1'},
-                {id: 2, name: 'Мерка 2'},
-                {id: 3, name: 'Мерка 3'}
-            ],
+            // Список мерок
+            items: window.initial_data.test_dimensions,
+            
+            // Текущая мерка
             currentItem: null,
-            create: function(name) {
+
+            // Метод для создания новой мерки
+            create: function(name, type, values) {
                 this.items.push(
-                    {
-                        name: name,
-                        id: this.items.length+1
-                    }
+                    new window.defaultStructures.defDimansionItemStructure(
+                        this.items.length + 1,
+                        name,
+                        type,
+                        values
+                    )
                 );
             }
         }
@@ -80,7 +87,7 @@
 
             },
             controllerAs: 'dimCtrl',
-            templateUrl: './templates/dimension_menu.html',
+            templateUrl: 'templates/dimension_menu.html',
             replace: true
         }
     });
@@ -134,7 +141,7 @@
     app.directive('newDimensionWindow', function() {
         return {
             restrict: 'E',
-            templateUrl: './templates/dimension_window.html',
+            templateUrl: 'templates/dimension_window.html',
             controller: function($scope) {
                 var dimWindowCtrl = {
                     models: {
@@ -169,4 +176,4 @@
 
     // Контроллеры
 
-})();
+})(this);
