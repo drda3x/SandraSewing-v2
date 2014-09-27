@@ -2,6 +2,7 @@ body {
     height: 148mm;
     overflow: hidden;
     width: 197mm;
+    margin: 0 auto;
 }
 
 #upper_container {
