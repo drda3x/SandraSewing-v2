@@ -1,34 +1,67 @@
 <!DOCTYPE html>
-<html ng-app="s_sewing">
+<html ng-app="sandra_sewing">
 <head>
     <meta charset="utf-8" />
     <title>SandraSewing v2.0</title>
     <link rel="stylesheet" type="text/css" href="./css/main.css"/>
     <script type="text/javascript" src="./js/angular.min.js"></script>
-    <script type="text/javascript" src="./js/ss_logic.js"></script>
+    <script type="text/javascript" src="js/sandra_sewing_main.js"></script>
     <style type="text/css">
         /*.hidden {display: none}*/
     </style>
 </head>
-<body main-directive>
-    <div id="upper_container">
-        <span id="create_dimension_btn" class="hover_class" ng-click="appWindows.changeCurrent('dim')">
-            <span id="create_dimension_btn_label">Создать мерку</span>
-        </span>
-        <span id="items_menu">
-            <span class="items_menu_item hover_class">Рубашка</span>
-            <span class="items_menu_item hover_class">Брюки</span>
-            <span class="items_menu_item hover_class">Платье</span>
-            <span class="items_menu_item hover_class">Юбка</span>
-        </span>
-    </div>
-    <div id="lower_container">
-    </div>
-    <div id="addNewDimension" ng-show="appWindows.currentWindow === dim">
-        <div id="addNewDimensionWindow">
-            <input type="text" placeholder="Название мерки"/>
-            <input type="button" value="Закрыть" ng-click="appWindows.changeCurrent('main')"/>
+<body>
+    <div id="main">
+        <div id="measurement_main">
+            <div id="new_measurement">Новая мерка</div>
+            <div id="exist_measurement">Какая-то мерка</div>
         </div>
+    </div>
+    <div id="footer">
+        <a href="" class="current">Размеры</a>
+        <a href="">Результаты расчета</a>
+        <table id="measurement_results">
+            <tr>
+                <th>ПОШ</th>
+                <th>ПОГ</th>
+                <th>ПОТ</th>
+                <th>ПОБ</th>
+                <th>ШГ</th>
+                <th>ЦГ</th>
+                <th>ВГ</th>
+                <th>ДПТ</th>
+                <th>ВПКП</th>
+                <th>ШС</th>
+                <th>ДСТ</th>
+                <th>ДСТ-1</th>
+                <th>ВПКС</th>
+                <th>ШПЛ</th>
+                <th>ВБ</th>
+                <th>ОП</th>
+                <th>ДР</th>
+                <th>ДИ</th>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>20</td>
+                <td>30</td>
+                <td>40</td>
+                <td>50</td>
+                <td>60</td>
+                <td>70</td>
+                <td>80</td>
+                <td>90</td>
+                <td>100</td>
+                <td>110</td>
+                <td>120</td>
+                <td>130</td>
+                <td>140</td>
+                <td>150</td>
+                <td>160</td>
+                <td>170</td>
+                <td>180</td>
+            </tr>
+        </table>
     </div>
 </body>
 </html>
