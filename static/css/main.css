@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body {
     height: 148mm;
     overflow: hidden;
@@ -69,139 +70,78 @@ body {
 #dimensions {
     border-bottom: 2px solid;
     list-style: none outside none;
+=======
+* {
+>>>>>>> dd53b8c36d4283b730316132cc90561b09a4e1c6
     margin: 0px;
     padding: 0px;
 }
 
-.current_dim {
-    border-left: 2px solid;
-    border-right: 2px solid;
-    border-top: 2px solid;
-    cursor: pointer;
-    display: table;
-    height: 26px;
-    padding: 5px 0px 0px 13px;
-    width: 137px;
+body {
+    height: 700px;
+    margin: 0px auto;
+    padding: 0px;
+    width: 960px;
 }
 
-.hover_class:hover {
-    background-color: #E6E6E6;
-}
-
-.current_dim:hover .sub_menu {
-    display: inline-block;
-}
-
-.sub_menu {
-    display: none;
-    left: 120px;
-    position: absolute;
-    top: auto;
-}
-
-.sub_menu_list {
-    list-style: none outside none;
-}
-
-.sub_menu_item {
-    background: none repeat scroll 0px 0px #FFFFFF;
-    border-left: 2px solid;
-    border-right: 2px solid;
-    border-top: 2px solid;
-    cursor: pointer;
-    display: table;
-    height: 26px;
-    padding: 5px 0px 0px 1px;
-    text-align: center;
-    width: 73px;
-    z-index: 99;
-}
-
-.last_dim {
-    border-bottom: 2px solid;
-}
-
-#calc_results {
-    margin: 20px 0px 0px 17px;
-    width: inherit;
-}
-
-#results {
-    border-collapse: collapse;
-    border: 1px solid #000000;
-    width: inherit;
-}
-
-#results th {
-    border: 1px solid #000000;
-}
-
-#results td {
-    border: 1px solid #000000;
-    width: 15px;
-}
-
-#algpattern {
+#main {
     height: 100%;
-    margin-top: 10px;
-    padding: 1px 0px;
-    position: relative;
+}
+
+#measurement_main {
+    border: 2px solid;
+    cursor: pointer;
+    display: table;
+    font-size: 15pt;
+    height: 49px;
+    vertical-align: middle;
     width: 100%;
 }
 
-#buttons_block {
-    position: absolute;
-    top: 340px;
-}
-
-.algbtn {
-    border-radius: 5px;
-    border: 2px solid #000000;
-    cursor: pointer;
-    height: 25px;
-    padding: 0px 4px;
-    width: 75px;
-}
-
-#btn_lft {
-    margin-left: 44px;
-}
-
-#btn_rt {
-    margin-left: 340px;
-}
-
-.algsteps {
-    border: 2px solid #000000;
-    cursor: pointer;
-    height: 20px;
-    margin: 6px 17px;
-    padding: 0px 4px;
-    width: 42px;
-}
-
-.steps_menu {
-    float: left;
-    width: 100px;
-}
-
-.alg {
-    float: right;
-    margin-top: 1px;
-    width: 460px;
-}
-
-#addNewDimension {
-    background-color: rgba(0, 0, 0, 0.5);
+#new_measurement {
+    border-right: 2px solid;
+    display: table-cell;
     height: inherit;
-    left: 0px;
-    margin: inherit;
-    position: absolute;
-    top: 0px;
-    width: inherit;
-    z-index: 1000;
+    text-align: center;
+    vertical-align: middle;
+    width: 150px;
 }
 
+#exist_measurement {
+    display: table-cell;
+    height: inherit;
+    margin-left: -5px;
+    text-align: center;
+    vertical-align: middle;
+    width: 808px;
+}
+
+#footer {
+    height: 60px;
+    margin-bottom: -60px;
+    width: 100%;
+}
+
+#footer a {
+    border: 2px solid;
+    color: black;
+    margin: 0px -5px 0px 0px;
+    padding: 0px 16px;
+    text-decoration: none;
+}
+
+#footer a:hover{
+    background-color: #dddddd;
+}
+
+#measurement_results {
+    border-collapse: collapse;
+    border: 2px solid;
+    height: 50px;
+    width: inherit;
+}
+
+<<<<<<< HEAD
 #addNewDimensionWindow {
     background-color: rgba(0, 0, 0, 0.5);
     height: 539px;
@@ -210,12 +150,19 @@ body {
     top: 10px;
     width: 725px;
     z-index: 1001;
+=======
+#measurement_results td {
+    border: 1px solid;
+    text-align: center;
+>>>>>>> dd53b8c36d4283b730316132cc90561b09a4e1c6
 }
 
-.hidden {
-    display: none;
+#measurement_results th {
+    background-color: #dddddd;
+    border: 1px solid;
 }
 
+<<<<<<< HEAD
 .visible {
     display: block;
 }
@@ -393,3 +340,8 @@ body {
     margin: 0px 10px;
     padding: 1px 14px;
 }
+=======
+.current {
+    background-color: #dddddd;
+}
+>>>>>>> dd53b8c36d4283b730316132cc90561b09a4e1c6
