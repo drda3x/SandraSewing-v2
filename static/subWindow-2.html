@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="sandra_sewing">
+<html ng-app="sewing_app">
 <!--todo: Подумать как верстку можно подгонять под различные размеры мониторов-->
 <head>
     <meta charset="utf-8" />
@@ -7,9 +7,6 @@
     <link rel="stylesheet" type="text/css" href="./css/main.css"/>
     <script type="text/javascript" src="./js/angular.min.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
-    <style type="text/css">
-        /*.hidden {display: none}*/
-    </style>
 </head>
 <body>
     <div id="main">
@@ -17,6 +14,8 @@
             <a href="" id="new_measurement">Новая мерка</a>
             <a href="" id="exist_measurement">Какая-то мерка</a>
         </div>
+
+        <!-- Доп. экран -->
         <div id="screen_saver"></div>
         <div id="sub_screen">
             <input id="dimension_name" type="text" placeholder="Название мерки"/>
@@ -139,6 +138,8 @@
                 <a href="" class="button">Сохранить</a>
             </div>
         </div>
+        <!-- ******************************************************************************************************* -->
+
         <div id="products">
             <a href="" class="product">Брюки</a>
             <a href="" class="product">Юбка</a>
