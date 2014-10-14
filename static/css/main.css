@@ -4,10 +4,23 @@
 }
 
 body {
-    height: 700px;
+    height: 633px;
     margin: 0px auto;
     padding: 0px;
     width: 960px;
+}
+
+a {
+    color: #000000;
+    text-decoration: none;
+}
+
+a:hover {
+    background-color: #dddddd;
+}
+
+ul {
+    list-style: none outside none;
 }
 
 #main {
@@ -44,7 +57,7 @@ body {
 
 #footer {
     height: 60px;
-    margin-bottom: -60px;
+    margin-top: -70px;
     width: 100%;
 }
 
@@ -53,11 +66,6 @@ body {
     color: black;
     margin: 0px -5px 0px 0px;
     padding: 0px 16px;
-    text-decoration: none;
-}
-
-#footer a:hover{
-    background-color: #dddddd;
 }
 
 #measurement_results {
@@ -79,4 +87,112 @@ body {
 
 .current {
     background-color: #dddddd;
+}
+
+#products {
+    margin: 15px auto;
+    width: 425px;
+}
+
+.product {
+    border: 2px solid;
+    margin: 0px 15px;
+    padding: 4px 10px;
+}
+
+#alg_steps {
+    display: inline-block;
+    margin: 30px;
+    vertical-align: top;
+    width: 150px;
+}
+
+#alg_text {
+    display: inline-block;
+    margin: 30px 0px;
+    text-align: center;
+    width: 500px;
+}
+
+.step {
+    margin: 5px 0px;
+}
+
+#control_buttons {
+    margin: 0px auto;
+    width: 300px;
+}
+
+#control_buttons a {
+    height: 16px;
+    margin: 0px 30px;
+    width: 58px;
+}
+
+#control_buttons a:nth-of-type(1) {
+    border-bottom: 2px solid;
+    border-right: 2px solid;
+    border-top: 2px solid;
+    padding: 0px 10px 0px 0px;
+}
+
+#control_buttons a:nth-of-type(1):before {
+    border-bottom: 2px solid;
+    border-left: 2px solid;
+    content: "";
+    display: inline-block;
+    height: 14px;
+    left: -8px;
+    position: relative;
+    top: 3px;
+    transform: rotate(45deg);
+    width: 14px;
+}
+
+#control_buttons a:nth-of-type(1):hover:before {
+    background-color: #dddddd;
+    border-bottom: 2px solid;
+    border-left: 2px solid;
+    content: "";
+    display: inline-block;
+    height: 14px;
+    left: -8px;
+    position: relative;
+    top: 3px;
+    transform: rotate(45deg);
+    width: 14px;
+}
+
+#control_buttons a:nth-of-type(2) {
+    border-bottom: 2px solid;
+    border-left: 2px solid;
+    border-top: 2px solid;
+    padding: 0px 0px 0px 10px;
+}
+
+#control_buttons a:nth-of-type(2):after {
+    border-right: 2px solid;
+    border-top: 2px solid;
+    content: "";
+    display: inline-block;
+    height: 14px;
+    left: 8px;
+    position: relative;
+    top: 3px;
+    transform: rotate(45deg);
+    width: 14px;
+}
+
+#control_buttons a:nth-of-type(2):hover:after {
+    background-color: #dddddd;
+    border-right: 2px solid;
+    border-top: 2px solid;
+    content: "";
+    display: inline-block;
+    height: 14px;
+    left: 8px;
+    position: relative;
+    top: 3px;
+    transform: rotate(45deg);
+    width: 14px;
 }
