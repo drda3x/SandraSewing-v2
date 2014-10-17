@@ -4,7 +4,7 @@
     <input class="dimension_type" id="woman_dimension" name="sex" type="radio" ng-click="changeType('woman')"/><label class="dimension_type" for="woman_dimension">Женская мерка</label>
 </div>
 <div id="dimensions_list">
-    <span  class="dimension_insert" ng-repeat="dim in dimensions[type]">{{dim}}<input type="text"></span>
+    <span class="dimension_insert" ng-repeat="dim in dimensions.config.types.man">{{dim.label}}<input type="text"></span>
 </div>
 <div id="dimension_values_list">
     <div id="age_types">

@@ -37,7 +37,7 @@
          */
 
         // Тестовые данные
-        $scopt.dimensions = {
+        $scope.dimensions = {
             current: {
                 name: 'Тестовая мерка 1',
                 type: 'woman',
@@ -134,13 +134,55 @@
                         {name: 'di', value: 100}
                     ]
                 }
-            ]
+            ],
+            config: {
+                 types: {
+                     man: [
+                         {name: 'posh', label: 'ПОШ'},
+                         {name: 'pog', label: 'ПОГ'},
+                         {name: 'pot', label: 'ПОБ'},
+                         {name: 'pob', label: 'ПОТ'},
+                         {name: 'shg', label: 'ШГ'},
+                         {name: 'dpt', label: 'ДПТ'},
+                         {name: 'shs', label: 'ШС'},
+                         {name: 'dst', label: 'ДСТ'},
+                         {name: 'shpl', label: 'ШПЛ'},
+                         {name: 'vb', label: 'ВБ'},
+                         {name: 'op', label: 'ОП'},
+                         {name: 'dr', label: 'ДР'},
+                         {name: 'di', label: 'ДИ'}
+                     ],
+                     woman: [
+                         {name: 'posh', label: 'ПОШ'},
+                         {name: 'pog', label: 'ПОГ'},
+                         {name: 'pot', label: 'ПОБ'},
+                         {name: 'pob', label: 'ПОТ'},
+                         {name: 'shg', label: 'ШГ'},
+                         {name: 'tsg', label: 'ЦГ'},
+                         {name: 'dpt', label: 'ДПТ'},
+                         {name: 'vpkp', label: 'ВПКП'},
+                         {name: 'shs', label: 'ШС'},
+                         {name: 'dst', label: 'ДСТ'},
+                         {name: 'dst-1', label: 'ДСТ-1'},
+                         {name: 'vpks', label: 'ВПКС'},
+                         {name: 'shpl', label: 'ШПЛ'},
+                         {name: 'vb', label: 'ВБ'},
+                         {name: 'op', label: 'ОП'},
+                         {name: 'dr', label: 'ДР'},
+                         {name: 'di', label: 'ДИ'}
+                     ]
+                 }
+            },
+            select: function(dim) {
+                this.current = dim;
+            }
         };
 
-        $scope.dimensions = {
+
+        /*$scope.dimensions = {
             current:,
             list:
-        }
+        }*/
     }]);
 
     app.directive('subScreen', function() {
@@ -168,9 +210,8 @@
         return {
             restrict: 'E',
             controller: function($scope) {
-                $scope.dimensions = ['Мерка 1', 'Мерка 2', 'Мерка 3']
             },
-            template:'<div class="select_new_dim_overflow"><div ng-repeat="dim in dimensions" class="dimensions"><a href="" class="dimension">{{dim}}</a></div></div>'
+            template:'<div class="select_new_dim_overflow"><div ng-repeat="dim in dimensions.list" class="dimensions"><a href="" class="dimension" ng-click="dimensions.select(dim)">{{dim.name}}</a></div></div>'
         }
     });
 
@@ -181,14 +222,11 @@
 
                 $scope.type = 'man';
 
-                $scope.dimensions = {
-                    woman: ['ПОШ','ПОГ','ПОТ','ПОБ','ШГ','ЦГ','ДПТ','ВПКП','ШС','ДСТ','ДСТ-1','ВПКС','ШПЛ','ВБ','ОП','ДР','ДИ'],
-                    man: ['ПОШ','ПОГ','ПОТ','ПОБ','ШГ','ДПТ','ШС','ДСТ','ШПЛ','ВБ','ОП','ДР','ДИ']
-                };
-
                 $scope.changeType = function(type) {
                     $scope.type = type;
-                }
+                };
+
+                console.log($scope.dimensions.config.types[$scope.type]);
             },
             templateUrl: './templates/new_dimension_tmp.html'
         }
