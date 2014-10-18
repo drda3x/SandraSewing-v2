@@ -273,12 +273,16 @@
                      });
                  };
 
-                $scope.setSelectedInp = function(val) {
-                    $scope.selectedInput = val;
+                $scope.setSelectedInp = function(val, index) {
+                    $scope.selectedInput = {
+                        name: val,
+                        index: index
+                    };
                 };
 
                 $scope.setInputVal = function(val) {
-                    $scope.formInfo[$scope.selectedInput] = val;
+                    $scope.formInfo[$scope.selectedInput.name] = val;
+                    $scope.inputs[$scope.selectedInput.index + 1].focus();
                 };
             },
             templateUrl: './templates/new_dimension_tmp.html'
@@ -316,8 +320,13 @@
         return {
             restrict: 'A',
             require: '^addNewDimension',
-            link: function(scope, element, addNewDimensionCtrl) {
-                scope.addInput(element);
+            link: function(scope, element, attrs, addNewDimensionCtrl) {
+                scope.addInput(element[0]);
+            },
+            controller: function($scope, $element) {
+                $scope.isFirst = function(isFirst) {
+                    console.log(isFirst);
+                }
             }
         }
     });

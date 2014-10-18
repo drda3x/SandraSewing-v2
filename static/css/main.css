@@ -126,6 +126,10 @@ ul {
     float: right;
 }
 
+.dimension_insert input:focus {
+    background-color: #dddddd;
+}
+
 #dimension_values_list {
     vertical-align: top;
     display: inline-block;
