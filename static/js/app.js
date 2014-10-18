@@ -175,6 +175,11 @@
             },
             select: function(dim) {
                 this.current = dim;
+            },
+            add: function(dim) {
+                this.list.push(dim);
+                this.current = dim;
+                console.log(dim);
             }
         };
 
@@ -218,15 +223,64 @@
     app.directive('addNewDimension', function() {
         return {
             restrict: 'E',
-            controller: function($scope) {
+            controller: function($scope, $element) {
 
-                $scope.type = 'man';
+                $scope.type = null;
+                $scope.dimension_name = null;
+                $scope.formInfo = null;
+                $scope.selectedInput = null;
+                $scope.inputs = [];
 
                 $scope.changeType = function(type) {
+                    $scope.inputs = [];
                     $scope.type = type;
+                    $scope.formInfo = (function() {
+                        var a = {},
+                            src = $scope.dimensions.config.types[type];
+
+                        for(var i in src) {
+                            a[src[i].name] = null;
+                        }
+                        return a;
+                    })();
                 };
 
-                console.log($scope.dimensions.config.types[$scope.type]);
+                $scope.changeType('man');
+
+                $scope.addInput = function(input) {
+                    $scope.inputs.push(input);
+                };
+
+                /**
+                 * Функция для сбора информации из формы и создания новой мерки...
+                 * */
+                 $scope.createNewDimension = function()  {
+                     if(!$scope.dimension_name || $scope.dimension_name.length == 0) {
+                         alert('Заполните название мерки');
+                         return;
+                     }
+                     var values = [];
+                     for(var i in $scope.formInfo) {
+                         values.push({
+                             name: i,
+                             value: parseInt($scope.formInfo[i])
+                         });
+                     }
+                     $scope.dimensions.add({
+                        name:  $scope.dimension_name,
+                        type: $scope.type,
+                        values: values
+                     });
+                 };
+
+                $scope.setSelectedInp = function(val) {
+                    $scope.selectedInput = val;
+                };
+
+                $scope.setInputVal = function(val) {
+                    $scope.formInfo[$scope.selectedInput] = val;
+                    console.log($scope.inputs.length);
+                };
             },
             templateUrl: './templates/new_dimension_tmp.html'
         }
@@ -255,7 +309,17 @@
                 })($scope.min, $scope.max);
 
             },
-            template: '<div ng-repeat="line in lines" class="dimension_values_shortlist"><a ng-repeat="val in line" href="">{{val}}</a></div>'
+            template: '<div ng-repeat="line in lines" class="dimension_values_shortlist"><a ng-repeat="val in line" href="" ng-click="setInputVal(val)">{{val}}</a></div>'
+        }
+    });
+
+    app.directive('focusMe', function() {
+        return {
+            restrict: 'A',
+            require: '^addNewDimension',
+            link: function(scope, element, addNewDimensionCtrl) {
+                scope.addInput(element);
+            }
         }
     });
 })();

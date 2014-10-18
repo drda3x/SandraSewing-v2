@@ -1,10 +1,10 @@
-<input id="dimension_name" type="text" placeholder="Название мерки"/>
+<input id="dimension_name" type="text" placeholder="Название мерки" ng-model="dimension_name"/>
 <div>
     <input class="dimension_type" id="man_dimension" name="sex" type="radio" ng-click="changeType('man')" checked/><label class="dimension_type" for="man_dimension">Мужская мерка</label>
     <input class="dimension_type" id="woman_dimension" name="sex" type="radio" ng-click="changeType('woman')"/><label class="dimension_type" for="woman_dimension">Женская мерка</label>
 </div>
 <div id="dimensions_list">
-    <span class="dimension_insert" ng-repeat="dim in dimensions.config.types.man">{{dim.label}}<input type="text"></span>
+    <span class="dimension_insert" ng-repeat="dim in dimensions.config.types[type]">{{dim.label}}<input focus-me="" ng-focus="setSelectedInp(dim.name)" ng-model="formInfo[dim.name]" type="text"></span>
 </div>
 <div id="dimension_values_list">
     <div id="age_types">
@@ -17,6 +17,6 @@
     </div>
 </div>
 <div id="sub_screen_buttons">
-    <a href="" class="button">Отмена</a>
-    <a href="" class="button">Сохранить</a>
+    <a href="" class="button" ng-click="showOrHideSubScreen(false)">Отмена</a>
+    <a href="" class="button" ng-click="createNewDimension()">Сохранить</a>
 </div>
