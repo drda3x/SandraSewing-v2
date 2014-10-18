@@ -138,19 +138,19 @@
             config: {
                  types: {
                      man: [
-                         {name: 'posh', label: 'ПОШ'},
-                         {name: 'pog', label: 'ПОГ'},
-                         {name: 'pot', label: 'ПОБ'},
-                         {name: 'pob', label: 'ПОТ'},
-                         {name: 'shg', label: 'ШГ'},
-                         {name: 'dpt', label: 'ДПТ'},
-                         {name: 'shs', label: 'ШС'},
-                         {name: 'dst', label: 'ДСТ'},
-                         {name: 'shpl', label: 'ШПЛ'},
-                         {name: 'vb', label: 'ВБ'},
-                         {name: 'op', label: 'ОП'},
-                         {name: 'dr', label: 'ДР'},
-                         {name: 'di', label: 'ДИ'}
+                         {name: 'posh', label: 'ПОШ', max: 22, min: 15},
+                         {name: 'pog', label: 'ПОГ', min: 40, max: 55},
+                         {name: 'pot', label: 'ПОБ', min: 40, max: 60},
+                         {name: 'pob', label: 'ПОТ', min: 17, max: 50},
+                         {name: 'shg', label: 'ШГ', min: 15, max: 25},
+                         {name: 'dpt', label: 'ДПТ', min: 20, max: 45},
+                         {name: 'shs', label: 'ШС', min: 15, max: 25},
+                         {name: 'dst', label: 'ДСТ', min: 20, max: 45},
+                         {name: 'shpl', label: 'ШПЛ', min: 10, max: 18},
+                         {name: 'vb', label: 'ВБ', min: 15, max: 25},
+                         {name: 'op', label: 'ОП', min: 25, max: 40},
+                         {name: 'dr', label: 'ДР', min: 55, max: 70},
+                         {name: 'di', label: 'ДИ', min: 50, max: 110}
                      ],
                      woman: [
                          {name: 'posh', label: 'ПОШ'},
@@ -228,7 +228,10 @@
                 $scope.type = null;
                 $scope.dimension_name = null;
                 $scope.formInfo = null;
-                $scope.selectedInput = null;
+                $scope.selectedInput = {
+                    name: null,
+                    index: null
+                };
                 $scope.inputs = [];
 
                 $scope.changeType = function(type) {
@@ -274,10 +277,8 @@
                  };
 
                 $scope.setSelectedInp = function(val, index) {
-                    $scope.selectedInput = {
-                        name: val,
-                        index: index
-                    };
+                    $scope.selectedInput.name = val;
+                    $scope.selectedInput.index = index;
                 };
 
                 $scope.setInputVal = function(val) {
@@ -294,6 +295,7 @@
             restrict: 'E',
             controller: function($scope) {
                 var i = 0;
+
                 $scope.max = 110;
                 $scope.min = 50;
                 $scope.lines = (function(min, max) {
