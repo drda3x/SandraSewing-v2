@@ -279,7 +279,6 @@
 
                 $scope.setInputVal = function(val) {
                     $scope.formInfo[$scope.selectedInput] = val;
-                    console.log($scope.inputs.length);
                 };
             },
             templateUrl: './templates/new_dimension_tmp.html'
