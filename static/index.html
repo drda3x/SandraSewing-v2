@@ -15,7 +15,7 @@
     <div id="main" ng-controller="mainAppCtrl">
         <div id="measurement_main">
             <a href="" id="new_measurement" ng-click="showOrHideSubScreen('new_dim')">Новая мерка</a>
-            <a href="" id="exist_measurement" ng-click="showOrHideSubScreen('select_dim')">{{dimensions.current.name}}</a>
+            <a href="" id="exist_measurement" ng-click="showOrHideSubScreen('select_dim')"><span sw-dimensions>{{dimensions.current.name}}</span></a>
         </div>
         <span sub-screen ng-show="showSubScreen"></span>
         <div id="products">

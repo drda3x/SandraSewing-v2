@@ -12,27 +12,9 @@
     app.controller('mainAppCtrl', ['$scope', function($scope) {
         $scope.showSubScreen = false;
 
-        $scope.showOrHideSubScreen =(function() {
-
-            var last_element;
-
-            return function(name, dim) {
-
-                if(name) {
-                    last_element = dim || $scope.dimensions.current || last_element;
-                }
-
-                $scope.showSubScreen = (($scope.showSubScreen == name) ? false : name);
-
-                if(!name && dim) {
-                    $scope.dimensions.current = dim;
-                } else if(name && !dim && $scope.showSubScreen) {
-                    $scope.dimensions.current = null;
-                } else {
-                    $scope.dimensions.current = last_element;
-                }
-            };
-        })();
+        $scope.showOrHideSubScreen = function(name) {
+            return $scope.showSubScreen = (($scope.showSubScreen == name) ? false : name);
+        };
 
         /**
          * Структура сущности "Мерка"
@@ -53,153 +35,6 @@
          *      value: 15 // {Int} Значение размера
          * }
          */
-
-        // Тестовые данные
-        $scope.dimensions = {
-            current: {
-                name: 'Тестовая мерка 1',
-                type: 'woman',
-                values: [
-                    {name: 'posh', value: 25},
-                    {name: 'pot', value: 60},
-                    {name: 'pob', value: 90},
-                    {name: 'pog', value: 90},
-                    {name: 'shg', value: 25},
-                    {name: 'tsg', value: 20},
-                    {name: 'vg', value: 30},
-                    {name: 'dpt', value: 50},
-                    {name: 'vpkp', value: 50},
-                    {name: 'shs', value: 50},
-                    {name: 'dst', value: 70},
-                    {name: 'dst-1', value: 50},
-                    {name: 'vpks', value: 60},
-                    {name: 'shpl', value: 40},
-                    {name: 'vb', value: 50},
-                    {name: 'op', value: 70},
-                    {name: 'dr', value: 30},
-                    {name: 'di', value: 100}
-                ]
-            },
-            list: [
-                {
-                    name: 'Тестовая мерка 1',
-                    type: 'woman',
-                    values: [
-                        {name: 'posh', value: 25},
-                        {name: 'pot', value: 60},
-                        {name: 'pob', value: 90},
-                        {name: 'pog', value: 90},
-                        {name: 'shg', value: 25},
-                        {name: 'tsg', value: 20},
-                        {name: 'vg', value: 30},
-                        {name: 'dpt', value: 50},
-                        {name: 'vpkp', value: 50},
-                        {name: 'shs', value: 50},
-                        {name: 'dst', value: 70},
-                        {name: 'dst-1', value: 50},
-                        {name: 'vpks', value: 60},
-                        {name: 'shpl', value: 40},
-                        {name: 'vb', value: 50},
-                        {name: 'op', value: 70},
-                        {name: 'dr', value: 30},
-                        {name: 'di', value: 100}
-                    ]
-                },
-                {
-                    name: 'Тестовая мерка 2',
-                    type: 'woman',
-                    values: [
-                        {name: 'posh', value: 25},
-                        {name: 'pot', value: 60},
-                        {name: 'pob', value: 90},
-                        {name: 'pog', value: 90},
-                        {name: 'shg', value: 25},
-                        {name: 'tsg', value: 20},
-                        {name: 'vg', value: 30},
-                        {name: 'dpt', value: 50},
-                        {name: 'vpkp', value: 50},
-                        {name: 'shs', value: 50},
-                        {name: 'dst', value: 70},
-                        {name: 'dst-1', value: 50},
-                        {name: 'vpks', value: 60},
-                        {name: 'shpl', value: 40},
-                        {name: 'vb', value: 50},
-                        {name: 'op', value: 70},
-                        {name: 'dr', value: 30},
-                        {name: 'di', value: 100}
-                    ]
-                },{
-                    name: 'Тестовая мерка 3',
-                    type: 'woman',
-                    values: [
-                        {name: 'posh', value: 25},
-                        {name: 'pot', value: 60},
-                        {name: 'pob', value: 90},
-                        {name: 'pog', value: 90},
-                        {name: 'shg', value: 25},
-                        {name: 'tsg', value: 20},
-                        {name: 'vg', value: 30},
-                        {name: 'dpt', value: 50},
-                        {name: 'vpkp', value: 50},
-                        {name: 'shs', value: 50},
-                        {name: 'dst', value: 70},
-                        {name: 'dst-1', value: 50},
-                        {name: 'vpks', value: 60},
-                        {name: 'shpl', value: 40},
-                        {name: 'vb', value: 50},
-                        {name: 'op', value: 70},
-                        {name: 'dr', value: 30},
-                        {name: 'di', value: 100}
-                    ]
-                }
-            ],
-            config: {
-                 types: {
-                     man: [
-                         {name: 'posh', label: 'ПОШ', max: 22, min: 15},
-                         {name: 'pog', label: 'ПОГ', min: 40, max: 55},
-                         {name: 'pob', label: 'ПОБ', min: 40, max: 60},
-                         {name: 'pot', label: 'ПОТ', min: 17, max: 50},
-                         {name: 'shg', label: 'ШГ', min: 15, max: 25},
-                         {name: 'dpt', label: 'ДПТ', min: 20, max: 45},
-                         {name: 'shs', label: 'ШС', min: 15, max: 25},
-                         {name: 'dst', label: 'ДСТ', min: 20, max: 45},
-                         {name: 'shpl', label: 'ШПЛ', min: 10, max: 18},
-                         {name: 'vb', label: 'ВБ', min: 15, max: 25},
-                         {name: 'op', label: 'ОП', min: 25, max: 40},
-                         {name: 'dr', label: 'ДР', min: 55, max: 70},
-                         {name: 'di', label: 'ДИ', min: 50, max: 110}
-                     ],
-                     woman: [
-                         {name: 'posh', label: 'ПОШ'},
-                         {name: 'pog', label: 'ПОГ'},
-                         {name: 'pob', label: 'ПОБ'},
-                         {name: 'pot', label: 'ПОТ'},
-                         {name: 'shg', label: 'ШГ'},
-                         {name: 'tsg', label: 'ЦГ'},
-                         {name: 'dpt', label: 'ДПТ'},
-                         {name: 'vpkp', label: 'ВПКП'},
-                         {name: 'shs', label: 'ШС'},
-                         {name: 'dst', label: 'ДСТ'},
-                         {name: 'dst-1', label: 'ДСТ-1'},
-                         {name: 'vpks', label: 'ВПКС'},
-                         {name: 'shpl', label: 'ШПЛ'},
-                         {name: 'vb', label: 'ВБ'},
-                         {name: 'op', label: 'ОП'},
-                         {name: 'dr', label: 'ДР'},
-                         {name: 'di', label: 'ДИ'}
-                     ]
-                 }
-            },
-            select: function(dim) {
-                this.current = dim;
-            },
-            add: function(dim) {
-                this.list.push(dim);
-                this.current = dim;
-            }
-        };
-
 
         /*$scope.dimensions = {
             current:,
@@ -251,7 +86,11 @@
                     }
                 }
             },
-            template:'<div class="select_new_dim_overflow"><div ng-repeat="dim in dimensions.list" class="dimensions"><a href="" class="dimension" ng-mousedown="reg_event(\'first\')" ng-mouseup="reg_event(\'last\', dim)"">{{dim.name}}</a></div></div>'
+            template:'<div sw-dimensions class="select_new_dim_overflow">' +
+                        '<div ng-repeat="dim in dimensions.list" class="dimensions">' +
+                            '<a href="" class="dimension" ng-mousedown="reg_event(\'first\')" ng-mouseup="reg_event(\'last\', dim)"">{{dim.name}}</a>' +
+                        '</div>' +
+                     '</div>'
         }
     });
 
@@ -261,7 +100,7 @@
             controller: function($scope, $element) {
 
                 $scope.type = null;
-                $scope.dimension_name = $scope.dimensions.current.name;
+                $scope.dimension_name = null;
                 $scope.formInfo = null;
                 $scope.selectedInput = {
                     name: null,
@@ -269,7 +108,7 @@
                 };
                 $scope.inputs = [];
 
-                $scope.changeType = function(type) {
+/*                $scope.changeType = function(type) {
                     $scope.inputs = [];
                     $scope.type = type;
                     $scope.formInfo = (function() {
@@ -283,13 +122,7 @@
                     })();
                 };
 
-                $scope.changeType('man');
-
-                $scope.refreshForm = function() {
-                    if($scope.dimensions.current){
-                        mapData($scope.dimensions.current.values, $scope.formInfo);
-                    }
-                };
+                $scope.changeType('man');*/
 
                 $scope.addInput = function(input) {
                     $scope.inputs.push(input);
@@ -333,6 +166,165 @@
                 };
             },
             templateUrl: './templates/new_dimension_tmp.html'
+        }
+    });
+
+    /**
+     * Директива поведения размеров
+     * Используется для показа возможных мерок в списке мерок, и передачи этих мерок в окно редактирования.
+     * А еще для создания новых мерок...
+     */
+    app.directive('swDimensions', function() {
+        return {
+            restrict: 'A',
+            //scope: {},
+            controller: function($scope) {
+                // Хранилище размеров
+                $scope.dimensions = {
+                    current: {
+                        name: 'Тестовая мерка 1',
+                        type: 'woman',
+                        values: [
+                            {name: 'posh', value: 25},
+                            {name: 'pot', value: 60},
+                            {name: 'pob', value: 90},
+                            {name: 'pog', value: 90},
+                            {name: 'shg', value: 25},
+                            {name: 'tsg', value: 20},
+                            {name: 'vg', value: 30},
+                            {name: 'dpt', value: 50},
+                            {name: 'vpkp', value: 50},
+                            {name: 'shs', value: 50},
+                            {name: 'dst', value: 70},
+                            {name: 'dst-1', value: 50},
+                            {name: 'vpks', value: 60},
+                            {name: 'shpl', value: 40},
+                            {name: 'vb', value: 50},
+                            {name: 'op', value: 70},
+                            {name: 'dr', value: 30},
+                            {name: 'di', value: 100}
+                        ]
+                    },
+                    list: [
+                        {
+                            name: 'Тестовая мерка 1',
+                            type: 'woman',
+                            values: [
+                                {name: 'posh', value: 25},
+                                {name: 'pot', value: 60},
+                                {name: 'pob', value: 90},
+                                {name: 'pog', value: 90},
+                                {name: 'shg', value: 25},
+                                {name: 'tsg', value: 20},
+                                {name: 'vg', value: 30},
+                                {name: 'dpt', value: 50},
+                                {name: 'vpkp', value: 50},
+                                {name: 'shs', value: 50},
+                                {name: 'dst', value: 70},
+                                {name: 'dst-1', value: 50},
+                                {name: 'vpks', value: 60},
+                                {name: 'shpl', value: 40},
+                                {name: 'vb', value: 50},
+                                {name: 'op', value: 70},
+                                {name: 'dr', value: 30},
+                                {name: 'di', value: 100}
+                            ]
+                        },
+                        {
+                            name: 'Тестовая мерка 2',
+                            type: 'woman',
+                            values: [
+                                {name: 'posh', value: 25},
+                                {name: 'pot', value: 60},
+                                {name: 'pob', value: 90},
+                                {name: 'pog', value: 90},
+                                {name: 'shg', value: 25},
+                                {name: 'tsg', value: 20},
+                                {name: 'vg', value: 30},
+                                {name: 'dpt', value: 50},
+                                {name: 'vpkp', value: 50},
+                                {name: 'shs', value: 50},
+                                {name: 'dst', value: 70},
+                                {name: 'dst-1', value: 50},
+                                {name: 'vpks', value: 60},
+                                {name: 'shpl', value: 40},
+                                {name: 'vb', value: 50},
+                                {name: 'op', value: 70},
+                                {name: 'dr', value: 30},
+                                {name: 'di', value: 100}
+                            ]
+                        },{
+                            name: 'Тестовая мерка 3',
+                            type: 'woman',
+                            values: [
+                                {name: 'posh', value: 25},
+                                {name: 'pot', value: 60},
+                                {name: 'pob', value: 90},
+                                {name: 'pog', value: 90},
+                                {name: 'shg', value: 25},
+                                {name: 'tsg', value: 20},
+                                {name: 'vg', value: 30},
+                                {name: 'dpt', value: 50},
+                                {name: 'vpkp', value: 50},
+                                {name: 'shs', value: 50},
+                                {name: 'dst', value: 70},
+                                {name: 'dst-1', value: 50},
+                                {name: 'vpks', value: 60},
+                                {name: 'shpl', value: 40},
+                                {name: 'vb', value: 50},
+                                {name: 'op', value: 70},
+                                {name: 'dr', value: 30},
+                                {name: 'di', value: 100}
+                            ]
+                        }
+                    ],
+                    config: {
+                        types: {
+                            man: [
+                                {name: 'posh', label: 'ПОШ', max: 22, min: 15},
+                                {name: 'pog', label: 'ПОГ', min: 40, max: 55},
+                                {name: 'pob', label: 'ПОБ', min: 40, max: 60},
+                                {name: 'pot', label: 'ПОТ', min: 17, max: 50},
+                                {name: 'shg', label: 'ШГ', min: 15, max: 25},
+                                {name: 'dpt', label: 'ДПТ', min: 20, max: 45},
+                                {name: 'shs', label: 'ШС', min: 15, max: 25},
+                                {name: 'dst', label: 'ДСТ', min: 20, max: 45},
+                                {name: 'shpl', label: 'ШПЛ', min: 10, max: 18},
+                                {name: 'vb', label: 'ВБ', min: 15, max: 25},
+                                {name: 'op', label: 'ОП', min: 25, max: 40},
+                                {name: 'dr', label: 'ДР', min: 55, max: 70},
+                                {name: 'di', label: 'ДИ', min: 50, max: 110}
+                            ],
+                            woman: [
+                                {name: 'posh', label: 'ПОШ'},
+                                {name: 'pog', label: 'ПОГ'},
+                                {name: 'pob', label: 'ПОБ'},
+                                {name: 'pot', label: 'ПОТ'},
+                                {name: 'shg', label: 'ШГ'},
+                                {name: 'tsg', label: 'ЦГ'},
+                                {name: 'dpt', label: 'ДПТ'},
+                                {name: 'vpkp', label: 'ВПКП'},
+                                {name: 'shs', label: 'ШС'},
+                                {name: 'dst', label: 'ДСТ'},
+                                {name: 'dst-1', label: 'ДСТ-1'},
+                                {name: 'vpks', label: 'ВПКС'},
+                                {name: 'shpl', label: 'ШПЛ'},
+                                {name: 'vb', label: 'ВБ'},
+                                {name: 'op', label: 'ОП'},
+                                {name: 'dr', label: 'ДР'},
+                                {name: 'di', label: 'ДИ'}
+                            ]
+                        }
+                    },
+                    select: function(dim) {
+                        this.current = dim;
+                    },
+                    add: function(dim) {
+                        this.list.push(dim);
+                        this.current = dim;
+                    }
+                }
+            }
         }
     });
 
