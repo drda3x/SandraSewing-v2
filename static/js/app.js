@@ -140,8 +140,8 @@
                      man: [
                          {name: 'posh', label: 'ПОШ', max: 22, min: 15},
                          {name: 'pog', label: 'ПОГ', min: 40, max: 55},
-                         {name: 'pot', label: 'ПОБ', min: 40, max: 60},
-                         {name: 'pob', label: 'ПОТ', min: 17, max: 50},
+                         {name: 'pob', label: 'ПОБ', min: 40, max: 60},
+                         {name: 'pot', label: 'ПОТ', min: 17, max: 50},
                          {name: 'shg', label: 'ШГ', min: 15, max: 25},
                          {name: 'dpt', label: 'ДПТ', min: 20, max: 45},
                          {name: 'shs', label: 'ШС', min: 15, max: 25},
@@ -155,8 +155,8 @@
                      woman: [
                          {name: 'posh', label: 'ПОШ'},
                          {name: 'pog', label: 'ПОГ'},
-                         {name: 'pot', label: 'ПОБ'},
-                         {name: 'pob', label: 'ПОТ'},
+                         {name: 'pob', label: 'ПОБ'},
+                         {name: 'pot', label: 'ПОТ'},
                          {name: 'shg', label: 'ШГ'},
                          {name: 'tsg', label: 'ЦГ'},
                          {name: 'dpt', label: 'ДПТ'},
@@ -276,11 +276,6 @@
                      });
                  };
 
-                $scope.setSelectedInp = function(val, index) {
-                    $scope.selectedInput.name = val;
-                    $scope.selectedInput.index = index;
-                };
-
                 $scope.setInputVal = function(val) {
                     $scope.formInfo[$scope.selectedInput.name] = val;
                     $scope.inputs[$scope.selectedInput.index + 1].focus();
@@ -313,6 +308,9 @@
                     return a;
                 })($scope.min, $scope.max);
 
+                $scope.$watch($scope.selectedInput, function(val) {
+                    console.log(val);
+                });
             },
             template: '<div ng-repeat="line in lines" class="dimension_values_shortlist"><a ng-repeat="val in line" href="" ng-click="setInputVal(val)">{{val}}</a></div>'
         }
