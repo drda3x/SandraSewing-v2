@@ -12,9 +12,27 @@
     app.controller('mainAppCtrl', ['$scope', function($scope) {
         $scope.showSubScreen = false;
 
-        $scope.showOrHideSubScreen = function(name) {
-            $scope.showSubScreen = (($scope.showSubScreen == name) ? false : name);
-        };
+        $scope.showOrHideSubScreen =(function() {
+
+            var last_element;
+
+            return function(name, dim) {
+
+                if(name) {
+                    last_element = dim || $scope.dimensions.current || last_element;
+                }
+
+                $scope.showSubScreen = (($scope.showSubScreen == name) ? false : name);
+
+                if(!name && dim) {
+                    $scope.dimensions.current = dim;
+                } else if(name && !dim && $scope.showSubScreen) {
+                    $scope.dimensions.current = null;
+                } else {
+                    $scope.dimensions.current = last_element;
+                }
+            };
+        })();
 
         /**
          * Структура сущности "Мерка"
@@ -179,7 +197,6 @@
             add: function(dim) {
                 this.list.push(dim);
                 this.current = dim;
-                console.log(dim);
             }
         };
 
@@ -218,7 +235,7 @@
 
                 var firstEvent;
 
-                $scope.reg_event = function(param) {
+                $scope.reg_event = function(param, dim) {
                     if(param === 'first') {
                         firstEvent = new Date();
                     } else {
@@ -226,25 +243,25 @@
                             return;
                         }
                         var laetEvent = new Date();
-                        if(laetEvent - firstEvent > 10) {
-                            showOrHideSubScreen('new_dim');
+                        if(laetEvent - firstEvent > 300) {
+                            $scope.showOrHideSubScreen('new_dim', dim);
                         } else {
-                            showOrHideSubScreen(false);
+                            $scope.showOrHideSubScreen(false, dim);
                         }
                     }
                 }
             },
-            template:'<div class="select_new_dim_overflow"><div ng-repeat="dim in dimensions.list" class="dimensions"><a href="" class="dimension" ng-mousedown="reg_event(first)" ng-click="dimensions.select(dim); showOrHideSubScreen(false)"">{{dim.name}}</a></div></div>'
+            template:'<div class="select_new_dim_overflow"><div ng-repeat="dim in dimensions.list" class="dimensions"><a href="" class="dimension" ng-mousedown="reg_event(\'first\')" ng-mouseup="reg_event(\'last\', dim)"">{{dim.name}}</a></div></div>'
         }
     });
 
-    app.directive('addNewDimension', function() {
+    app.directive('editScreen', function() {
         return {
             restrict: 'E',
             controller: function($scope, $element) {
 
                 $scope.type = null;
-                $scope.dimension_name = null;
+                $scope.dimension_name = $scope.dimensions.current.name;
                 $scope.formInfo = null;
                 $scope.selectedInput = {
                     name: null,
@@ -268,6 +285,12 @@
 
                 $scope.changeType('man');
 
+                $scope.refreshForm = function() {
+                    if($scope.dimensions.current){
+                        mapData($scope.dimensions.current.values, $scope.formInfo);
+                    }
+                };
+
                 $scope.addInput = function(input) {
                     $scope.inputs.push(input);
                 };
@@ -287,11 +310,16 @@
                              value: parseInt($scope.formInfo[i])
                          });
                      }
-                     $scope.dimensions.add({
-                        name:  $scope.dimension_name,
-                        type: $scope.type,
-                        values: values
-                     });
+
+                     var newDim = {
+                         name:  $scope.dimensions.current.name,
+                         type: $scope.type,
+                         values: values
+                     };
+
+                     $scope.dimensions.add(newDim);
+
+                     return newDim;
                  };
 
                 $scope.setInputVal = function(val) {
@@ -335,15 +363,30 @@
     app.directive('focusMe', function() {
         return {
             restrict: 'A',
-            require: '^addNewDimension',
-            link: function(scope, element, attrs, addNewDimensionCtrl) {
+            require: '^editScreen',
+            link: function(scope, element, attrs, editScreenCtrl) {
                 scope.addInput(element[0]);
             },
             controller: function($scope, $element) {
                 $scope.isFirst = function(isFirst) {
-                    console.log(isFirst);
                 }
             }
         }
     });
+
+    function mapData(from,to) {
+        for(var i= 0 in to){
+            var changed = false;
+            for(var k= 0, m= from.length; k<m; k++) {
+                if(i == from[k].name) {
+                    to[i] = from[k].value;
+                    changed = true;
+                }
+                if(!changed) {
+                    to[i] = null;
+                }
+            }
+        }
+
+    }
 })();

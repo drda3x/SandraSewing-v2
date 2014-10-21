@@ -1,4 +1,4 @@
-<input id="dimension_name" type="text" placeholder="Название мерки" ng-model="dimension_name"/>
+<input id="dimension_name" type="text" placeholder="Название мерки" ng-model="dimensions.current.name"/>
 <div>
     <input class="dimension_type" id="man_dimension" name="sex" type="radio" ng-click="changeType('man')" checked/><label class="dimension_type" for="man_dimension">Мужская мерка</label>
     <input class="dimension_type" id="woman_dimension" name="sex" type="radio" ng-click="changeType('woman')"/><label class="dimension_type" for="woman_dimension">Женская мерка</label>
@@ -19,5 +19,5 @@
 </div>
 <div id="sub_screen_buttons">
     <a href="" class="button" ng-click="showOrHideSubScreen(false)">Отмена</a>
-    <a href="" class="button" ng-click="createNewDimension(); showOrHideSubScreen(false)">Сохранить</a>
+    <a href="" class="button" ng-click="showOrHideSubScreen(false, createNewDimension())">Сохранить</a>
 </div>
