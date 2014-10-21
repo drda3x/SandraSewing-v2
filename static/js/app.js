@@ -285,14 +285,11 @@
         }
     });
 
-    app.directive('dimensionValuesShortlist', function() {
+    app.directive('valuesCalculator', function() {
         return {
-            restrict: 'E',
+            restrict: 'A',
             controller: function($scope) {
-                var i = 0;
-
-                $scope.max = 110;
-                $scope.min = 50;
+                var values = $scope.values;
                 $scope.lines = (function(min, max) {
                     var a = [],
                         start = min;
@@ -306,13 +303,22 @@
                         a.push(b);
                     }
                     return a;
-                })($scope.min, $scope.max);
-
-                $scope.$watch($scope.selectedInput, function(val) {
-                    console.log(val);
-                });
+                })(values.min, values.max);
+                console.log($scope.lines)
             },
-            template: '<div ng-repeat="line in lines" class="dimension_values_shortlist"><a ng-repeat="val in line" href="" ng-click="setInputVal(val)">{{val}}</a></div>'
+            template: '<div ng-show="values.name==selectedInput.name" ng-repeat="line in lines" class="dimension_values_shortlist"><a ng-repeat="val in line" href="" ng-click="setInputVal(val)">{{val}}</a></div>'
+        }
+    });
+
+    app.directive('createValues', function() {
+        return {
+            restrict: 'E',
+            //require: '^valuesCalculator',
+            link: function(scope, element, attrs, valuesCalculatorCtrl) {
+                valuesCalculatorCtrl.addVal(scope);
+                console.log(valuesCalculatorCtrl);
+            },
+            //template: '<div ng-repeat="line in lines" class="dimension_values_shortlist"><a ng-repeat="val in line" href="" ng-click="setInputVal(val)">{{val}}</a></div>'
         }
     });
 
