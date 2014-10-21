@@ -12,10 +12,12 @@
         <input class="dimension_type" id="kinder_dimension" name="age" type="radio" value="1" /><label class="dimension_type" for="kinder_dimension">Детские</label>
         <a href="" id="self_insert">Ввести вручную</a>
     </div>
-    <div values-calculator ng-repeat="values in dimensions.config.types[type]"></div>
+    <div values-calculator ng-repeat="values in dimensions.config.types[type]">
+        <div ng-show="values.name==selectedInput.name" ng-repeat="line in lines" class="dimension_values_shortlist"><a ng-repeat="val in line" href="" ng-click="setInputVal(val)">{{val}}</a></div>
+    </div>
 </div>
 </div>
 <div id="sub_screen_buttons">
     <a href="" class="button" ng-click="showOrHideSubScreen(false)">Отмена</a>
-    <a href="" class="button" ng-click="createNewDimension()">Сохранить</a>
+    <a href="" class="button" ng-click="createNewDimension(); showOrHideSubScreen(false)">Сохранить</a>
 </div>

@@ -215,8 +215,26 @@
         return {
             restrict: 'E',
             controller: function($scope) {
+
+                var firstEvent;
+
+                $scope.reg_event = function(param) {
+                    if(param === 'first') {
+                        firstEvent = new Date();
+                    } else {
+                        if(!firstEvent) {
+                            return;
+                        }
+                        var laetEvent = new Date();
+                        if(laetEvent - firstEvent > 10) {
+                            showOrHideSubScreen('new_dim');
+                        } else {
+                            showOrHideSubScreen(false);
+                        }
+                    }
+                }
             },
-            template:'<div class="select_new_dim_overflow"><div ng-repeat="dim in dimensions.list" class="dimensions"><a href="" class="dimension" ng-click="dimensions.select(dim)">{{dim.name}}</a></div></div>'
+            template:'<div class="select_new_dim_overflow"><div ng-repeat="dim in dimensions.list" class="dimensions"><a href="" class="dimension" ng-mousedown="reg_event(first)" ng-click="dimensions.select(dim); showOrHideSubScreen(false)"">{{dim.name}}</a></div></div>'
         }
     });
 
@@ -277,8 +295,13 @@
                  };
 
                 $scope.setInputVal = function(val) {
-                    $scope.formInfo[$scope.selectedInput.name] = val;
-                    $scope.inputs[$scope.selectedInput.index + 1].focus();
+                    try{
+                        $scope.formInfo[$scope.selectedInput.name] = val;
+                        $scope.inputs[$scope.selectedInput.index + 1].focus();
+                    } catch (e) {
+                        console.log('index is grater then array length, it\'s OK!');
+                    }
+
                 };
             },
             templateUrl: './templates/new_dimension_tmp.html'
@@ -290,6 +313,7 @@
             restrict: 'A',
             controller: function($scope) {
                 var values = $scope.values;
+
                 $scope.lines = (function(min, max) {
                     var a = [],
                         start = min;
@@ -304,21 +328,7 @@
                     }
                     return a;
                 })(values.min, values.max);
-                console.log($scope.lines)
-            },
-            template: '<div ng-show="values.name==selectedInput.name" ng-repeat="line in lines" class="dimension_values_shortlist"><a ng-repeat="val in line" href="" ng-click="setInputVal(val)">{{val}}</a></div>'
-        }
-    });
-
-    app.directive('createValues', function() {
-        return {
-            restrict: 'E',
-            //require: '^valuesCalculator',
-            link: function(scope, element, attrs, valuesCalculatorCtrl) {
-                valuesCalculatorCtrl.addVal(scope);
-                console.log(valuesCalculatorCtrl);
-            },
-            //template: '<div ng-repeat="line in lines" class="dimension_values_shortlist"><a ng-repeat="val in line" href="" ng-click="setInputVal(val)">{{val}}</a></div>'
+            }
         }
     });
 
