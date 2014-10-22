@@ -55,7 +55,8 @@
         return {
             restrict: 'E',
             scope: {
-                current: '=dimension'
+                current: '=dimension',
+                showOrHideSubScreen: '='
             },
             controller: function($scope) {
 

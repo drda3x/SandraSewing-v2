@@ -20,7 +20,7 @@
         <span ng-show="showSubScreen">
             <div id="screen_saver"></div>
             <div id="sub_screen">
-                <edit-screen ng-show="showSubScreen=='new_dim'" dimension="showSubScreen"></edit-screen>
+                <edit-screen showOrHideSubScreen="showOrHideSubScreen" ng-show="showSubScreen=='new_dim'" dimension="showSubScreen"></edit-screen>
                 <select-dimension ng-show="showSubScreen=='select_dim'"></select-dimension>
             </div>
         </span>
