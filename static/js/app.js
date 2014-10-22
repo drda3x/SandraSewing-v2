@@ -15,53 +15,7 @@
         $scope.showOrHideSubScreen = function(name) {
             return $scope.showSubScreen = (($scope.showSubScreen == name) ? false : name);
         };
-
-        /**
-         * Структура сущности "Мерка"
-         * {
-         *      name: 'Мерка 1', // {String} имя мерки
-         *      type: 'woman' // {String} тип (мужская, женская)
-         *      values: [
-         *          {name: 'posh', value: 10},  // {Dimension} - сущность "Размер"
-         *          {name: 'pot', value: 11},
-         *          {name: 'pod', value: 12},
-         *          ...
-         *      ]
-         * }
-         *
-         * Структура сущности "Размер"
-         * {
-         *      name: 'pot' // {String} Имя размера
-         *      value: 15 // {Int} Значение размера
-         * }
-         */
-
-        /*$scope.dimensions = {
-            current:,
-            list:
-        }*/
     }]);
-
-    app.directive('subScreen', function() {
-        return {
-            restrict: 'A',
-            templateUrl: './templates/sub_screen_tmp.html'
-        }
-    });
-
-    app.directive('screen', function() {
-        return {
-            restrict: 'E',
-            controller: function($scope) {
-                $scope.isAvailable = function(name) {
-                    return name == $scope.showSubScreen;
-                }
-            },
-            template: '<span ng-transclude></span>',
-            transclude: true
-        }
-    });
-
 
     app.directive('selectDimension', function() {
         return {
@@ -86,7 +40,7 @@
                     }
                 }
             },
-            template:'<div sw-dimensions class="select_new_dim_overflow">' +
+            template:'<div ng-controller="swDimensions" class="select_new_dim_overflow">' +
                         '<div ng-repeat="dim in dimensions.list" class="dimensions">' +
                             '<a href="" class="dimension" ng-mousedown="reg_event(\'first\')" ng-mouseup="reg_event(\'last\', dim)"">{{dim.name}}</a>' +
                         '</div>' +
@@ -174,11 +128,7 @@
      * Используется для показа возможных мерок в списке мерок, и передачи этих мерок в окно редактирования.
      * А еще для создания новых мерок...
      */
-    app.directive('swDimensions', function() {
-        return {
-            restrict: 'A',
-            //scope: {},
-            controller: function($scope) {
+    app.controller('swDimensions', ['$scope', function($scope) {
                 // Хранилище размеров
                 $scope.dimensions = {
                     current: {
@@ -324,9 +274,7 @@
                         this.current = dim;
                     }
                 }
-            }
-        }
-    });
+    }]);
 
     app.directive('valuesCalculator', function() {
         return {
