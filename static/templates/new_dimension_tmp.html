@@ -1,10 +1,10 @@
 <input id="dimension_name" type="text" placeholder="Название мерки" ng-model="dimensions.current.name"/>
 <div>
-    <input class="dimension_type" id="man_dimension" name="sex" type="radio" ng-click="changeType('man')" checked/><label class="dimension_type" for="man_dimension">Мужская мерка</label>
-    <input class="dimension_type" id="woman_dimension" name="sex" type="radio" ng-click="changeType('woman')"/><label class="dimension_type" for="woman_dimension">Женская мерка</label>
+    <input class="dimension_type" id="man_dimension" name="sex" type="radio" ng-click="type='man'" checked/><label class="dimension_type" for="man_dimension">Мужская мерка</label>
+    <input class="dimension_type" id="woman_dimension" name="sex" type="radio" ng-click="type='woman'"/><label class="dimension_type" for="woman_dimension">Женская мерка</label>
 </div>
 <div id="dimensions_list">
-    <span class="dimension_insert" ng-repeat="dim in dimensions.config.types[type]">{{dim.label}}<input focus-me ng-focus="selectedInput.name=dim.name; selectedInput.index=$index;" ng-model="formInfo[dim.name]" type="text"></span>
+    <span class="dimension_insert" ng-repeat="dim in dimensions_types[type]">{{dim.label}}<input focus-me ng-focus="selectedInput.name=dim.name; selectedInput.index=$index;" ng-model="formModel[dim.name]" type="text"></span>
 </div>
 <div id="dimension_values_list">
     <div id="age_types">
@@ -12,7 +12,7 @@
         <input class="dimension_type" id="kinder_dimension" name="age" type="radio" value="1" /><label class="dimension_type" for="kinder_dimension">Детские</label>
         <a href="" id="self_insert">Ввести вручную</a>
     </div>
-    <div values-calculator ng-repeat="values in dimensions.config.types[type]">
+    <div values-calculator ng-repeat="values in dimensions_types[type]">
         <div ng-show="values.name==selectedInput.name" ng-repeat="line in lines" class="dimension_values_shortlist"><a ng-repeat="val in line" href="" ng-click="setInputVal(val)">{{val}}</a></div>
     </div>
 </div>

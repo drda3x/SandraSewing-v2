@@ -10,11 +10,14 @@
      * Показываем или скрываем доп. экран
      */
     app.controller('mainAppCtrl', ['$scope', function($scope) {
+
         $scope.showSubScreen = false;
 
         $scope.showOrHideSubScreen = function(name) {
             return $scope.showSubScreen = (($scope.showSubScreen == name) ? false : name);
         };
+
+
     }]);
 
     app.directive('selectDimension', function() {
@@ -51,69 +54,87 @@
     app.directive('editScreen', function() {
         return {
             restrict: 'E',
-            controller: function($scope, $element) {
+            scope: {
+                current: '=dimension'
+            },
+            controller: function($scope) {
 
-                $scope.type = null;
+                $scope.dimensions_types = {
+                    man: [
+                        {name: 'posh', label: 'ПОШ', max: 22, min: 15},
+                        {name: 'pog', label: 'ПОГ', min: 40, max: 55},
+                        {name: 'pob', label: 'ПОБ', min: 40, max: 60},
+                        {name: 'pot', label: 'ПОТ', min: 17, max: 50},
+                        {name: 'shg', label: 'ШГ', min: 15, max: 25},
+                        {name: 'dpt', label: 'ДПТ', min: 20, max: 45},
+                        {name: 'shs', label: 'ШС', min: 15, max: 25},
+                        {name: 'dst', label: 'ДСТ', min: 20, max: 45},
+                        {name: 'shpl', label: 'ШПЛ', min: 10, max: 18},
+                        {name: 'vb', label: 'ВБ', min: 15, max: 25},
+                        {name: 'op', label: 'ОП', min: 25, max: 40},
+                        {name: 'dr', label: 'ДР', min: 55, max: 70},
+                        {name: 'di', label: 'ДИ', min: 50, max: 110}
+                    ],
+                    woman: [
+                        {name: 'posh', label: 'ПОШ'},
+                        {name: 'pog', label: 'ПОГ'},
+                        {name: 'pob', label: 'ПОБ'},
+                        {name: 'pot', label: 'ПОТ'},
+                        {name: 'shg', label: 'ШГ'},
+                        {name: 'tsg', label: 'ЦГ'},
+                        {name: 'dpt', label: 'ДПТ'},
+                        {name: 'vpkp', label: 'ВПКП'},
+                        {name: 'shs', label: 'ШС'},
+                        {name: 'dst', label: 'ДСТ'},
+                        {name: 'dst-1', label: 'ДСТ-1'},
+                        {name: 'vpks', label: 'ВПКС'},
+                        {name: 'shpl', label: 'ШПЛ'},
+                        {name: 'vb', label: 'ВБ'},
+                        {name: 'op', label: 'ОП'},
+                        {name: 'dr', label: 'ДР'},
+                        {name: 'di', label: 'ДИ'}
+                    ]
+                };
+
+                var inputs = $scope.inputs = [],
+                    getFormModel = (function() {
+                        var types = $scope.dimensions_types;
+
+                        return function(type) {
+                            var t = types[type],
+                                a = {};
+
+                            for(var i= 0, j= t.length; i<j; i++) {
+                                a[t[i].name] = null;
+                            }
+                            return a;
+                        }
+                    })();
+
+                $scope.type = $scope.current.type || 'man';
+
                 $scope.dimension_name = null;
-                $scope.formInfo = null;
+
+                $scope.$watch('type', function(value) {
+                    $scope.formModel = getFormModel(value);
+                });
+
                 $scope.selectedInput = {
                     name: null,
                     index: null
                 };
-                $scope.inputs = [];
-
-/*                $scope.changeType = function(type) {
-                    $scope.inputs = [];
-                    $scope.type = type;
-                    $scope.formInfo = (function() {
-                        var a = {},
-                            src = $scope.dimensions.config.types[type];
-
-                        for(var i in src) {
-                            a[src[i].name] = null;
-                        }
-                        return a;
-                    })();
-                };
-
-                $scope.changeType('man');*/
 
                 $scope.addInput = function(input) {
-                    $scope.inputs.push(input);
+                    inputs.push(input);
                 };
 
-                /**
-                 * Функция для сбора информации из формы и создания новой мерки...
-                 * */
-                 $scope.createNewDimension = function()  {
-                     if(!$scope.dimension_name || $scope.dimension_name.length == 0) {
-                         alert('Заполните название мерки');
-                         return;
-                     }
-                     var values = [];
-                     for(var i in $scope.formInfo) {
-                         values.push({
-                             name: i,
-                             value: parseInt($scope.formInfo[i])
-                         });
-                     }
-
-                     var newDim = {
-                         name:  $scope.dimensions.current.name,
-                         type: $scope.type,
-                         values: values
-                     };
-
-                     $scope.dimensions.add(newDim);
-
-                     return newDim;
-                 };
 
                 $scope.setInputVal = function(val) {
                     try{
-                        $scope.formInfo[$scope.selectedInput.name] = val;
+                        $scope.formModel[$scope.selectedInput.name] = val;
                         $scope.inputs[$scope.selectedInput.index + 1].focus();
                     } catch (e) {
+                        console.log(e);
                         console.log('index is grater then array length, it\'s OK!');
                     }
 
@@ -123,8 +144,48 @@
         }
     });
 
+    app.directive('valuesCalculator', function() {
+        return {
+            restrict: 'A',
+            controller: function($scope) {
+
+                var values = $scope.values;
+
+                $scope.lines = (function(min, max) {
+                    var a = [],
+                        start = min;
+                    for(var i= 0, j= Math.ceil((max-min)/10); i < j; i++){
+                        var b = [];
+
+                        for(var k= start, m= ((start + 10 > max) ? max : start + 10); k<m; k++) {
+                            b.push(k);
+                        }
+                        start+=10;
+                        a.push(b);
+                    }
+                    return a;
+                })(values.min, values.max);
+            }
+        }
+    });
+
+    app.directive('focusMe', function() {
+        return {
+            restrict: 'A',
+            require: '^editScreen',
+            link: function(scope, element) {
+                element[0].selected = null;
+                scope.addInput(element[0]);
+            },
+            controller: function($scope, $element) {
+                $scope.isFirst = function(isFirst) {
+                }
+            }
+        }
+    });
+
     /**
-     * Директива поведения размеров
+     * Контроллер поведения размеров
      * Используется для показа возможных мерок в списке мерок, и передачи этих мерок в окно редактирования.
      * А еще для создания новых мерок...
      */
@@ -228,44 +289,6 @@
                             ]
                         }
                     ],
-                    config: {
-                        types: {
-                            man: [
-                                {name: 'posh', label: 'ПОШ', max: 22, min: 15},
-                                {name: 'pog', label: 'ПОГ', min: 40, max: 55},
-                                {name: 'pob', label: 'ПОБ', min: 40, max: 60},
-                                {name: 'pot', label: 'ПОТ', min: 17, max: 50},
-                                {name: 'shg', label: 'ШГ', min: 15, max: 25},
-                                {name: 'dpt', label: 'ДПТ', min: 20, max: 45},
-                                {name: 'shs', label: 'ШС', min: 15, max: 25},
-                                {name: 'dst', label: 'ДСТ', min: 20, max: 45},
-                                {name: 'shpl', label: 'ШПЛ', min: 10, max: 18},
-                                {name: 'vb', label: 'ВБ', min: 15, max: 25},
-                                {name: 'op', label: 'ОП', min: 25, max: 40},
-                                {name: 'dr', label: 'ДР', min: 55, max: 70},
-                                {name: 'di', label: 'ДИ', min: 50, max: 110}
-                            ],
-                            woman: [
-                                {name: 'posh', label: 'ПОШ'},
-                                {name: 'pog', label: 'ПОГ'},
-                                {name: 'pob', label: 'ПОБ'},
-                                {name: 'pot', label: 'ПОТ'},
-                                {name: 'shg', label: 'ШГ'},
-                                {name: 'tsg', label: 'ЦГ'},
-                                {name: 'dpt', label: 'ДПТ'},
-                                {name: 'vpkp', label: 'ВПКП'},
-                                {name: 'shs', label: 'ШС'},
-                                {name: 'dst', label: 'ДСТ'},
-                                {name: 'dst-1', label: 'ДСТ-1'},
-                                {name: 'vpks', label: 'ВПКС'},
-                                {name: 'shpl', label: 'ШПЛ'},
-                                {name: 'vb', label: 'ВБ'},
-                                {name: 'op', label: 'ОП'},
-                                {name: 'dr', label: 'ДР'},
-                                {name: 'di', label: 'ДИ'}
-                            ]
-                        }
-                    },
                     select: function(dim) {
                         this.current = dim;
                     },
@@ -275,44 +298,6 @@
                     }
                 }
     }]);
-
-    app.directive('valuesCalculator', function() {
-        return {
-            restrict: 'A',
-            controller: function($scope) {
-                var values = $scope.values;
-
-                $scope.lines = (function(min, max) {
-                    var a = [],
-                        start = min;
-                    for(var i= 0, j= Math.ceil((max-min)/10); i < j; i++){
-                        var b = [];
-
-                        for(var k= start, m= ((start + 10 > max) ? max : start + 10); k<m; k++) {
-                            b.push(k);
-                        }
-                        start+=10;
-                        a.push(b);
-                    }
-                    return a;
-                })(values.min, values.max);
-            }
-        }
-    });
-
-    app.directive('focusMe', function() {
-        return {
-            restrict: 'A',
-            require: '^editScreen',
-            link: function(scope, element, attrs, editScreenCtrl) {
-                scope.addInput(element[0]);
-            },
-            controller: function($scope, $element) {
-                $scope.isFirst = function(isFirst) {
-                }
-            }
-        }
-    });
 
     function mapData(from,to) {
         for(var i= 0 in to){
