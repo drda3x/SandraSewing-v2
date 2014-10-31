@@ -7,22 +7,30 @@
     var app = angular.module('sewing_app', []);
 
     /**
-     * Показываем или скрываем доп. экран
+     * Директива для хранения данных о текущей мерке и открытия и закрытия суб-окна...
+     * todo: этой дирктиве нужно имя получше
      */
-    app.controller('mainAppCtrl', ['$scope', function($scope) {
+    app.directive('mainApp', function() {
+        return {
+            restrict: 'A',
+            controller: function($scope) {
+                $scope.showSubScreen = false;
 
-        $scope.showSubScreen = false;
-
-        $scope.showOrHideSubScreen = function(name) {
-            return $scope.showSubScreen = (($scope.showSubScreen == name) ? false : name);
-        };
-
-
-    }]);
+                this.showOrHideSubScreen = $scope.showOrHideSubScreen = function(name) {
+                    return $scope.showSubScreen = (($scope.showSubScreen == name) ? false : name);
+                };
+            }
+        }
+    });
 
     app.directive('selectDimension', function() {
         return {
             restrict: 'E',
+            scope: {},
+            require: '^mainApp',
+            link: function(scope, element, attrs, ctrls) {
+                scope.mainAppCtrl = ctrls;
+            },
             controller: function($scope) {
 
                 var firstEvent;
@@ -36,16 +44,16 @@
                         }
                         var laetEvent = new Date();
                         if(laetEvent - firstEvent > 300) {
-                            $scope.showOrHideSubScreen('new_dim', dim);
+                            $scope.mainAppCtrl.showOrHideSubScreen('new_dim', dim);
                         } else {
-                            $scope.showOrHideSubScreen(false, dim);
+                            $scope.mainAppCtrl.showOrHideSubScreen(false, dim);
                         }
                     }
                 }
             },
             template:'<div ng-controller="swDimensions" class="select_new_dim_overflow">' +
                         '<div ng-repeat="dim in dimensions.list" class="dimensions">' +
-                            '<a href="" class="dimension" ng-mousedown="reg_event(\'first\')" ng-mouseup="reg_event(\'last\', dim)"">{{dim.name}}</a>' +
+                            '<a href="" class="dimension" ng-mousedown="reg_event(\'first\')" ng-mouseup="dimensions.select(dim); clk(); reg_event(\'last\', dim)"">{{dim.name}}</a>' +
                         '</div>' +
                      '</div>'
         }
@@ -54,9 +62,13 @@
     app.directive('editScreen', function() {
         return {
             restrict: 'E',
+            require: '^mainApp',
+            link: function(scope, element, attrs, ctrls) {
+                scope.mainAppCtrl = ctrls;
+            },
             scope: {
                 current: '=dimension',
-                showOrHideSubScreen: '='
+                show: '='
             },
             controller: function($scope) {
 
@@ -112,7 +124,7 @@
                         }
                     })();
 
-                $scope.type = $scope.current.type || 'man';
+                $scope.type = ($scope.current && $scope.current.typ) ? $scope.current.type : 'man';
 
                 $scope.dimension_name = null;
 
@@ -297,7 +309,11 @@
                         this.list.push(dim);
                         this.current = dim;
                     }
-                }
+                };
+
+        $scope.clk = function() {
+            console.log($scope.dimensions.current);
+        };
     }]);
 
     function mapData(from,to) {
