@@ -12,16 +12,16 @@
     </style>
 </head>
 <body>
-    <div id="main" main-app>
+    <div id="main" app-main>
         <div id="measurement_main">
-            <a href="" id="new_measurement" ng-click="showOrHideSubScreen('new_dim')">Новая мерка</a>
-            <a ng-controller="swDimensions" href="" id="exist_measurement" ng-click="clk(); showOrHideSubScreen('select_dim')"><span>{{dimensions.current.name}}</span></a>
+            <a href="" id="new_measurement" ng-click="showOrHideSubScreen('new')">Новая мерка</a>
+            <a href="" id="exist_measurement" ng-click="showOrHideSubScreen('select')"><span>{{dimensions.current.name}}</span></a>
         </div>
         <span ng-show="showSubScreen">
             <div id="screen_saver"></div>
             <div id="sub_screen">
-                <edit-screen ng-show="showSubScreen=='new_dim'" dimension="showSubScreen"></edit-screen>
-                <select-dimension ng-show="showSubScreen=='select_dim'"></select-dimension>
+                <edit-screen ng-show="showSubScreen=='new'||showSubScreen=='edit'" context="showSubScreen" current="dimensions.current"></edit-screen>
+                <select-dimension dimensions="dimensions" ng-show="showSubScreen=='select'"></select-dimension>
             </div>
         </span>
         <div id="products">

@@ -129,6 +129,7 @@ ul {
     margin: 15px 0px;
     vertical-align: top;
     width: 510px;
+    overflow-y: scroll;
 }
 
 #age_types {
