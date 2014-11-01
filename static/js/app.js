@@ -64,7 +64,7 @@
                     list: [
                         {
                             name: 'Тестовая мерка 1',
-                            type: 'woman',
+                            type: 'man',
                             values: [{name: 'posh', value: 25},{name: 'pot', value: 60},{name: 'pob', value: 90},{name: 'pog', value: 90},{name: 'shg', value: 25},{name: 'tsg', value: 20},{name: 'vg', value: 30},{name: 'dpt', value: 50},{name: 'vpkp', value: 50},{name: 'shs', value: 50},{name: 'dst', value: 70},{name: 'dst-1', value: 50},{name: 'vpks', value: 60},{name: 'shpl', value: 40},{name: 'vb', value: 50},{name: 'op', value: 70},{name: 'dr', value: 30},{name: 'di', value: 100}]
                         },
                         {
@@ -158,7 +158,7 @@
                             return;
                         }
                         var laetEvent = new Date();
-                        if(laetEvent - firstEvent > 200) {
+                        if(laetEvent - firstEvent > 150) {
                             $scope.appMainCtrl.showOrHideSubScreen('edit', dim);
                         } else {
                             $scope.appMainCtrl.showOrHideSubScreen(false, dim);
@@ -226,6 +226,7 @@
                     }
                 });
 
+                // todo это еще один УЖООООООСССССС
                 $scope.$watch('context', function(value) {
                     if($scope.formModel.hasOwnProperty(value)) {
                         $scope.type = $scope.current.type;
@@ -364,20 +365,4 @@
             }
         }
     });
-
-    function mapData(from,to) {
-        for(var i= 0 in to){
-            var changed = false;
-            for(var k= 0, m= from.length; k<m; k++) {
-                if(i == from[k].name) {
-                    to[i] = from[k].value;
-                    changed = true;
-                }
-                if(!changed) {
-                    to[i] = null;
-                }
-            }
-        }
-
-    }
 })();
