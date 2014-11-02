@@ -11,8 +11,8 @@
         /*.hidden {display: none}*/
     </style>
 </head>
-<body>
-    <div id="main" app-main>
+<body app-main>
+    <div id="main">
         <div id="measurement_main">
             <a href="" id="new_measurement" ng-click="showOrHideSubScreen('new')">Новая мерка</a>
             <a href="" id="exist_measurement" ng-click="showOrHideSubScreen('select')"><span>{{dimensions.current.name}}</span></a>
@@ -47,46 +47,12 @@
     <div id="footer">
         <a href="" class="current">Размеры</a>
         <a href="">Результаты расчета</a>
-        <table id="measurement_results">
+        <table footer-dimension-info id="measurement_results">
             <tr>
-                <th>ПОШ</th>
-                <th>ПОГ</th>
-                <th>ПОТ</th>
-                <th>ПОБ</th>
-                <th>ШГ</th>
-                <th>ЦГ</th>
-                <th>ВГ</th>
-                <th>ДПТ</th>
-                <th>ВПКП</th>
-                <th>ШС</th>
-                <th>ДСТ</th>
-                <th>ДСТ-1</th>
-                <th>ВПКС</th>
-                <th>ШПЛ</th>
-                <th>ВБ</th>
-                <th>ОП</th>
-                <th>ДР</th>
-                <th>ДИ</th>
+                <th ng-repeat="value in dimensions.current.values">{{dim_names[value.name]}}</th>
             </tr>
             <tr>
-                <td>10</td>
-                <td>20</td>
-                <td>30</td>
-                <td>40</td>
-                <td>50</td>
-                <td>60</td>
-                <td>70</td>
-                <td>80</td>
-                <td>90</td>
-                <td>100</td>
-                <td>110</td>
-                <td>120</td>
-                <td>130</td>
-                <td>140</td>
-                <td>150</td>
-                <td>160</td>
-                <td>170</td>
-                <td>180</td>
+                <td ng-repeat="value in dimensions.current.values">{{value.value}}</td>
             </tr>
         </table>
     </div>

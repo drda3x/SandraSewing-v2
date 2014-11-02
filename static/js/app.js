@@ -213,13 +213,6 @@
                     $scope.dimension_name = value;
                 });
 
-                /*$scope.$watch('type', function(value) {
-                    // todo Это ужасная реализация!!!!!!! УЖООООООССССС
-                    $scope.formModel = getFormModel(value);
-                    $scope.formModel.new = clearForm;
-                    $scope.formModel.edit = setForm;
-                });*/
-
                 $scope.changeFormModel = function(type) {
                     $scope.type = type;
                     $scope.formModel = getFormModel(type);
@@ -364,6 +357,23 @@
                     $attrs.$set('checked',
                         (($attrs.myType === val) ? 'checked' : undefined)
                     );
+                });
+            }
+        }
+    });
+
+    app.directive('footerDimensionInfo', function() {
+        return {
+            restrict: 'A',
+            require: '^appMain',
+            controller: function($scope) {
+                $scope.$watch('dimensions.current', function(val) {
+                    var arr = dimensionsTypes[val.type];
+                    $scope.dim_names = {};
+
+                    for(var i= 0, j= arr.length; i<j; i++) {
+                        $scope.dim_names[arr[i].name] = arr[i].label;
+                    }
                 });
             }
         }
