@@ -13,6 +13,7 @@
             {name: 'pob', label: 'ПОБ', min: 40, max: 60},
             {name: 'pot', label: 'ПОТ', min: 17, max: 50},
             {name: 'shg', label: 'ШГ', min: 15, max: 25},
+            {name: 'vg', label: 'ВГ', max: 40, min: 30},
             {name: 'dpt', label: 'ДПТ', min: 20, max: 45},
             {name: 'shs', label: 'ШС', min: 15, max: 25},
             {name: 'dst', label: 'ДСТ', min: 20, max: 45},
@@ -29,6 +30,7 @@
             {name: 'pot', label: 'ПОТ', max: 47, min: 29},
             {name: 'shg', label: 'ШГ', max: 23, min: 15},
             {name: 'tsg', label: 'ЦГ', max: 12, min: 7},
+            {name: 'vg', label: 'ВГ', max: 40, min: 30},
             {name: 'dpt', label: 'ДПТ', max: 53, min: 35},
             {name: 'vpkp', label: 'ВПКП', max: 30, min: 18},
             {name: 'shs', label: 'ШС', max: 25, min: 14},
@@ -41,6 +43,29 @@
             {name: 'dr', label: 'ДР', max: 65, min: 35},
             {name: 'di', label: 'ДИ', max: 116, min: 40}
         ]
+    };
+
+    var calculator = {
+        pants: {},
+        skirt: {},
+        dress: {},
+        shirt: {}
+    };
+
+    function Product(formuls, algorithm) {
+        this.formuls = formuls;
+        this.algorithm = algorithm;
+        this.results = [];
+    }
+
+    Product.prototype.calculate = function() {
+        this.results = [];
+
+        for(var formula in this.formuls) {
+            this.results.push(this.formuls[formula]());
+        }
+
+        // todo разработать парсинг алгоритма, чтобы при выборе мерки алгоритм один раз расчитался и больше его не надо было считать...
     };
 
     var app = angular.module('sewing_app', []);
@@ -263,10 +288,12 @@
                         context = ($scope.context === 'new') ? 'add' : 'save';
 
                     for(var i in $scope.formModel) {
-                        newValues.push({
-                            name: i,
-                            value: $scope.formModel[i]
-                        });
+                        if(typeof $scope.formModel[i] !== 'function') {
+                            newValues.push({
+                                name: i,
+                                value: $scope.formModel[i]
+                            });
+                        }
                     }
 
                     $scope.appMainCtrl.saveDimension({
@@ -362,7 +389,7 @@
         }
     });
 
-    app.directive('footerDimensionInfo', function() {
+    app.directive('calcResults', function() {
         return {
             restrict: 'A',
             require: '^appMain',
@@ -374,8 +401,23 @@
                     for(var i= 0, j= arr.length; i<j; i++) {
                         $scope.dim_names[arr[i].name] = arr[i].label;
                     }
+                    console.log($scope.dimensions.current.values.length);
                 });
-            }
+            },
+            template:
+                '<div id="footer">' +
+                    '<a href="" class="current">Размеры</a>' +
+                    '<a href="">Результаты расчета</a>' +
+                    '<table id="measurement_results">' +
+                        '<tr>' +
+                            '<th ng-if="value.value && value.name" ng-repeat="value in dimensions.current.values">{{dim_names[value.name]}}</th>' +
+                        '</tr>' +
+                        '<tr>' +
+                            '<td ng-if="value.value && value.name" ng-repeat="value in dimensions.current.values">{{value.value}}</td>' +
+                        '</tr>' +
+                    '</table>' +
+                '</div>',
+            replace: true
         }
     });
 })();

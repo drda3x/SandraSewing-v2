@@ -44,17 +44,7 @@
             <a href="">Вперед</a>
         </div>
     </div>
-    <div id="footer">
-        <a href="" class="current">Размеры</a>
-        <a href="">Результаты расчета</a>
-        <table footer-dimension-info id="measurement_results">
-            <tr>
-                <th ng-repeat="value in dimensions.current.values">{{dim_names[value.name]}}</th>
-            </tr>
-            <tr>
-                <td ng-repeat="value in dimensions.current.values">{{value.value}}</td>
-            </tr>
-        </table>
+    <div id="footer" calc-results>
     </div>
 </body>
 </html>
