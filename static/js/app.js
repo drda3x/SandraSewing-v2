@@ -205,7 +205,7 @@
                         }
                     })();
 
-                $scope.type = ($scope.current && $scope.current.typ) ? $scope.current.type : 'man';
+                $scope.type = ($scope.current && $scope.current.type) ? $scope.current.type : 'man';
 
                 $scope.dimension_name = null;
 
@@ -213,26 +213,28 @@
                     $scope.dimension_name = value;
                 });
 
-                var action = null;
-
-                $scope.$watch('type', function(value) {
+                /*$scope.$watch('type', function(value) {
                     // todo Это ужасная реализация!!!!!!! УЖООООООССССС
                     $scope.formModel = getFormModel(value);
                     $scope.formModel.new = clearForm;
                     $scope.formModel.edit = setForm;
-                    if(action) {
-                        $scope.formModel[action]();
-                        action = null;
-                    }
-                });
+                });*/
+
+                $scope.changeFormModel = function(type) {
+                    $scope.type = type;
+                    $scope.formModel = getFormModel(type);
+                    $scope.formModel.new = clearForm;
+                    $scope.formModel.edit = setForm;
+                };
+
+                $scope.changeFormModel($scope.type);
 
                 // todo это еще один УЖООООООСССССС
                 $scope.$watch('context', function(value) {
                     if($scope.formModel.hasOwnProperty(value)) {
-                        $scope.type = $scope.current.type;
                         $scope.dimension_name = $scope.current.name;
-                        action = value;
-                        $scope.formModel[action]();
+                        $scope.changeFormModel($scope.current.type);
+                        $scope.formModel[value]();
                     }
                 });
 
@@ -286,12 +288,12 @@
                  */
                 function setForm() {
                     var values = $scope.current.values;
-
                     for(var i= 0, j= values.length; i<j; i++) {
                         if(typeof this[values.name] !== 'function') {
                             this[values[i].name] = values[i].value;
                         }
                     }
+                    action = null;
                 }
 
                 /**
@@ -305,6 +307,7 @@
                     }
                     $scope.dimension_name = null;
                     $scope.type = 'man';
+                    action = null;
                 }
             },
             templateUrl: './templates/new_dimension_tmp.html'

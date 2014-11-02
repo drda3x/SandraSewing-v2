@@ -1,7 +1,7 @@
 <input id="dimension_name" type="text" placeholder="Название мерки" ng-model="dimension_name"/>
 <div>
-    <input check-me class="dimension_type" id="man_dimension" name="sex" type="radio" my-type="man" ng-click="type='man'"/><label class="dimension_type" for="man_dimension">Мужская мерка</label>
-    <input check-me class="dimension_type" id="woman_dimension" name="sex" type="radio" my-type="woman" ng-click="type='woman'"/><label class="dimension_type" for="woman_dimension">Женская мерка</label>
+    <input check-me class="dimension_type" id="man_dimension" name="sex" type="radio" my-type="man" ng-click="changeFormModel('man')"/><label class="dimension_type" for="man_dimension">Мужская мерка</label>
+    <input check-me class="dimension_type" id="woman_dimension" name="sex" type="radio" my-type="woman" ng-click="changeFormModel('woman')"/><label class="dimension_type" for="woman_dimension">Женская мерка</label>
 </div>
 <div id="dimensions_list">
     <span class="dimension_insert" ng-repeat="dim in dimensions_types[type]">{{dim.label}}<input focus-me ng-focus="selectedInput.name=dim.name; selectedInput.index=$index;" ng-model="formModel[dim.name]" type="text"></span>
