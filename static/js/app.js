@@ -83,14 +83,14 @@
                 $scope.dimensions = {
                     current: {
                         name: 'Тестовая мерка 1',
-                        type: 'woman',
-                        values: [{name: 'posh', value: 25},{name: 'pot', value: 60},{name: 'pob', value: 90},{name: 'pog', value: 90},{name: 'shg', value: 25},{name: 'tsg', value: 20},{name: 'vg', value: 30},{name: 'dpt', value: 50},{name: 'vpkp', value: 50},{name: 'shs', value: 50},{name: 'dst', value: 70},{name: 'dst-1', value: 50},{name: 'vpks', value: 60},{name: 'shpl', value: 40},{name: 'vb', value: 50},{name: 'op', value: 70},{name: 'dr', value: 30},{name: 'di', value: 100}]
+                        type: 'man',
+                        values: [{name: 'posh', value: 25},{name: 'pot', value: 60},{name: 'pob', value: 90},{name: 'pog', value: 90},{name: 'shg', value: 25},{name: 'vg', value: 30},{name: 'dpt', value: 50},{name: 'shs', value: 50},{name: 'dst', value: 70},{name: 'shpl', value: 40},{name: 'vb', value: 50},{name: 'op', value: 70},{name: 'dr', value: 30},{name: 'di', value: 100}]
                     },
                     list: [
                         {
                             name: 'Тестовая мерка 1',
                             type: 'man',
-                            values: [{name: 'posh', value: 25},{name: 'pot', value: 60},{name: 'pob', value: 90},{name: 'pog', value: 90},{name: 'shg', value: 25},{name: 'tsg', value: 20},{name: 'vg', value: 30},{name: 'dpt', value: 50},{name: 'vpkp', value: 50},{name: 'shs', value: 50},{name: 'dst', value: 70},{name: 'dst-1', value: 50},{name: 'vpks', value: 60},{name: 'shpl', value: 40},{name: 'vb', value: 50},{name: 'op', value: 70},{name: 'dr', value: 30},{name: 'di', value: 100}]
+                            values: [{name: 'posh', value: 25},{name: 'pot', value: 60},{name: 'pob', value: 90},{name: 'pog', value: 90},{name: 'shg', value: 25},{name: 'vg', value: 30},{name: 'dpt', value: 50},{name: 'shs', value: 50},{name: 'dst', value: 70},{name: 'shpl', value: 40},{name: 'vb', value: 50},{name: 'op', value: 70},{name: 'dr', value: 30},{name: 'di', value: 100}]
                         },
                         {
                             name: 'Тестовая мерка 2',
