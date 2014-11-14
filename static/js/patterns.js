@@ -17,6 +17,7 @@
     function Algorithm(_name) {
         this.name = _name;
         this.steps = [];
+        this.scope = {};
     }
 
 
@@ -27,27 +28,49 @@
      * @param step - {Step || Algorithm} - шаг алгоритма (может быть другим алгоритмом если представлять группу как алгоритм...)
      */
     Algorithm.prototype.addStep = function(step) {
+        step.scope = this.scope;
         this.steps.push(step);
     };
 
+    /**
+     * Метод для запуска обхода шагов алгоритма и обработки каждого из них
+     */
+    Algorithm.prototype.iterate = function() {};
 
     /**
      * Конструктор класса "Пункт алгоритма"
      * Отвечает за один конкретный шаг алгоритма
      * @constructor
-     * @param string_view {string} строковое представление шага
-     * @param params {Object} словарь расчетных значений
-     * @param dialog {Object} список действий пользователя перед выполнением шага
+     * @param _string_view {string} строковое представление шага
+     * @param _params {Array} список расчетных значений
+     * @param _dialog {Object} список действий пользователя перед выполнением шага
      */
-    function Step(string_view, params, dialog) {}
+    function Step(_string_view, _params, _dialog) {
+        this.scope = null;
+        this.string_view = _string_view;
+        this.params = _params;
+        this.dialog = _dialog;
+    }
 
+    /**
+     * Метод для обработки шага
+     * Последовательногго вызова диалога, расчетов и отображения результата шага
+     */
+    Step.prototype.process = function() {};
 
     /**
      * Конструктор класса "Расчетное значение"
      * Отвечает за одно конкретное значение в шаге алгоритма
      * @constructor
+     * @param _name - {String} Наименование параметра
+     * @param _requirements - {Array} Массив необходимых значений которые нужны для расчетов
+     * @param _formula - {Function} формула расчета параметра
      */
-    function Value() {}
+    function Value(_name, _requirements, _formula) {
+        this.name = _name;
+        this.requirements = _requirements;
+        this.formula = _formula;
+    }
 
 
     /**
