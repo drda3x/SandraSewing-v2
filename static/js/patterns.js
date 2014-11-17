@@ -61,7 +61,7 @@
     /**
      * Метод для расчета знчений массива параметров
      */
-    Step.prototype.calc_params = function() {
+    Step.prototype.calc_params = (function() {
         /*
         Пока что это самая сложная функция во всей программе.
         Тут нужно:
@@ -71,7 +71,26 @@
                 в формулу расчета параметра (_formula)
             c. Вызвать выполнение формулы и сохранить результат в scope под именем _name...
          */
-    };
+
+        /**
+         * Функция для выдергивания необходимых параметров из scope'a алгоритма
+         * @param req - {Array} - массив параметров
+         * @return {Array}  - массив значений для указанных параметров
+         */
+        function get_requirements(req) {
+            var values = [];
+
+
+
+            return values;
+        }
+
+        return function() {
+            for(var i= 0, params_len= this.params.length; i < params_len; i++) {
+
+            }
+        }
+    })();
 
 
     /**
