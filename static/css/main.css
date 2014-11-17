@@ -1,220 +1,340 @@
-body {
-    height: 148mm;
-    overflow: hidden;
-    width: 197mm;
-}
-
-#upper_container {
-    height: 14px;
-    padding: 15px;
-}
-
-#lower_container {
-    height: 515px;
-    position: relative;
-}
-
-#left {
-    display: inline-table;
-    height: inherit;
-    width: 20%;
-    z-index: 1;
-}
-
-#right {
-    display: inline-table;
-    height: 121px;
-    position: relative;
-    width: 76%;
-    z-index: 1;
-}
-
-#create_dimension_btn {
-    border-radius: 5px;
-    border: 2px solid #000000;
-    cursor: pointer;
-    height: 40px;
-    padding: 6px 25px 10px 7px;
-    text-align: center;
-    width: 167px;
-}
-
-#create_dimension_btn_label {
-    padding: 0px 0px 0px 17px;
-}
-
-#items_menu {
-    margin-left: 51px;
-    position: relative;
-    top: 5px;
-}
-
-.items_menu_item {
-    border-radius: 6px;
-    border: 2px solid #000000;
-    cursor: pointer;
-    display: inline-block;
-    height: 22px;
-    margin: 0px 22px;
-    padding: 3px 5px;
-    text-align: center;
-    width: 61px;
-}
-
-#dimensions_menu {
-    margin-left: 16px;
-}
-
-#dimensions {
-    list-style: none outside none;
+* {
     margin: 0px;
     padding: 0px;
 }
 
-.current_dim {
-    border-left: 2px solid;
-    border-right: 2px solid;
-    border-top: 2px solid;
-    cursor: pointer;
-    display: table;
-    height: 26px;
-    padding: 5px 0px 0px 13px;
-    width: 137px;
+body {
+    height: 633px;
+    margin: 0px auto;
+    padding: 0px;
+    position: relative;
+    width: 960px;
 }
 
-.hover_class:hover {
-    background-color: #E6E6E6;
+a {
+    color: #000000;
+    text-decoration: none;
 }
 
-.current_dim:hover .sub_menu {
-    display: inline-block;
+a:hover {
+    background-color: #dddddd;
 }
 
-.sub_menu {
-    display: none;
-    left: 120px;
-    position: absolute;
-    top: auto;
-}
-
-.sub_menu_list {
+ul {
     list-style: none outside none;
 }
 
-.sub_menu_item {
-    background: none repeat scroll 0px 0px #FFFFFF;
-    border-left: 2px solid;
-    border-right: 2px solid;
-    border-top: 2px solid;
-    cursor: pointer;
-    display: table;
-    height: 26px;
-    padding: 5px 0px 0px 1px;
-    text-align: center;
-    width: 73px;
-    z-index: 99;
-}
-
-.last_dim {
-    border-bottom: 2px solid;
-}
-
-#calc_results {
-    margin: 20px 0px 0px 17px;
-    width: inherit;
-}
-
-#results {
-    border-collapse: collapse;
-    border: 1px solid #000000;
-    width: inherit;
-}
-
-#results th {
-    border: 1px solid #000000;
-}
-
-#results td {
-    border: 1px solid #000000;
-    width: 15px;
-}
-
-#algpattern {
-    height: 100%;
-    margin-top: 10px;
-    padding: 1px 0px;
-    position: relative;
-    width: 100%;
-}
-
-#buttons_block {
+#screen_saver {
+    background-color: #000000;
+    height: 580px;
+    opacity: 0.6;
     position: absolute;
-    top: 340px;
+    top: 53px;
+    width: 964px;
 }
 
-.algbtn {
-    border-radius: 5px;
-    border: 2px solid #000000;
+#sub_screen {
+    background-color: #ffffff;
+    border: 2px solid;
+    height: 550px;
+    left: 152px;
+    position: absolute;
+    top: 51px;
+    width: 808px;
+    z-index: 10;
+}
+
+.select_new_dim_overflow {
+    height: 550px;
+    overflow-y: scroll;
+    width: inherit;
+}
+
+.dimensions {
+    border-bottom: 2px solid;
+    height: 50px;
+}
+
+.dimension {
+    display: block;
+    height: 36px;
+    padding: 14px 0px 0px;
+    text-align: center;
+    vertical-align: middle;
+    width: inherit;
+}
+
+#dimension_name {
+    border: 2px solid;
+    height: 30px;
+    margin: 10px;
+    width: 600px;
+}
+
+.dimension_type {
     cursor: pointer;
-    height: 25px;
-    padding: 0px 4px;
-    width: 75px;
 }
 
-#btn_lft {
-    margin-left: 44px;
+#man_dimension, #woman_dimension {
+    margin-left: 20px;
+    margin-right: 5px;
 }
 
-#btn_rt {
-    margin-left: 340px;
+#sub_screen_buttons {
+    bottom: 30px;
+    position: absolute;
+    right: 30px;
 }
 
-.algsteps {
-    border: 2px solid #000000;
-    cursor: pointer;
-    height: 20px;
-    margin: 6px 17px;
-    padding: 0px 4px;
-    width: 42px;
+.button {
+    border: 2px solid;
+    margin: 4px 13px;
+    padding: 4px 7px;
 }
 
-.steps_menu {
-    float: left;
-    width: 100px;
+.button:hover {
+    background-color: #dddddd;
 }
 
-.alg {
+#dimensions_list {
+    display: inline-block;
+    height: 300px;
+    margin: 10px;
+    width: 245px;
+}
+
+.dimension_insert {
+    display: inline-block;
+    height: 23px;
+    margin: 5px 0px;
+    width: 120px;
+}
+
+.dimension_insert input {
+    border: 2px solid;
     float: right;
-    margin-top: 1px;
+    height: inherit;
+    margin: 0px 10px;
+    width: 50px;
+}
+
+.dimension_insert input:focus {
+    background-color: #dddddd;
+}
+
+#dimension_values_list {
+    border: 2px solid;
+    display: inline-block;
+    height: 333px;
+    margin: 15px 0px;
+    vertical-align: top;
+    width: 510px;
+    overflow-y: scroll;
+}
+
+#age_types {
+    margin: 10px;
+}
+
+#age_types input {
+    margin-left: 10px;
+}
+
+.dimension_values_shortlist {
+    border-bottom: 1px solid #dddddd;
+    margin: 0px 20px;
+    padding: 14px 0px;
+    text-align: center;
     width: 460px;
 }
 
-#addNewDimension {
-    background-color: rgba(0, 0, 0, 0.5);
+.dimension_values_shortlist:last-of-type {
+    border: 0px none;
+}
+
+.dimension_values_shortlist a {
+    border-radius: 5px;
+    border: 2px solid;
+    margin: 4px;
+    padding: 3px;
+}
+
+#self_insert {
+    border: 2px solid;
+    float: right;
+    padding: 2px 7px;
+}
+
+#main {
+    height: 100%;
+}
+
+#measurement_main {
+    border: 2px solid;
+    cursor: pointer;
+    display: table;
+    font-size: 15pt;
+    height: 49px;
+    vertical-align: middle;
+    width: 100%;
+}
+
+#new_measurement {
+    border-right: 2px solid;
+    display: table-cell;
     height: inherit;
-    left: 0px;
-    margin: inherit;
-    position: absolute;
-    top: 0px;
+    text-align: center;
+    vertical-align: middle;
+    width: 150px;
+}
+
+#exist_measurement {
+    display: table-cell;
+    height: inherit;
+    margin-left: -5px;
+    text-align: center;
+    vertical-align: middle;
+    width: 808px;
+}
+
+#footer {
+    height: 60px;
+    margin-top: -70px;
+    width: 100%;
+}
+
+#footer a {
+    border: 2px solid;
+    color: black;
+    margin: 0px -5px 0px 0px;
+    padding: 0px 16px;
+}
+
+#measurement_results {
+    border-collapse: collapse;
+    border: 2px solid;
+    height: 50px;
     width: inherit;
-    z-index: 1000;
 }
 
-#addNewDimensionWindow {
-    background-color: #FFFFFF;
-    border-radius: 10px;
-    height: 539px;
-    left: 10px;
-    position: absolute;
-    top: 10px;
-    width: 725px;
-    z-index: 1001;
+#measurement_results td {
+    border: 1px solid;
+    text-align: center;
 }
 
-.hidden {
-    display: none;
+#measurement_results th {
+    background-color: #dddddd;
+    border: 1px solid;
 }
 
-.visible {
-    display: block;
+.current {
+    background-color: #dddddd;
+}
+
+#products {
+    margin: 15px auto;
+    width: 425px;
+}
+
+.product {
+    border: 2px solid;
+    margin: 0px 15px;
+    padding: 4px 10px;
+}
+
+#alg_steps {
+    display: inline-block;
+    margin: 30px;
+    vertical-align: top;
+    width: 150px;
+}
+
+#alg_text {
+    display: inline-block;
+    margin: 30px 0px;
+    text-align: center;
+    width: 500px;
+}
+
+.step {
+    margin: 5px 0px;
+}
+
+#control_buttons {
+    margin: 0px auto;
+    width: 300px;
+}
+
+#control_buttons a {
+    height: 16px;
+    margin: 0px 30px;
+    width: 58px;
+}
+
+#control_buttons a:nth-of-type(1) {
+    border-bottom: 2px solid;
+    border-right: 2px solid;
+    border-top: 2px solid;
+    padding: 0px 10px 0px 0px;
+}
+
+#control_buttons a:nth-of-type(1):before {
+    border-bottom: 2px solid;
+    border-left: 2px solid;
+    content: "";
+    display: inline-block;
+    height: 14px;
+    left: -8px;
+    position: relative;
+    top: 3px;
+    transform: rotate(45deg);
+    width: 14px;
+}
+
+#control_buttons a:nth-of-type(1):hover:before {
+    background-color: #dddddd;
+    border-bottom: 2px solid;
+    border-left: 2px solid;
+    content: "";
+    display: inline-block;
+    height: 14px;
+    left: -8px;
+    position: relative;
+    top: 3px;
+    transform: rotate(45deg);
+    width: 14px;
+}
+
+#control_buttons a:nth-of-type(2) {
+    border-bottom: 2px solid;
+    border-left: 2px solid;
+    border-top: 2px solid;
+    padding: 0px 0px 0px 10px;
+}
+
+#control_buttons a:nth-of-type(2):after {
+    border-right: 2px solid;
+    border-top: 2px solid;
+    content: "";
+    display: inline-block;
+    height: 14px;
+    left: 8px;
+    position: relative;
+    top: 3px;
+    transform: rotate(45deg);
+    width: 14px;
+}
+
+#control_buttons a:nth-of-type(2):hover:after {
+    background-color: #dddddd;
+    border-right: 2px solid;
+    border-top: 2px solid;
+    content: "";
+    display: inline-block;
+    height: 14px;
+    left: 8px;
+    position: relative;
+    top: 3px;
+    transform: rotate(45deg);
+    width: 14px;
 }

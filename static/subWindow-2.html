@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html ng-app="sewing_app">
+<!--todo: Подумать как верстку можно подгонять под различные размеры мониторов-->
+<head>
+    <meta charset="utf-8" />
+    <title>SandraSewing v2.0</title>
+    <link rel="stylesheet" type="text/css" href="./css/main.css"/>
+    <script type="text/javascript" src="./js/angular.min.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+</head>
+<body>
+    <div id="main">
+        <div id="measurement_main">
+            <a href="" id="new_measurement">Новая мерка</a>
+            <a href="" id="exist_measurement">Какая-то мерка</a>
+        </div>
+
+        <!-- Доп. экран -->
+        <div id="screen_saver"></div>
+        <div id="sub_screen">
+            <input id="dimension_name" type="text" placeholder="Название мерки"/>
+            <div>
+                <input class="dimension_type" id="man_dimension" name="sex" type="radio" value="1" /><label class="dimension_type" for="man_dimension">Мужская мерка</label>
+                <input class="dimension_type" id="woman_dimension" name="sex" type="radio" value="1" /><label class="dimension_type" for="woman_dimension">Женская мерка</label>
+            </div>
+            <div id="dimensions_list">
+                <span  class="dimension_insert">ПОШ<input type="text"></span>
+                <span  class="dimension_insert">ПОГ<input type="text"></span>
+                <span  class="dimension_insert">ПОТ<input type="text"></span>
+                <span  class="dimension_insert">ПОБ<input type="text"></span>
+                <span  class="dimension_insert">ШГ<input type="text"></span>
+                <span  class="dimension_insert">ЦГ<input type="text"></span>
+                <span  class="dimension_insert">ДПТ<input type="text"></span>
+                <span  class="dimension_insert">ВПКП<input type="text"></span>
+                <span  class="dimension_insert">ШС<input type="text"></span>
+                <span  class="dimension_insert">ДСТ<input type="text"></span>
+                <span  class="dimension_insert">ДСТ-1<input type="text"></span>
+                <span  class="dimension_insert">ВПКС<input type="text"></span>
+                <span  class="dimension_insert">ШПЛ<input type="text"></span>
+                <span  class="dimension_insert">ВБ<input type="text"></span>
+                <span  class="dimension_insert">ОП<input type="text"></span>
+                <span  class="dimension_insert">ДР<input type="text"></span>
+                <span  class="dimension_insert">ДИ<input type="text"></span>
+            </div>
+            <div id="dimension_values_list">
+                <div id="age_types">
+                    <input class="dimension_type" id="adults_dimension" name="age" type="radio" value="1" /><label class="dimension_type" for="adults_dimension">Взрослые</label>
+                    <input class="dimension_type" id="kinder_dimension" name="age" type="radio" value="1" /><label class="dimension_type" for="kinder_dimension">Детские</label>
+                    <a href="" id="self_insert">Ввести вручную</a>
+                </div>
+                <div class="dimension_values_shortlist">
+                    <a href="">50</a>
+                    <a href="">51</a>
+                    <a href="">52</a>
+                    <a href="">53</a>
+                    <a href="">54</a>
+                    <a href="">55</a>
+                    <a href="">56</a>
+                    <a href="">57</a>
+                    <a href="">58</a>
+                    <a href="">59</a>
+                </div>
+                <div class="dimension_values_shortlist">
+                    <a href="">60</a>
+                    <a href="">61</a>
+                    <a href="">62</a>
+                    <a href="">63</a>
+                    <a href="">64</a>
+                    <a href="">65</a>
+                    <a href="">66</a>
+                    <a href="">67</a>
+                    <a href="">68</a>
+                    <a href="">69</a>
+                </div>
+                <div class="dimension_values_shortlist">
+                    <a href="">70</a>
+                    <a href="">71</a>
+                    <a href="">72</a>
+                    <a href="">73</a>
+                    <a href="">74</a>
+                    <a href="">75</a>
+                    <a href="">76</a>
+                    <a href="">77</a>
+                    <a href="">78</a>
+                    <a href="">79</a>
+                </div>
+                <div class="dimension_values_shortlist">
+                    <a href="">80</a>
+                    <a href="">81</a>
+                    <a href="">82</a>
+                    <a href="">83</a>
+                    <a href="">84</a>
+                    <a href="">85</a>
+                    <a href="">86</a>
+                    <a href="">87</a>
+                    <a href="">88</a>
+                    <a href="">89</a>
+                </div>
+                <div class="dimension_values_shortlist">
+                    <a href="">90</a>
+                    <a href="">91</a>
+                    <a href="">92</a>
+                    <a href="">93</a>
+                    <a href="">94</a>
+                    <a href="">95</a>
+                    <a href="">96</a>
+                    <a href="">97</a>
+                    <a href="">98</a>
+                    <a href="">99</a>
+                </div>
+                <div class="dimension_values_shortlist">
+                    <a href="">100</a>
+                    <a href="">101</a>
+                    <a href="">102</a>
+                    <a href="">103</a>
+                    <a href="">104</a>
+                    <a href="">105</a>
+                    <a href="">106</a>
+                    <a href="">107</a>
+                    <a href="">108</a>
+                    <a href="">109</a>
+                </div>
+                <div class="dimension_values_shortlist">
+                    <a href="">110</a>
+                    <a href="">111</a>
+                    <a href="">112</a>
+                    <a href="">113</a>
+                    <a href="">114</a>
+                    <a href="">115</a>
+                    <a href="">116</a>
+                    <a href="">117</a>
+                    <a href="">118</a>
+                    <a href="">119</a>
+                </div>
+            </div>
+            <div id="sub_screen_buttons">
+                <a href="" class="button">Отмена</a>
+                <a href="" class="button">Сохранить</a>
+            </div>
+        </div>
+        <!-- ******************************************************************************************************* -->
+
+        <div id="products">
+            <a href="" class="product">Брюки</a>
+            <a href="" class="product">Юбка</a>
+            <a href="" class="product">Платье</a>
+            <a href="" class="product">Рубашка</a>
+        </div>
+        <ul id="alg_steps">
+            <li class="step"><input type="radio" name="steps" value="1"/> Шаг 1</li>
+            <li class="step"><input type="radio" name="steps" value="2"/> Шаг 2</li>
+            <li class="step"><input type="radio" name="steps" value="3"/> Шаг 3</li>
+            <li class="step"><input type="radio" name="steps" value="4"/> Шаг 4</li>
+        </ul>
+        <div id="alg_text">
+            От правого края отложите 18 вниз.
+        </div>
+        <div id="control_buttons">
+            <a href="">Назад</a>
+            <a href="">Вперед</a>
+        </div>
+    </div>
+    <div id="footer">
+        <a href="" class="current">Размеры</a>
+        <a href="">Результаты расчета</a>
+        <table id="measurement_results">
+            <tr>
+                <th>ПОШ</th>
+                <th>ПОГ</th>
+                <th>ПОТ</th>
+                <th>ПОБ</th>
+                <th>ШГ</th>
+                <th>ЦГ</th>
+                <th>ВГ</th>
+                <th>ДПТ</th>
+                <th>ВПКП</th>
+                <th>ШС</th>
+                <th>ДСТ</th>
+                <th>ДСТ-1</th>
+                <th>ВПКС</th>
+                <th>ШПЛ</th>
+                <th>ВБ</th>
+                <th>ОП</th>
+                <th>ДР</th>
+                <th>ДИ</th>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>20</td>
+                <td>30</td>
+                <td>40</td>
+                <td>50</td>
+                <td>60</td>
+                <td>70</td>
+                <td>80</td>
+                <td>90</td>
+                <td>100</td>
+                <td>110</td>
+                <td>120</td>
+                <td>130</td>
+                <td>140</td>
+                <td>150</td>
+                <td>160</td>
+                <td>170</td>
+                <td>180</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

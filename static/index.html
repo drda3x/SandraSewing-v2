@@ -1,111 +1,51 @@
 <!DOCTYPE html>
-<html ng-app="s_sewing">
+<html ng-app="sewing_app">
+<!--todo: Подумать как верстку можно подгонять под различные размеры мониторов-->
 <head>
     <meta charset="utf-8" />
     <title>SandraSewing v2.0</title>
     <link rel="stylesheet" type="text/css" href="./css/main.css"/>
     <script type="text/javascript" src="./js/angular.min.js"></script>
-    <script type="text/javascript" src="./js/ss_logic.js"></script>
+    <script type="text/javascript" src="./js/angular.touch.min.js"></script>
+    <script type="text/javascript" src="./js/app.js"></script>
     <style type="text/css">
         /*.hidden {display: none}*/
     </style>
 </head>
-<body>
-    <div id="upper_container">
-        <span id="create_dimension_btn" class="hover_class" ng-click="addNewDim='visible'">
-            <span id="create_dimension_btn_label">Создать мерку</span>
-        </span>
-        <span id="items_menu">
-            <span class="items_menu_item hover_class">Рубашка</span>
-            <span class="items_menu_item hover_class">Брюки</span>
-            <span class="items_menu_item hover_class">Платье</span>
-            <span class="items_menu_item hover_class">Юбка</span>
-        </span>
-    </div>
-    <div id="lower_container">
-        <div id="left">
-            <div dimmenu id="dimensions_menu">
-                <ul id="dimensions" ng-controller="DimensionsCtrl">
-                    <li class="current_dim hover_class" ng-repeat="dim in dimensions">
-                        {{dim.name}}
-                        <div class="sub_menu">
-                            <img class="sub_menu_list" src="img/pen.png " ng-click="addNewDim='visible'" />
-                            <img class="sub_menu_list" src="img/x.png " />
-                        </div>
-                    </li>
-                    <li class="current_dim last_dim hover_class">{{last_dimension.name}}
-                        <div class="sub_menu">
-                            <img class="sub_menu_list" src="img/pen.png " ng-click="addNewDim='visible'" />
-                            <img class="sub_menu_list" src="img/x.png " />
-                        </div>
-                    </li>
-                </ul>
-            </div>
+<body app-main>
+    <div id="main">
+        <div id="measurement_main">
+            <a href="" id="new_measurement" ng-click="showOrHideSubScreen('new')">Новая мерка</a>
+            <a href="" id="exist_measurement" ng-click="showOrHideSubScreen('select')"><span>{{dimensions.current.name}}</span></a>
         </div>
-        <div id="right">
-            <div id="calc_results">
-                <table id="results">
-                    <thead>
-                        <tr><th colspan="7">Результаты расчетов</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Р1</td>
-                            <td>Р1</td>
-                            <td>Р1</td>
-                            <td>Р1</td>
-                            <td>Р1</td>
-                            <td>Р1</td>
-                            <td>Р1</td>
-                        </tr>
-                        <tr>
-                            <td>Р1</td>
-                            <td>Р1</td>
-                            <td>Р1</td>
-                            <td>Р1</td>
-                            <td>Р1</td>
-                            <td>Р1</td>
-                            <td>Р1</td>
-                        </tr>
-                        <tr>
-                            <td colspan="7">Длинна вытачки = </td>
-                        </tr>
-                    </tbody>
-                </table>
+        <span ng-show="showSubScreen">
+            <div id="screen_saver"></div>
+            <div id="sub_screen">
+                <edit-screen ng-show="showSubScreen=='new'||showSubScreen=='edit'" context="showSubScreen" current="dimensions.current"></edit-screen>
+                <select-dimension dimensions="dimensions" ng-show="showSubScreen=='select'"></select-dimension>
             </div>
-            <div id="algpattern">
-                <div class="steps_menu">
-                    <div class="top algsteps hover_class">Шаг 1</div>
-                    <div class="algsteps hover_class">Шаг 2</div>
-                    <div class="algsteps hover_class">Шаг 3</div>
-                </div>
-                <p class="alg">
-                    фываыавфыаыфа
-                    фывафыафываыфа
-                    ыфвафыафыавфыва
-                    фывафыафыафыавфы
-                    афыафыафыаыфвафываыф
-                    афыафыафыафыафы
-                    авфыафыафыафыавфыа
-                    фыафыафывафыавфыафыва
-                    фывафыавфывафыавфыаф
-                    ывафыафыавфыафывафыва
-                    фыафыафыафыавфыафыав
-                    фыафыафыавфыафыафыафыа
-                    фыавфывафыавфыавфыавфыавфы
-                    вафыафыафыафывафывафыа
-                </p>
-                <div id="buttons_block">
-                    <span id="btn_lft" class="algbtn hover_class">Назад</span>
-                    <span id="btn_rt" class="algbtn hover_class">Вперед</span>
-                </div>
-            </div>
+        </span>
+        <div id="products">
+            <a href="" class="product">Брюки</a>
+            <a href="" class="product">Юбка</a>
+            <a href="" class="product">Платье</a>
+            <a href="" class="product">Рубашка</a>
+        </div>
+        <ul id="alg_steps">
+            <li class="step"><input type="radio" name="steps" value="1"/> Шаг 1</li>
+            <li class="step"><input type="radio" name="steps" value="2"/> Шаг 2</li>
+            <li class="step"><input type="radio" name="steps" value="3"/> Шаг 3</li>
+            <li class="step"><input type="radio" name="steps" value="4"/> Шаг 4</li>
+        </ul>
+        <div id="alg_text">
+            От правого края отложите 18 вниз.
+        </div>
+        <div id="control_buttons">
+            <a href="">Назад</a>
+            <a href="">Вперед</a>
         </div>
     </div>
-    <div id="addNewDimension" class="hidden" ng-class="addNewDim">
-        <div id="addNewDimensionWindow" ng-click="addNewDim='hidden'">
-            <input type="text" placeholder="Название мерки"/>
-        </div>
+    <div id="footer" calc-results>
     </div>
 </body>
 </html>
