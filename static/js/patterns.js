@@ -35,7 +35,11 @@
     /**
      * Метод для запуска обхода шагов алгоритма и обработки каждого из них
      */
-    Algorithm.prototype.iterate = function() {};
+    Algorithm.prototype.iterate = function() {
+        for(var i= 0, j= this.steps.length; i < j; i++) {
+            this.steps[i].process();
+        }
+    };
 
     /**
      * Конструктор класса "Пункт алгоритма"
@@ -56,12 +60,23 @@
      * Метод для обработки шага
      * Последовательногго вызова: диалога, расчетов и отображения результата
      */
-    Step.prototype.process = function() {};
+    Step.prototype.process = function() {
+        /*
+        Сил думать прямо в коде сейчас нет, да и не очень это хорошо, а еще я в электричке,
+        по этому пока просто подумаю как это должно работать...
+
+        1. Нужно вызвать диалог шага с пользователем, получить от него информацию и где-то ее сохранить
+        2. Нужно вызвать расчет параметра и эту величину тоже сохранить
+        3. Нужно вызвать отображение на экране
+
+        Мне понадибится интерфейс для общения с пользователем и интерфейс показа информации пользователю
+         */
+    };
 
     /**
      * Метод для расчета знчений массива параметров
      */
-    Step.prototype.calc_params = (function() {
+    Step.prototype.calc_params = (function(context) {
         /*
         Пока что это самая сложная функция во всей программе.
         Тут нужно:
@@ -72,6 +87,8 @@
             c. Вызвать выполнение формулы и сохранить результат в scope под именем _name...
          */
 
+        var scope = context.scope;
+
         /**
          * Функция для выдергивания необходимых параметров из scope'a алгоритма
          * @param req - {Array} - массив параметров
@@ -79,18 +96,26 @@
          */
         function get_requirements(req) {
             var values = [];
-
-
-
+            for(var i= 0, j= req.length; i < j; i++) {
+                values.push(scope[req]);
+            }
             return values;
         }
 
         return function() {
+            /*
+            Обходим список параметров и запускаем расчет для каждого из них
+             */
             for(var i= 0, params_len= this.params.length; i < params_len; i++) {
+                var param_name = this.params[i].name,
+                    calc_function = this.params[i].formula,
+                    requirements = get_requirements(this.params[i].requirements);
 
+                // Сразу сохраняем результат в scope
+                this.scope[param_name] = calc_function(requirements);
             }
         }
-    })();
+    })(Step);
 
 
     /**
@@ -112,7 +137,12 @@
      * Конструктор класса "Диалог"
      * Отвечает за действия пользователя, которые необходимы для работы алгоритма
      * @constructor
+     * @param _html {String} - html код диалога для отображения пользователю
+     * @param _values {Array} - массив значений, которые булут использованы далее
      */
-    function Dialog() {}
+    function Dialog(_html, _values) {
+        this.html = _html;
+        this.values = _values;
+    }
 
 })(exports);
