@@ -39,7 +39,6 @@
         this.scope = {};
     }
 
-
     /**
      * Метод для добавления шагов в цепочку алгоритма
      * todo ПРИМЕЧАНИЕ!!! Учесть что в цепочку может добавляться как один шаг так и группа шагов
@@ -54,11 +53,19 @@
     /**
      * Метод для запуска обхода шагов алгоритма и обработки каждого из них
      */
-    Algorithm.prototype.iterate = function() {
-        for(var i= 0, j= this.steps.length; i < j; i++) {
-            this.steps[i].process();
+    Algorithm.prototype.next = (function(context) {
+        var index = 0,
+            steps_length = context.steps.length;
+
+        return function() {
+            if(index < steps_length) {
+                context.steps[index].process();
+                index++;
+            } else {
+                throw 'StopIteration';
+            }
         }
-    };
+    })(Algorithm);
 
     /**
      * Конструктор класса "Пункт алгоритма"
@@ -90,6 +97,16 @@
 
         Мне понадибится интерфейс для общения с пользователем и интерфейс показа информации пользователю
          */
+
+        // Проверяем есть ли у шага диалог с пользователем
+        if(this.dialog) {
+            try {
+
+            }
+        } else {
+            // Если диалога нет - сразу считаем параметры и выводим пользователю строку отображения
+            this.calc_params();
+        }
     };
 
     /**
@@ -104,7 +121,7 @@
             b. Сформировать из полученных _requirements массив аргументов и передать его
                 в формулу расчета параметра (_formula)
             c. Вызвать выполнение формулы и сохранить результат в scope под именем _name...
-         */
+        */
 
         var scope = context.scope;
 

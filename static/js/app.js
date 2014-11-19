@@ -45,29 +45,6 @@
         ]
     };
 
-    var calculator = {
-        pants: {},
-        skirt: {},
-        dress: {},
-        shirt: {}
-    };
-
-    function Product(formuls, algorithm) {
-        this.formuls = formuls;
-        this.algorithm = algorithm;
-        this.results = [];
-    }
-
-    Product.prototype.calculate = function() {
-        this.results = [];
-
-        for(var formula in this.formuls) {
-            this.results.push(this.formuls[formula]());
-        }
-
-        // todo разработать парсинг алгоритма, чтобы при выборе мерки алгоритм один раз расчитался и больше его не надо было считать...
-    };
-
     var app = angular.module('sewing_app', []);
 
     /**
@@ -418,6 +395,28 @@
                     '</table>' +
                 '</div>',
             replace: true
+        }
+    });
+
+    /**
+     * Директива для отображения алгоритмов построения выкроек и диалогов с пользователями в процессе
+     * прохождения алгоритма...
+     */
+    app.directive('mainView', function($compile) {
+        return {
+            restrict: 'A',
+            controller: function($scope, $compile) {
+
+            },
+            link: function(scope, element) {
+                // Переменная innerHtml хранит в себе html код для отображения, ее нужно связать с алгоритмами
+                scope.$watch('innerHtml', function(val) {
+                    var linkFunc = $compile(val),
+                        content = linkFunc(scope);
+
+                    element.append(content);
+                });
+            }
         }
     });
 })();
