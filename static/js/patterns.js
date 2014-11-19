@@ -61,7 +61,7 @@
     /**
      * Метод для расчета знчений массива параметров
      */
-    Step.prototype.calc_params = (function() {
+    Step.prototype.calc_params = (function(self) {
         /*
         Пока что это самая сложная функция во всей программе.
         Тут нужно:
@@ -80,7 +80,9 @@
         function get_requirements(req) {
             var values = [];
 
+            for(var i= 0, j= req.length; i < j; i++) {
 
+            }
 
             return values;
         }
@@ -90,7 +92,7 @@
 
             }
         }
-    })();
+    })(Step);
 
 
     /**
