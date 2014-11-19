@@ -2,6 +2,25 @@
  * Библиотека создания алгоритмов
  *
  * Тут хранится логика создания, расчета и отображения алгоритма как класса
+ *
+ *
+ * Для связи этого кода с angular нужно сделать спец директиву в которой будет работать $compile
+ * в эту директиву передавать html в котором будет запрограммировано поведение диалога и отображения шагов
+ * внутри директивы компилировать html и подставлять его не странице... Вот как-то так...
+ * как тут
+ * app.directive('exmpl', function($compile) {
+  return {
+    restrict: 'A',
+    controller: function($scope, $compile, $element) {
+      var html = '<input type=text ng-model="abc"><input type="button" value="click me">{{abc}}';
+
+      var link = $compile(html),
+          content = link($scope);
+          $element.append(content);
+
+    }
+  }
+});
  */
 
 (function (global) {
