@@ -47,8 +47,15 @@
      */
     Algorithm.prototype.addStep = function(step) {
         step.scope = this.scope;
+        step.myAlgorithm = this;
         this.steps.push(step);
     };
+
+    /**
+     * Метод для рендеринга контента шага алгоритма
+     * Его реализация находится в файле с директивами
+     */
+    Algorithm.prototype.render = function() {};
 
     /**
      * Метод для запуска обхода шагов алгоритма и обработки каждого из них
@@ -80,6 +87,7 @@
         this.string_view = _string_view;
         this.params = _params;
         this.dialog = _dialog;
+        this.myAlgorithm = null;
     }
 
     /**
@@ -99,13 +107,19 @@
          */
 
         // Проверяем есть ли у шага диалог с пользователем
+        //todo это может не работать))))
         if(this.dialog) {
+            var self = this;
             try {
-
+                this.myAlgorithm.render.apply(this, [this.dialog, function() {
+                    self.calc_params();
+                    self.myAlgorithm.render.apply(self, self.string_view);
+                }]);
             }
         } else {
             // Если диалога нет - сразу считаем параметры и выводим пользователю строку отображения
             this.calc_params();
+            this.myAlgorithm.render.apply(this, [this.string_view]);
         }
     };
 
