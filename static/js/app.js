@@ -3,7 +3,7 @@
  * Файл с директивами, контроллерами и всем остальным...
  */
 
-(function() {
+(function(global) {
 
     // Просто чтобы не засорять код директивы, вынесем таблицу типов размеров сюда
     var dimensionsTypes = {
@@ -398,6 +398,10 @@
         }
     });
 
+    // Мапим алгоритмы на директивы
+
+    var algorithms = global.avaliableAlgorithms;
+
     /**
      * Директива для отображения алгоритмов построения выкроек и диалогов с пользователями в процессе
      * прохождения алгоритма...
@@ -405,10 +409,63 @@
     app.directive('mainView', function($compile) {
         return {
             restrict: 'A',
-            controller: function($scope, $compile) {
+            controller: function($scope) {
+
+                var thisScope = $scope;
+                // todo это конечно все прекрасно, но над этим надо еще подумать!!!
+                function linkToAlgorithms() {
+
+                    $scope.innerHtml = arguments[0];
+
+                    if(arguments.length > 1 && arguments[1] instanceof Function) {
+
+                        var callback = arguments[1];
+
+                        $scope.stepValues = [];
+
+                        $scope.nextStep = function() {
+                            for(var val in $scope.stepValues) {
+                                if($scope.stepValues.hasOwnProperty(val)) {
+                                    $scope.currentAlgorithm.loadValueToScope(val, $scope.stepValues[val]);
+                                }
+
+                                console.log(callback);
+                                callback();
+                            }
+                        };
+                    } else {
+                        $scope.nextStep = function(way) {
+                            $scope.currentAlgorithm.next.call($scope.currentAlgorithm, way);
+                        };
+                    }
+                }
+
+                $scope.setCurrentAlgorithm = function(algorithm) {
+                    // todo БЛЯЯЯЯЯЯЯЯ!!!!! ЭТО ЖОПА, ИСПРАВИТЬ, НАПИСАТЬ НОРМАЛЬНО!!!!!!!!!!
+                    $scope.currentAlgorithm = algorithm;
+                    $scope.currentAlgorithm.clearScope();
+                    $scope.currentAlgorithm.linkToDirecive(linkToAlgorithms);
+
+                    $scope.nextStep = function(way) {
+                        $scope.currentAlgorithm.next.call($scope.currentAlgorithm, way);
+                    };
+
+                    for(var i= 0, j= $scope.dimensions.current.length; i<j; i++) {
+                        var cur_val = $scope.dimensions.current[i];
+                        $scope.currentAlgorithm.loadValueToScope(cur_val.name, cur_val.val);
+                    }
+
+                };
+
+                // Отладка!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                $scope.setCurrentAlgorithm(algorithms[0]);
+                // Отладка!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
             },
             link: function(scope, element) {
+
+                scope.algorithms = algorithms;
+
                 // Переменная innerHtml хранит в себе html код для отображения, ее нужно связать с алгоритмами
                 scope.$watch('innerHtml', function(val) {
                     var linkFunc = $compile(val),
@@ -416,7 +473,9 @@
 
                     element.append(content);
                 });
-            }
+            },
+            template: '<a href="" class="button" ng-click="nextStep()">Назад</a>' +
+                      '<a href="" class="button" ng-click="nextStep(\'forward\')">Вперед</a>'
         }
     });
-})();
+})(this);

@@ -32,34 +32,63 @@
      * Отвечает за весь алгоритм в целом
      * @constructor
      * @param _name {string} имя алгоритма
-     * @param _root_scope {Object} - мост к директиве
+     * @param _container {Object} - мост к директиве
      */
-    function Algorithm(_name, _root_scope) {
+    function Algorithm(_name) {
         this.name = _name;
         this.steps = [];
         this.scope = {};
-        this.root_scope = _root_scope;
     }
+
+    Algorithm.prototype.clearScope = function() {
+        this.scope = {};
+    };
+
+    Algorithm.prototype.loadValueToScope = function(name, val) {
+        this.scope[name] = val;
+    };
+
+    Algorithm.prototype.linkToDirecive = function(linkFunc) {
+        if(!this.linkFunction) {
+            this.linkFunction = linkFunc;
+        }
+    };
 
     /**
      * Метод для добавления шагов в цепочку алгоритма
      * todo ПРИМЕЧАНИЕ!!! Учесть что в цепочку может добавляться как один шаг так и группа шагов
      * todo               есть мысль представить группу как маленький алгоритм...
-     * @param step - {Step || Algorithm} - шаг алгоритма (может быть другим алгоритмом если представлять группу как алгоритм...)
+     * @param _steps - {Step || Algorithm} - шаг алгоритма (может быть другим алгоритмом если представлять группу как алгоритм...)
      */
-    Algorithm.prototype.addStep = function(step) {
-        step.scope = this.scope;
-        step.call_render = (function(context) {
+    Algorithm.prototype.addSteps = function(_steps) {
 
-            //todo проверить правильность подстновки контекста...
+        var steps = (_steps instanceof Array) ? _steps : [_steps],
+            step;
 
-            var self = context;
+        for(var i= 0, j= steps.length; i<j; i++) {
 
-            return function() {
-                self.render.apply(self, arguments);
+            step = steps[i];
+
+            step.myAlgorithm = this;
+
+            // Т.к. step может быть алгоритмом, то ему нужно передать root_scope его алгоритма-содержателя
+            if(step instanceof Algorithm) {
+                step.root_scope = this.root_scope;
             }
-        })(this);
-        this.steps.push(step);
+
+            step.scope = this.scope;
+            step.call_render = (function(context) {
+
+                //todo проверить правильность подстновки контекста...
+
+                var self = context;
+
+                return function() {
+                    self.render.apply(self, arguments);
+                }
+            })(this);
+            this.steps.push(step);
+        }
     };
 
     /**
@@ -67,25 +96,35 @@
      * Его реализация находится в файле с директивами
      */
     Algorithm.prototype.render = function() {
-        console.debug('render еще не реализован');
+        this.linkFunction.apply(null, arguments);
     };
 
     /**
      * Метод для запуска обхода шагов алгоритма и обработки каждого из них
      */
-    Algorithm.prototype.next = (function(context) {
-        var index = 0,
-            steps_length = context.steps.length;
+    Algorithm.prototype.next = (function() {
+        var steps_length, index = -1;
 
-        return function() {
-            if(index < steps_length) {
-                context.steps[index].process();
-                index++;
+        return function(way) {
+
+            steps_length = (!steps_length) ? this.steps.length : steps_length;
+
+            if(way === 'forward') {
+                if(index < steps_length) {
+                    this.steps[++index].process();
+                } else {
+                    throw 'StopIteration';
+                }
             } else {
-                throw 'StopIteration';
+                if(index > 0) {
+                    this.steps[--index].process();
+                } else {
+                    throw 'StopIteration';
+                }
             }
+
         }
-    })(Algorithm);
+    })();
 
     /**
      * Конструктор класса "Пункт алгоритма"
@@ -98,7 +137,7 @@
     function Step(_string_view, _params, _dialog) {
         this.scope = null;
         this.string_view = _string_view;
-        this.params = _params;
+        this.params = (_params instanceof Array) ? _params : [_params];
         this.dialog = _dialog;
         this.myAlgorithm = null;
     }
@@ -124,15 +163,17 @@
         if(this.dialog) {
             var self = this;
             try {
-                this.myAlgorithm.render.apply(this, [this.dialog, function() {
+                this.myAlgorithm.render(this.dialog.html, function() {
                     self.calc_params();
-                    self.myAlgorithm.render.apply(self, self.string_view);
-                }]);
+                    self.myAlgorithm.render(self.string_view);
+                });
+            } catch (e) {
+                console.debug(e);
             }
         } else {
             // Если диалога нет - сразу считаем параметры и выводим пользователю строку отображения
             this.calc_params();
-            this.myAlgorithm.render.apply(this, [this.string_view]);
+            this.myAlgorithm.render(this.string_view);
         }
     };
 
@@ -150,17 +191,21 @@
             c. Вызвать выполнение формулы и сохранить результат в scope под именем _name...
         */
 
-        var scope = context.scope;
-
         /**
          * Функция для выдергивания необходимых параметров из scope'a алгоритма
-         * @param req - {Array} - массив параметров
+         * @param _req - {Array} - массив параметров
          * @return {Array}  - массив значений для указанных параметров
          */
-        function get_requirements(req) {
+        function get_requirements(_req) {
+
+            var req = (_req instanceof Array) ? _req : [_req];
+
+            if(!req) {
+                return [];
+            }
             var values = [];
             for(var i= 0, j= req.length; i < j; i++) {
-                values.push(scope[req]);
+                values.push(this.scope[req]);
             }
             return values;
         }
@@ -169,16 +214,17 @@
             /*
             Обходим список параметров и запускаем расчет для каждого из них
              */
+
             for(var i= 0, params_len= this.params.length; i < params_len; i++) {
                 var param_name = this.params[i].name,
                     calc_function = this.params[i].formula,
-                    requirements = get_requirements(this.params[i].requirements);
+                    requirements = get_requirements.call(this, this.params[i].requirements);
 
                 // Сразу сохраняем результат в scope
                 this.scope[param_name] = calc_function(requirements);
             }
         }
-    })(Step);
+    })(Step.prototype);
 
 
     /**
@@ -208,4 +254,17 @@
         this.values = _values;
     }
 
-})(exports);
+    if(!global) {
+        throw 'There is no global object';
+    }
+
+    if(!global.algorithmApi) {
+        global.algorithmApi = {}
+    }
+
+    global.algorithmApi.Algorithm = Algorithm;
+    global.algorithmApi.Step = Step;
+    global.algorithmApi.Value = Value;
+    global.algorithmApi.Dialog = Dialog;
+
+})(this);
