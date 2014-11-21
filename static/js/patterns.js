@@ -32,11 +32,13 @@
      * Отвечает за весь алгоритм в целом
      * @constructor
      * @param _name {string} имя алгоритма
+     * @param _root_scope {Object} - мост к директиве
      */
-    function Algorithm(_name) {
+    function Algorithm(_name, _root_scope) {
         this.name = _name;
         this.steps = [];
         this.scope = {};
+        this.root_scope = _root_scope;
     }
 
     /**
@@ -47,7 +49,16 @@
      */
     Algorithm.prototype.addStep = function(step) {
         step.scope = this.scope;
-        step.myAlgorithm = this;
+        step.call_render = (function(context) {
+
+            //todo проверить правильность подстновки контекста...
+
+            var self = context;
+
+            return function() {
+                self.render.apply(self, arguments);
+            }
+        })(this);
         this.steps.push(step);
     };
 
@@ -55,7 +66,9 @@
      * Метод для рендеринга контента шага алгоритма
      * Его реализация находится в файле с директивами
      */
-    Algorithm.prototype.render = function() {};
+    Algorithm.prototype.render = function() {
+        console.debug('render еще не реализован');
+    };
 
     /**
      * Метод для запуска обхода шагов алгоритма и обработки каждого из них
