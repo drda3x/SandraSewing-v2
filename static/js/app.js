@@ -416,22 +416,20 @@
                 function linkToAlgorithms() {
 
                     $scope.innerHtml = arguments[0];
-
+                    console.log(arguments[1] instanceof Function);
                     if(arguments.length > 1 && arguments[1] instanceof Function) {
 
                         var callback = arguments[1];
 
-                        $scope.stepValues = [];
+                        $scope.stepValues = {};
 
                         $scope.nextStep = function() {
                             for(var val in $scope.stepValues) {
                                 if($scope.stepValues.hasOwnProperty(val)) {
                                     $scope.currentAlgorithm.loadValueToScope(val, $scope.stepValues[val]);
                                 }
-
-                                console.log(callback);
-                                callback();
                             }
+                            callback();
                         };
                     } else {
                         $scope.nextStep = function(way) {

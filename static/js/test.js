@@ -4,13 +4,13 @@
 (function(api) {
 
     // Создаем тестовый алгоритм
-    var testAlg = new api.Algorithm();
+    var testAlg = new api.Algorithm('HAAALK');
 
 
     // Создаем тестовое значение для расчета
-    var testValue = new api.Value('val_1', null, function() {
+    var testValue = new api.Value('val_1', 'inp_1', function() {
 
-        return 1 + 1;
+        return arguments[0] + 1;
 
     });
 
@@ -18,7 +18,7 @@
             '<div>Я результат шага 1</div>',
             testValue,
             new api.Dialog(
-                '<div>Я диалог шага 1</div>',
+                '<div>Введите значения <input type="text" ng-model="stepValues[\'inp_1\']"></div>',
                 []
             )
         ),

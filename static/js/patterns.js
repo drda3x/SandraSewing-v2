@@ -77,16 +77,12 @@
             }
 
             step.scope = this.scope;
-            step.call_render = (function(context) {
 
-                //todo проверить правильность подстновки контекста...
+            var self = this;
 
-                var self = context;
-
-                return function() {
+            step.call_render = function() {
                     self.render.apply(self, arguments);
-                }
-            })(this);
+            };
             this.steps.push(step);
         }
     };
@@ -180,7 +176,7 @@
     /**
      * Метод для расчета знчений массива параметров
      */
-    Step.prototype.calc_params = (function(context) {
+    Step.prototype.calc_params = (function() {
         /*
         Пока что это самая сложная функция во всей программе.
         Тут нужно:
@@ -214,7 +210,6 @@
             /*
             Обходим список параметров и запускаем расчет для каждого из них
              */
-
             for(var i= 0, params_len= this.params.length; i < params_len; i++) {
                 var param_name = this.params[i].name,
                     calc_function = this.params[i].formula,
@@ -224,7 +219,7 @@
                 this.scope[param_name] = calc_function(requirements);
             }
         }
-    })(Step.prototype);
+    })();
 
 
     /**
