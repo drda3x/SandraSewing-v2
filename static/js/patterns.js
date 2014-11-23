@@ -101,7 +101,7 @@
      * Метод для запуска обхода шагов алгоритма и обработки каждого из них
      */
     Algorithm.prototype.next = (function() {
-        var steps_length, canChange = false, index = 0;
+        var steps_length, index = -1;
 
         return function(way) {
 
@@ -109,19 +109,13 @@
 
             if(way === 'forward') {
                 if(index < steps_length - 1) {
-                    if(canChange) {
-                        index++;
-                    }
-                    canChange = this.steps[index].process(way);
+                    this.steps[++index].process();
                 } else {
                     throw 'StopIteration';
                 }
             } else {
                 if(index >= 0) {
-                    if(canChange && index > 0) {
-                        index--;
-                    }
-                    canChange = this.steps[index].process() && index > 0;
+                    this.steps[--index].process();
                 } else {
                     throw 'StopIteration';
                 }
@@ -137,21 +131,11 @@
      * @param _params {Array} список расчетных значений
      * @param _dialog {Object} список действий пользователя перед выполнением шага
      */
-    function Step(_string_view, _params, _dialog) {
+    function Step(_string_view, _params) {
         this.scope = null;
         this.string_view = _string_view;
-        this.params = (_params instanceof Array) ? _params : [_params];
-        this.dialog = _dialog;
+        this.params = (_params instanceof Array) ? _params : (_params !== undefined) ? [_params] : undefined;
         this.myAlgorithm = null;
-
-        if(this.dialog) {
-            this.queue = {
-                elems: [this.dialog, this.string_view],
-                index: null
-            };
-        } else {
-            this.queue = null;
-        }
     }
 
     /**
@@ -159,72 +143,10 @@
      * Последовательногго вызова: диалога, расчетов и отображения результата
      */
     Step.prototype.process = function(way) {
-        /*
-        Сил думать прямо в коде сейчас нет, да и не очень это хорошо, а еще я в электричке,
-        по этому пока просто подумаю как это должно работать...
-
-        1. Нужно вызвать диалог шага с пользователем, получить от него информацию и где-то ее сохранить
-        2. Нужно вызвать расчет параметра и эту величину тоже сохранить
-        3. Нужно вызвать отображение на экране
-
-        Мне понадибится интерфейс для общения с пользователем и интерфейс показа информации пользователю
-         */
-
-        // Проверяем есть ли у шага диалог с пользователем
-        //todo это может не работать)))
-        var queue = this.queue;
-
-        if(queue) {
-            if(way == 'forward') {
-                queue.index = (queue.index) ? queue.index : 0;
-
-                if(queue.index == queue.length - 1) {
-                    this.calc_params();
-                }
-
-                this.myAlgorithm.render(this.__map(queue.elems[queue.index]));
-
-                if(queue.index == queue.elems.length - 1) {
-                    return true;
-                } else {
-                    queue.index++;
-                    return false;
-                }
-            } else {
-
-                queue.index = (!(queue.index)) ? queue.index : queue.elems.length - 1;
-
-                this.myAlgorithm.render(this.__map(queue.elems[queue.index]));
-
-                if(queue.index == 0) {
-                    return true;
-                } else {
-                    queue.index -= 1;
-                    return false;
-                }
-            }
-
-        } else {
-            // Если диалога нет - сразу считаем параметры и выводим пользователю строку отображения
+        if(this.params !== undefined) {
             this.calc_params();
-            this.myAlgorithm.render(this.__map(this.string_view));
-            return true;
         }
-        /*
-        if(this.dialog) {
-            var self = this;
-            try {
-                this.myAlgorithm.render(this.dialog.html, function() {
-                    self.calc_params();
-                    self.myAlgorithm.render(self.__map());
-                });
-            } catch (e) {
-                console.debug(e);
-            }
-        } else {
-
-        }
-        */
+        this.myAlgorithm.render(this.__map(this.string_view));
     };
 
     /**
@@ -324,6 +246,10 @@
         this.html = _html;
         this.values = _values;
     }
+
+    Dialog.prototype.toString = function() {
+        return this.html;
+    };
 
     if(!global) {
         throw 'There is no global object';

@@ -415,25 +415,19 @@
                 function linkToAlgorithms() {
 
                     $scope.innerHtml = arguments[0];
-                    if(arguments.length > 1 && arguments[1] instanceof Function) {
 
-                        var callback = arguments[1];
+                    $scope.stepValues = {};
 
-                        $scope.stepValues = {};
+                    $scope.nextStep = function(way) {
 
-                        $scope.nextStep = function() {
-                            for(var val in $scope.stepValues) {
-                                if($scope.stepValues.hasOwnProperty(val)) {
-                                    $scope.currentAlgorithm.loadValueToScope(val, $scope.stepValues[val]);
-                                }
+                        for(var val in $scope.stepValues) {
+                            if($scope.stepValues.hasOwnProperty(val)) {
+                                $scope.currentAlgorithm.loadValueToScope(val, $scope.stepValues[val]);
                             }
-                            callback();
-                        };
-                    } else {
-                        $scope.nextStep = function(way) {
-                            $scope.currentAlgorithm.next.call($scope.currentAlgorithm, way);
-                        };
-                    }
+                        }
+
+                        $scope.currentAlgorithm.next.call($scope.currentAlgorithm, way);
+                    };
                 }
 
                 $scope.setCurrentAlgorithm = function(algorithm) {
@@ -476,9 +470,11 @@
                     container.append(content);
                 });
             },
-            template: '<div></div>' +
-                      '<a href="" class="button" ng-click="prevStep()">Назад</a>' +
-                      '<a href="" class="button" ng-click="nextStep(\'forward\')">Вперед</a>'
+            template: '<div id="viewContainer"></div>' +
+                      '<span class="alg_buttons">' +
+                          '<a href="" class="button" ng-click="prevStep()">Назад</a>' +
+                          '<a href="" class="button" ng-click="nextStep(\'forward\')">Вперед</a>' +
+                      '</span>'
         }
     });
 })(this);

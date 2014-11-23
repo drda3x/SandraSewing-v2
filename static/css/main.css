@@ -88,8 +88,8 @@ ul {
 
 .button {
     border: 2px solid;
-    margin: 4px 13px;
-    padding: 4px 7px;
+    margin: 4px 15px;
+    padding: 4px 10px;
 }
 
 .button:hover {
@@ -127,9 +127,9 @@ ul {
     display: inline-block;
     height: 333px;
     margin: 15px 0px;
+    overflow-y: scroll;
     vertical-align: top;
     width: 510px;
-    overflow-y: scroll;
 }
 
 #age_types {
@@ -337,4 +337,23 @@ ul {
     top: 3px;
     transform: rotate(45deg);
     width: 14px;
+}
+
+#mainView {
+    height: 400px;
+    margin: 3px 110px;
+    padding: 10px 50px;
+}
+
+#viewContainer {
+    height: inherit;
+}
+
+.alg_buttons {
+    height: 35px;
+    margin: 0px 50px;
+}
+
+.alg_buttons a {
+    margin: 0 117px;
 }
