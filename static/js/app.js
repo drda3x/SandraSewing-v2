@@ -378,7 +378,6 @@
                     for(var i= 0, j= arr.length; i<j; i++) {
                         $scope.dim_names[arr[i].name] = arr[i].label;
                     }
-                    console.log($scope.dimensions.current.values.length);
                 });
             },
             template:
@@ -416,7 +415,6 @@
                 function linkToAlgorithms() {
 
                     $scope.innerHtml = arguments[0];
-                    console.log(arguments[1] instanceof Function);
                     if(arguments.length > 1 && arguments[1] instanceof Function) {
 
                         var callback = arguments[1];
@@ -444,6 +442,10 @@
                     $scope.currentAlgorithm.clearScope();
                     $scope.currentAlgorithm.linkToDirecive(linkToAlgorithms);
 
+                    $scope.prevStep = function() {
+                        $scope.currentAlgorithm.next.call($scope.currentAlgorithm);
+                    };
+
                     $scope.nextStep = function(way) {
                         $scope.currentAlgorithm.next.call($scope.currentAlgorithm, way);
                     };
@@ -462,17 +464,20 @@
             },
             link: function(scope, element) {
 
+                var container = element.find('div');
+
                 scope.algorithms = algorithms;
 
                 // Переменная innerHtml хранит в себе html код для отображения, ее нужно связать с алгоритмами
                 scope.$watch('innerHtml', function(val) {
                     var linkFunc = $compile(val),
                         content = linkFunc(scope);
-
-                    element.append(content);
+                    container.empty();
+                    container.append(content);
                 });
             },
-            template: '<a href="" class="button" ng-click="nextStep()">Назад</a>' +
+            template: '<div></div>' +
+                      '<a href="" class="button" ng-click="prevStep()">Назад</a>' +
                       '<a href="" class="button" ng-click="nextStep(\'forward\')">Вперед</a>'
         }
     });

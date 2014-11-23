@@ -41,11 +41,13 @@
     }
 
     Algorithm.prototype.clearScope = function() {
-        this.scope = {};
+        for(var i in this.scope) {
+            delete this.scope[i];
+        }
     };
 
     Algorithm.prototype.loadValueToScope = function(name, val) {
-        this.scope[name] = val;
+        this.scope[name] = parseInt(val);
     };
 
     Algorithm.prototype.linkToDirecive = function(linkFunc) {
@@ -99,26 +101,31 @@
      * Метод для запуска обхода шагов алгоритма и обработки каждого из них
      */
     Algorithm.prototype.next = (function() {
-        var steps_length, index = -1;
+        var steps_length, canChange = false, index = 0;
 
         return function(way) {
 
             steps_length = (!steps_length) ? this.steps.length : steps_length;
 
             if(way === 'forward') {
-                if(index < steps_length) {
-                    this.steps[++index].process();
+                if(index < steps_length - 1) {
+                    if(canChange) {
+                        index++;
+                    }
+                    canChange = this.steps[index].process(way);
                 } else {
                     throw 'StopIteration';
                 }
             } else {
-                if(index > 0) {
-                    this.steps[--index].process();
+                if(index >= 0) {
+                    if(canChange && index > 0) {
+                        index--;
+                    }
+                    canChange = this.steps[index].process() && index > 0;
                 } else {
                     throw 'StopIteration';
                 }
             }
-
         }
     })();
 
@@ -136,13 +143,22 @@
         this.params = (_params instanceof Array) ? _params : [_params];
         this.dialog = _dialog;
         this.myAlgorithm = null;
+
+        if(this.dialog) {
+            this.queue = {
+                elems: [this.dialog, this.string_view],
+                index: null
+            };
+        } else {
+            this.queue = null;
+        }
     }
 
     /**
      * Метод для обработки шага
      * Последовательногго вызова: диалога, расчетов и отображения результата
      */
-    Step.prototype.process = function() {
+    Step.prototype.process = function(way) {
         /*
         Сил думать прямо в коде сейчас нет, да и не очень это хорошо, а еще я в электричке,
         по этому пока просто подумаю как это должно работать...
@@ -155,22 +171,82 @@
          */
 
         // Проверяем есть ли у шага диалог с пользователем
-        //todo это может не работать))))
+        //todo это может не работать)))
+        var queue = this.queue;
+
+        if(queue) {
+            if(way == 'forward') {
+                queue.index = (queue.index) ? queue.index : 0;
+
+                if(queue.index == queue.length - 1) {
+                    this.calc_params();
+                }
+
+                this.myAlgorithm.render(this.__map(queue.elems[queue.index]));
+
+                if(queue.index == queue.elems.length - 1) {
+                    return true;
+                } else {
+                    queue.index++;
+                    return false;
+                }
+            } else {
+
+                queue.index = (!(queue.index)) ? queue.index : queue.elems.length - 1;
+
+                this.myAlgorithm.render(this.__map(queue.elems[queue.index]));
+
+                if(queue.index == 0) {
+                    return true;
+                } else {
+                    queue.index -= 1;
+                    return false;
+                }
+            }
+
+        } else {
+            // Если диалога нет - сразу считаем параметры и выводим пользователю строку отображения
+            this.calc_params();
+            this.myAlgorithm.render(this.__map(this.string_view));
+            return true;
+        }
+        /*
         if(this.dialog) {
             var self = this;
             try {
                 this.myAlgorithm.render(this.dialog.html, function() {
                     self.calc_params();
-                    self.myAlgorithm.render(self.string_view);
+                    self.myAlgorithm.render(self.__map());
                 });
             } catch (e) {
                 console.debug(e);
             }
         } else {
-            // Если диалога нет - сразу считаем параметры и выводим пользователю строку отображения
-            this.calc_params();
-            this.myAlgorithm.render(this.string_view);
+
         }
+        */
+    };
+
+    /**
+     * Метод для подстановки числовых параметров в строки-отображалки
+     * @private
+     */
+    Step.prototype.__map = function(mapObj) {
+        var buffer = mapObj.split(/<<|>>/);
+
+        if(buffer.length > 1) {
+            for(var i= 0, j= buffer.length; i<j; i++) {
+                if(this.scope.hasOwnProperty(buffer[i])) {
+                    buffer[i] = this.scope[buffer[i]];
+                }
+            }
+
+            return buffer.join('');
+
+        } else {
+            return mapObj;
+        }
+
     };
 
     /**
