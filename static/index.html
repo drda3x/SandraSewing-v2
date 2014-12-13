@@ -8,7 +8,6 @@
     <script type="text/javascript" src="./js/angular.min.js"></script>
     <script type="text/javascript" src="./js/angular.touch.min.js"></script>
     <script type="text/javascript" src="./js/patterns.js"></script>
-    <script type="text/javascript" src="./js/test.js"></script>
     <script type="text/javascript" src="./js/app.js"></script>
     <style type="text/css">
         /*.hidden {display: none}*/
@@ -27,13 +26,19 @@
                 <select-dimension dimensions="dimensions" ng-show="showSubScreen=='select'"></select-dimension>
             </div>
         </span>
-        <!--div id="products">
+        <div id="products">
             <a href="" class="product">Брюки</a>
             <a href="" class="product">Юбка</a>
             <a href="" class="product">Платье</a>
             <a href="" class="product">Рубашка</a>
         </div>
-        <ul id="alg_steps">
+
+        <panes>
+            <panes-step>123</panes-step>
+            <panes-step>456</panes-step>
+            <panes-step>789</panes-step>
+        </panes>
+        <!--ul id="alg_steps">
             <li class="step"><input type="radio" name="steps" value="1"/> Шаг 1</li>
             <li class="step"><input type="radio" name="steps" value="2"/> Шаг 2</li>
             <li class="step"><input type="radio" name="steps" value="3"/> Шаг 3</li>

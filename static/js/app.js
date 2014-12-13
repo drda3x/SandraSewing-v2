@@ -397,84 +397,47 @@
         }
     });
 
-    // Мапим алгоритмы на директивы
-
-    var algorithms = global.avaliableAlgorithms;
-
-    /**
-     * Директива для отображения алгоритмов построения выкроек и диалогов с пользователями в процессе
-     * прохождения алгоритма...
-     */
-    app.directive('mainView', function($compile) {
+    app.directive('panes', function() {
         return {
-            restrict: 'A',
-            controller: function($scope) {
+            restrict: 'E',
+            scope: {},
+            transclude: true,
+            controller: function($scope, $element) {
+                $scope.steps = [];
 
-                var thisScope = $scope;
-                // todo это конечно все прекрасно, но над этим надо еще подумать!!!
-                function linkToAlgorithms() {
-
-                    $scope.innerHtml = arguments[0];
-
-                    $scope.stepValues = {};
-
-                    $scope.nextStep = function(way) {
-
-                        for(var val in $scope.stepValues) {
-                            if($scope.stepValues.hasOwnProperty(val)) {
-                                $scope.currentAlgorithm.loadValueToScope(val, $scope.stepValues[val]);
-                            }
-                        }
-
-                        $scope.currentAlgorithm.next.call($scope.currentAlgorithm, way);
-                    };
-                }
-
-                $scope.setCurrentAlgorithm = function(algorithm) {
-                    // todo БЛЯЯЯЯЯЯЯЯ!!!!! ЭТО ЖОПА, ИСПРАВИТЬ, НАПИСАТЬ НОРМАЛЬНО!!!!!!!!!!
-                    $scope.currentAlgorithm = algorithm;
-                    $scope.currentAlgorithm.clearScope();
-                    $scope.currentAlgorithm.linkToDirecive(linkToAlgorithms);
-
-                    $scope.prevStep = function() {
-                        $scope.currentAlgorithm.next.call($scope.currentAlgorithm);
-                    };
-
-                    $scope.nextStep = function(way) {
-                        $scope.currentAlgorithm.next.call($scope.currentAlgorithm, way);
-                    };
-
-                    for(var i= 0, j= $scope.dimensions.current.length; i<j; i++) {
-                        var cur_val = $scope.dimensions.current[i];
-                        $scope.currentAlgorithm.loadValueToScope(cur_val.name, cur_val.val);
-                    }
-
+                this.addStep = function(step) {
+                    $scope.steps.push(step);
                 };
 
-                // Отладка!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                $scope.setCurrentAlgorithm(algorithms[0]);
-                // Отладка!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                var curStep = 0;
+                $scope.nextStep = function() {
+                    angular.forEach(steps, function(step) {
+                        step.selected = false;
+                    });
 
+                    try{
+                        $scope.steps[++curStep].selected = true;
+                    } catch(e) {
+
+                    }
+
+                }
             },
-            link: function(scope, element) {
-
-                var container = element.find('div');
-
-                scope.algorithms = algorithms;
-
-                // Переменная innerHtml хранит в себе html код для отображения, ее нужно связать с алгоритмами
-                scope.$watch('innerHtml', function(val) {
-                    var linkFunc = $compile(val),
-                        content = linkFunc(scope);
-                    container.empty();
-                    container.append(content);
-                });
-            },
-            template: '<div id="viewContainer"></div>' +
-                      '<span class="alg_buttons">' +
-                          '<a href="" class="button" ng-click="prevStep()">Назад</a>' +
-                          '<a href="" class="button" ng-click="nextStep(\'forward\')">Вперед</a>' +
-                      '</span>'
+            template: '<div ng-transclude></div>' +
+                '<div ng-click="nextStep()">rrrr</div>'
         }
     });
+
+    app.directive('panesStep', function() {
+        return {
+            restrict: 'E',
+            require: '^panes',
+            transclude: true,
+            link: function(scope, element, attrs, panesCtrl) {
+                panesCtrl.addStep(scope);
+            },
+            template: '<div ng-class="{active: selected}" ng-transclude></div>'
+        }
+    });
+
 })(this);
