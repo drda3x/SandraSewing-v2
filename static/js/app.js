@@ -406,19 +406,27 @@
                 $scope.steps = [];
 
                 this.addStep = function(step) {
+
+                    if($scope.steps.length == 0) {
+                        step.selected = true;
+                    } else {
+                        step.selected = false;
+                    }
+
                     $scope.steps.push(step);
                 };
 
                 var curStep = 0;
                 $scope.nextStep = function() {
-                    angular.forEach(steps, function(step) {
-                        step.selected = false;
-                    });
+
+                    for(var i= 0, j= $scope.steps.length; i<j; i++) {
+                        $scope.steps[i].selected = false;
+                    }
 
                     try{
-                        $scope.steps[++curStep].selected = true;
+                        $scope.steps[(curStep += 1)].selected = true;
                     } catch(e) {
-
+                        console.debug(e);
                     }
 
                 }
@@ -433,10 +441,13 @@
             restrict: 'E',
             require: '^panes',
             transclude: true,
+            controller: function($scope) {
+                //$scope.selected = false;
+            },
             link: function(scope, element, attrs, panesCtrl) {
                 panesCtrl.addStep(scope);
             },
-            template: '<div ng-class="{active: selected}" ng-transclude></div>'
+            template: '<div ng-show="{{selected}}" ng-transclude></div>'
         }
     });
 
