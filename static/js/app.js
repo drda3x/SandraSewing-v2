@@ -397,57 +397,130 @@
         }
     });
 
-    app.directive('panes', function() {
+    app.directive('products', function() {
         return {
             restrict: 'E',
-            scope: {},
             transclude: true,
             controller: function($scope, $element) {
-                $scope.steps = [];
+
+                var curStep = 1,
+                    stepsCount = 0,
+                    steps = [],
+                    notEnd = true;
 
                 this.addStep = function(step) {
-
-                    if($scope.steps.length == 0) {
-                        step.selected = true;
-                    } else {
-                        step.selected = false;
-                    }
-
-                    $scope.steps.push(step);
+                    steps.push(step);
                 };
 
-                var curStep = 0;
+                this.canShow = function(index) {
+                    return index == curStep;
+                };
+
+                this.checkEnd = function() {
+                    return !(notEnd)
+                };
+
+                this.stepsCounter = function(index) {
+                    if(steps[stepsCount] && index != steps[stepsCount].index) {
+                        stepsCount++;
+                    }
+                };
+
+                $scope.specialButtons = [];
+
+                function setSpecialButtons() {
+                    if(steps[curStep].special != undefined) {
+                        if(steps[curStep].special.hasOwnProperty('buttons')) {
+                            $scope.specialButtons = steps[curStep].special.buttons;
+                        }
+                    } else {
+                        $scope.specialButtons = []
+                    }
+                };
+
                 $scope.nextStep = function() {
+                    setSpecialButtons();
+                    curStep++;
+                };
 
-                    for(var i= 0, j= $scope.steps.length; i<j; i++) {
-                        $scope.steps[i].selected = false;
+                $scope.endOfAlgorithm = function() {
+                    notEnd = false;
+                };
+
+                $scope.prevStep = function() {
+                    curStep--;
+                    setSpecialButtons();
+                    notEnd = true;
+                };
+
+                $scope.$watch('selectedProd', function() {
+                    curStep = 1;
+                });
+
+                $scope.showMe = function(who) {
+                    console.log(who);
+                    if(who == 'prev') {
+                        return curStep > 1;
+                    } else if(who == 'next') {
+                        return curStep < stepsCount && $scope.specialButtons.length == 0 && notEnd;
+                    } else if(who == 'yes' || who == 'no') {
+                        return $scope.specialButtons.length > 0
+                    }
+                };
+
+                $scope.calkParams = {};
+
+                function resetCalkParams() {
+                    var temp = {};
+
+                    for(var i= 0, j= $scope.dimensions.current.values.length; i<j; i++) {
+                        temp[$scope.dimensions.current.values[i].name] = $scope.dimensions.current.values[i].value;
                     }
 
-                    try{
-                        $scope.steps[(curStep += 1)].selected = true;
-                    } catch(e) {
-                        console.debug(e);
-                    }
-
+                    $scope.calkParams = temp;
                 }
+
+                resetCalkParams();
+
+                $scope.$watch('dimensions.current.name', function() {
+                    resetCalkParams()
+                });
             },
-            template: '<div ng-transclude></div>' +
-                '<div ng-click="nextStep()">rrrr</div>'
+            template: '<div id="center" ng-transclude></div>' +
+                '<div>' +
+                    '<a href="" ng-show="showMe(\'prev\')" ng-click="prevStep()" class="button">Назад</a>' +
+                    '<a href="" ng-show="showMe(\'next\')" ng-click="nextStep()" class="button">Вперед</a>' +
+                    '<a href="" ng-show="showMe(\'yes\')" ng-click="nextStep()" class="button">Да</a>' +
+                    '<a href="" ng-show="showMe(\'no\')" ng-click="nextStep(); endOfAlgorithm()" class="button">Нет</a>' +
+                '</div>'
         }
     });
 
     app.directive('panesStep', function() {
         return {
             restrict: 'E',
-            require: '^panes',
-            transclude: true,
-            controller: function($scope) {
-                //$scope.selected = false;
+            require: '^products',
+            scope: {
+                index: '=',
+                special: '=',
+                end: '='
             },
-            link: function(scope, element, attrs, panesCtrl) {
+            transclude: true,
+            link: function(scope, element, attr, panesCtrl) {
+                scope.canShow = panesCtrl.canShow;
+                scope.checkEnd = panesCtrl.checkEnd;
+                panesCtrl.stepsCounter(scope.index);
                 panesCtrl.addStep(scope);
             },
-            template: '<div ng-show="{{selected}}" ng-transclude></div>'
+            controller: function($scope) {
+                $scope.onEnd = function() {
+                    if($scope.end != undefined) {
+                        return $scope.checkEnd() == $scope.end;
+                    }
+                    return true;
+                }
+            },
+            template: '<div ng-show="canShow({{index}}) && onEnd()" ng-transclude></div>'
         }
     });
 

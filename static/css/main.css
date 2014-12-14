@@ -21,7 +21,7 @@ a:hover {
 }
 
 ul {
-    list-style: none outside none;
+    list-style: outside none none;
 }
 
 #screen_saver {
@@ -93,6 +93,10 @@ ul {
 }
 
 .button:hover {
+    background-color: #dddddd;
+}
+
+.active {
     background-color: #dddddd;
 }
 
@@ -355,5 +359,13 @@ ul {
 }
 
 .alg_buttons a {
-    margin: 0 117px;
+    margin: 0px 117px;
+}
+
+#center {
+    height: 370px;
+    position: relative;
+    right: 33px;
+    width: 500px;
+    padding-top: 30px;
 }
