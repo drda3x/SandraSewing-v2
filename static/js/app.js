@@ -397,84 +397,131 @@
         }
     });
 
-    // Мапим алгоритмы на директивы
-
-    var algorithms = global.avaliableAlgorithms;
-
-    /**
-     * Директива для отображения алгоритмов построения выкроек и диалогов с пользователями в процессе
-     * прохождения алгоритма...
-     */
-    app.directive('mainView', function($compile) {
+    app.directive('products', function() {
         return {
-            restrict: 'A',
-            controller: function($scope) {
+            restrict: 'E',
+            transclude: true,
+            controller: function($scope, $element) {
 
-                var thisScope = $scope;
-                // todo это конечно все прекрасно, но над этим надо еще подумать!!!
-                function linkToAlgorithms() {
+                var curStep = 1,
+                    stepsCount = 0,
+                    steps = [],
+                    notEnd = true;
 
-                    $scope.innerHtml = arguments[0];
-
-                    $scope.stepValues = {};
-
-                    $scope.nextStep = function(way) {
-
-                        for(var val in $scope.stepValues) {
-                            if($scope.stepValues.hasOwnProperty(val)) {
-                                $scope.currentAlgorithm.loadValueToScope(val, $scope.stepValues[val]);
-                            }
-                        }
-
-                        $scope.currentAlgorithm.next.call($scope.currentAlgorithm, way);
-                    };
-                }
-
-                $scope.setCurrentAlgorithm = function(algorithm) {
-                    // todo БЛЯЯЯЯЯЯЯЯ!!!!! ЭТО ЖОПА, ИСПРАВИТЬ, НАПИСАТЬ НОРМАЛЬНО!!!!!!!!!!
-                    $scope.currentAlgorithm = algorithm;
-                    $scope.currentAlgorithm.clearScope();
-                    $scope.currentAlgorithm.linkToDirecive(linkToAlgorithms);
-
-                    $scope.prevStep = function() {
-                        $scope.currentAlgorithm.next.call($scope.currentAlgorithm);
-                    };
-
-                    $scope.nextStep = function(way) {
-                        $scope.currentAlgorithm.next.call($scope.currentAlgorithm, way);
-                    };
-
-                    for(var i= 0, j= $scope.dimensions.current.length; i<j; i++) {
-                        var cur_val = $scope.dimensions.current[i];
-                        $scope.currentAlgorithm.loadValueToScope(cur_val.name, cur_val.val);
-                    }
-
+                this.addStep = function(step) {
+                    steps.push(step);
                 };
 
-                // Отладка!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                $scope.setCurrentAlgorithm(algorithms[0]);
-                // Отладка!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                this.canShow = function(index) {
+                    return index == curStep;
+                };
 
-            },
-            link: function(scope, element) {
+                this.checkEnd = function() {
+                    return !(notEnd)
+                };
 
-                var container = element.find('div');
+                this.stepsCounter = function(index) {
+                    if(steps[stepsCount] && index != steps[stepsCount].index) {
+                        stepsCount++;
+                    }
+                };
 
-                scope.algorithms = algorithms;
+                $scope.specialButtons = [];
 
-                // Переменная innerHtml хранит в себе html код для отображения, ее нужно связать с алгоритмами
-                scope.$watch('innerHtml', function(val) {
-                    var linkFunc = $compile(val),
-                        content = linkFunc(scope);
-                    container.empty();
-                    container.append(content);
+                function setSpecialButtons() {
+                    if(steps[curStep].special != undefined) {
+                        if(steps[curStep].special.hasOwnProperty('buttons')) {
+                            $scope.specialButtons = steps[curStep].special.buttons;
+                        }
+                    } else {
+                        $scope.specialButtons = []
+                    }
+                };
+
+                $scope.nextStep = function() {
+                    setSpecialButtons();
+                    curStep++;
+                };
+
+                $scope.endOfAlgorithm = function() {
+                    notEnd = false;
+                };
+
+                $scope.prevStep = function() {
+                    curStep--;
+                    setSpecialButtons();
+                    notEnd = true;
+                };
+
+                $scope.$watch('selectedProd', function() {
+                    curStep = 1;
+                });
+
+                $scope.showMe = function(who) {
+                    console.log(who);
+                    if(who == 'prev') {
+                        return curStep > 1;
+                    } else if(who == 'next') {
+                        return curStep < stepsCount && $scope.specialButtons.length == 0 && notEnd;
+                    } else if(who == 'yes' || who == 'no') {
+                        return $scope.specialButtons.length > 0
+                    }
+                };
+
+                $scope.calkParams = {};
+
+                function resetCalkParams() {
+                    var temp = {};
+
+                    for(var i= 0, j= $scope.dimensions.current.values.length; i<j; i++) {
+                        temp[$scope.dimensions.current.values[i].name] = $scope.dimensions.current.values[i].value;
+                    }
+
+                    $scope.calkParams = temp;
+                }
+
+                resetCalkParams();
+
+                $scope.$watch('dimensions.current.name', function() {
+                    resetCalkParams()
                 });
             },
-            template: '<div id="viewContainer"></div>' +
-                      '<span class="alg_buttons">' +
-                          '<a href="" class="button" ng-click="prevStep()">Назад</a>' +
-                          '<a href="" class="button" ng-click="nextStep(\'forward\')">Вперед</a>' +
-                      '</span>'
+            template: '<div id="center" ng-transclude></div>' +
+                '<div>' +
+                    '<a href="" ng-show="showMe(\'prev\')" ng-click="prevStep()" class="button">Назад</a>' +
+                    '<a href="" ng-show="showMe(\'next\')" ng-click="nextStep()" class="button">Вперед</a>' +
+                    '<a href="" ng-show="showMe(\'yes\')" ng-click="nextStep()" class="button">Да</a>' +
+                    '<a href="" ng-show="showMe(\'no\')" ng-click="nextStep(); endOfAlgorithm()" class="button">Нет</a>' +
+                '</div>'
         }
     });
+
+    app.directive('panesStep', function() {
+        return {
+            restrict: 'E',
+            require: '^products',
+            scope: {
+                index: '=',
+                special: '=',
+                end: '='
+            },
+            transclude: true,
+            link: function(scope, element, attr, panesCtrl) {
+                scope.canShow = panesCtrl.canShow;
+                scope.checkEnd = panesCtrl.checkEnd;
+                panesCtrl.stepsCounter(scope.index);
+                panesCtrl.addStep(scope);
+            },
+            controller: function($scope) {
+                $scope.onEnd = function() {
+                    if($scope.end != undefined) {
+                        return $scope.checkEnd() == $scope.end;
+                    }
+                    return true;
+                }
+            },
+            template: '<div ng-show="canShow({{index}}) && onEnd()" ng-transclude></div>'
+        }
+    });
+
 })(this);

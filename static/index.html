@@ -8,7 +8,6 @@
     <script type="text/javascript" src="./js/angular.min.js"></script>
     <script type="text/javascript" src="./js/angular.touch.min.js"></script>
     <script type="text/javascript" src="./js/patterns.js"></script>
-    <script type="text/javascript" src="./js/test.js"></script>
     <script type="text/javascript" src="./js/app.js"></script>
     <style type="text/css">
         /*.hidden {display: none}*/
@@ -27,13 +26,60 @@
                 <select-dimension dimensions="dimensions" ng-show="showSubScreen=='select'"></select-dimension>
             </div>
         </span>
-        <!--div id="products">
-            <a href="" class="product">Брюки</a>
-            <a href="" class="product">Юбка</a>
-            <a href="" class="product">Платье</a>
-            <a href="" class="product">Рубашка</a>
+        <div id="products">
+            <a href="" class="product" ng-click="(selectedProd = 'panes')" ng-class="{active:(selectedProd == 'panes')}">Брюки</a>
+            <a href="" class="product" ng-click="(selectedProd = 'skirt')" ng-class="{active:(selectedProd == 'skirt')}">Юбка</a>
+            <a href="" class="product" ng-click="(selectedProd = 'dress')" ng-class="{active:(selectedProd == 'dress')}">Платье</a>
+            <a href="" class="product" ng-click="(selectedProd = 'shirt')" ng-class="{active:(selectedProd == 'shirt')}">Рубашка</a>
+
+            <!--Выкройка брюк-->
+            <products ng-show="(selectedProd == 'panes')">
+                <panes-step index="1" ng-model="calkParams.abc">
+                    Выберите величину Х<br>
+                    <select ng-model="calkParams.x" ng-options="item.oValue as item.oLabel for item in
+                        [
+                            {oLabel: 'X', oValue: {{calkParams.pob/10}} },
+                            {oLabel: '2X', oValue: {{11*calkParams.pob/100}} },
+                            {oLabel: '3X', oValue: {{23*calkParams.pob/200}} }
+                        ]">
+                    </select>
+                </panes-step>
+                <panes-step index="2">
+                    Проведите вертикальную линию высотой <span ng-if="dimensions.current.type == 'man'">{{calkParams.pob / 2 + 1}}</span><span ng-if="dimensions.current.type == 'woman'">{{calkParams.pob / 2-1}}</span>
+                </panes-step>
+                <panes-step index="3">
+                    Укажите высоту ТБ
+                    <select ng-model="calkParams.tb" ng-options="item for item in [17, 18, 19, 20]"></select>
+                </panes-step>
+                <panes-step index="4"><h3>Прямая ТБ</h3>Из точки Т проведите вниз {{calkParams.tb}}</panes-step>
+                <panes-step index="5"><h3>Точка Я1</h3>От точки Я отложите влево {{3*calkParams.x}}</panes-step>
+                <panes-step index="6"><h3>Точка Т1</h3>От точки Т отложите влево {{3*calkParams.x}}</panes-step>
+                <panes-step index="7">Соедините прямоугольник Т-Т1-Я1-Я</panes-step>
+                <panes-step index="8"><h3>Точка Я2</h3>От точки Я отложите вправо {{2*calkParams.x}}</panes-step>
+                <panes-step index="9"><h3>Точка Т2</h3>От точки Т отложите вправо {{2*calkParams.x}}</panes-step>
+                <panes-step index="10">Соедините прямоугольник Т-Т2-Я2-Я</panes-step>
+                <panes-step index="11"><h3>Точка Я3</h3>От Я2 отложите вправо {{calkParams.x}}</panes-step>
+                <panes-step index="12"><h3>Точка Я4</h3>От Я2 отложите влево {{calkParams.x}}</panes-step>
+                <panes-step index="13">Проведите горизонтальную прямую между Т1-Я1 и Т2-Я2 через точку Б</panes-step>
+                <panes-step index="14"><h3>Точка К</h3>От точки Б отложите {{calkParams.di - calkParams.tb}}</panes-step>
+                <panes-step index="15"><h3>Точка К1</h3>От точки К отложите влево {{2*calkParams.x-1}}</panes-step>
+                <panes-step index="16"><h3>Точка К2</h3>От точки К отложите вправо {{2*calkParams.x-1}}</panes-step>
+                <panes-step index="17"><h3>Точка N1</h3>От точки N отложите влево {{2*calkParams.x-1.5}}</panes-step>
+                <panes-step index="18"><h3>Точка N2</h3>От точки N отложите вправо {{2*calkParams.x-1.5}}</panes-step>
+                <panes-step index="19">Соедините N1-K1 по прямой</panes-step>
+                <panes-step index="20">Соедините N2-K2 по прямой</panes-step>
+                <panes-step index="21">Соедините K1-Б1 по прямой</panes-step>
+                <panes-step index="22" special="{buttons:['yes', 'no']}">Требуется ли делать вытачки?</panes-step>
+                <panes-step index="23" end="true">Готово</panes-step>
+                <panes-step index="23" end="false">
+                    Выберите длинну вытачки  <input ng-model="calkParams.dv" type="number">
+                </panes-step>
+                <panes-step index="24">От точки Т2 отложите влево{{calkParams.pot/2 + calkParams.dv}}</panes-step>
+            </products>
+
         </div>
-        <ul id="alg_steps">
+
+        <!--ul id="alg_steps">
             <li class="step"><input type="radio" name="steps" value="1"/> Шаг 1</li>
             <li class="step"><input type="radio" name="steps" value="2"/> Шаг 2</li>
             <li class="step"><input type="radio" name="steps" value="3"/> Шаг 3</li>
