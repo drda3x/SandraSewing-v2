@@ -6,22 +6,30 @@
      * Выкройка брюк
      * @constructor
      */
-    function Panes() {
+    function Algorithm() {
         this.algorithm = [];
+        this.index = 0;
     }
 
     // Переход к следующему шагу алгоритма
-    Panes.prototype.next = function() {}
+    Algorithm.prototype.next = function() {
+
+    };
 
     // Переход к предыдущему шагу алгоритма
-    Panes.prototype.prev = function() {}
+    Algorithm.prototype.prev = function() {
+
+    };
 
     // Сброс алгоритма на начало
-    Panse.prototype.reset = function() {}
+    Algorithm.prototype.reset = function() {
+        this.index = 0;
+    };
 
     // Загрузка размеров
-    Panes.prototype.config = function(dim) {
-        this.pob = dim.pob;
-        this.di = dim.di;
+    Algorithm.prototype.config = function() {
+
     }
+
+    
 })();
