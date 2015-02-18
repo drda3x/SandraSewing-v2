@@ -485,6 +485,12 @@
                 $scope.$watch('dimensions.current.name', function() {
                     resetCalkParams()
                 });
+
+                $scope.clearMainWindow = function() {
+                    $scope.continue = false;
+                    $scope.continue1 = false;
+                    $scope.continue2 = false;
+                }
             },
             template: '<div id="center" ng-transclude></div>' +
                 '<div>' +
