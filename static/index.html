@@ -16,15 +16,16 @@
         }
 
         .tr {
-            margin: 7px 0;
+            margin: 7px 0 15px;
         }
 
         .td {
-            display: inline-block;
+            margin: 0 0 0 117px;
         }
 
-        .td1 {
-
+        strong {
+            width: 115px;
+            display: inline-block;
         }
     </style>
 </head>
@@ -55,125 +56,98 @@
             <div class="table">
 
                 <div class="tr">
-                    <div class="td">Выберите Х</div>
-                    <div class="td" ng-click="(continue=true)">
-                        <a href="" class="button" ng-click="calkParams.x=calkParams.pob/10; selectedX=1" ng-class="{active:(selectedX == 1)}">X</a>
-                        <a href="" class="button" ng-click="calkParams.x=11*calkParams.pob/100; selectedX=2" ng-class="{active:(selectedX == 2)}">2X</a>
-                        <a href="" class="button" ng-click="calkParams.x=23*calkParams.pob/200; selectedX=3" ng-class="{active:(selectedX == 3)}">3X</a>
-                    </div>
+                    <strong>Выберите Х</strong>
+                    <a href="" class="button" ng-click="calkParams.x=calkParams.pob/10; selectedX=1; continue=true" ng-class="{active:(selectedX == 1)}">X</a>
+                    <a href="" class="button" ng-click="calkParams.x=11*calkParams.pob/100; selectedX=2; continue=true" ng-class="{active:(selectedX == 2)}">2X</a>
+                    <a href="" class="button" ng-click="calkParams.x=23*calkParams.pob/200; selectedX=3; continue=true" ng-class="{active:(selectedX == 3)}">3X</a>
                 </div>
 
                 <div class="tr" ng-show="continue">
-                    <div class="td tdrs">Проведите вертикальную линию высотой <span
-                            ng-if="dimensions.current.type == 'man'">{{calkParams.pob / 2 + 1}}</span><span
-                            ng-if="dimensions.current.type == 'woman'">{{calkParams.pob / 2-1}}</span></div>
+                    <span class="td">Проведите вертикальную линию высотой <span ng-if="dimensions.current.type == 'man'">{{calkParams.pob / 2 + 1}}</span><span ng-if="dimensions.current.type == 'woman'">{{calkParams.pob / 2-1}}</span></span>
                 </div>
 
                 <div class="tr" ng-show="continue">
-                    <div class="td">Выберите ТБ</div>
-                    <div class="td" ng-click="(continue1=true)">
-                        <a href="" class="button" ng-click="calkParams.tb=17; selectedTB = 17" ng-class="{active:(selectedTB == 17)}">17</a>
-                        <a href="" class="button" ng-click="calkParams.tb=18; selectedTB = 18" ng-class="{active:(selectedTB == 18)}">18</a>
-                        <a href="" class="button" ng-click="calkParams.tb=19; selectedTB = 19" ng-class="{active:(selectedTB == 19)}">19</a>
-                        <a href="" class="button" ng-click="calkParams.tb=20; selectedTB = 20" ng-class="{active:(selectedTB == 20)}">20</a>
-                    </div>
+                    <strong>Выберите ТБ</strong>
+                    <a href="" class="button" ng-click="calkParams.tb=17; selectedTB = 17; continue1=true" ng-class="{active:(selectedTB == 17)}">17</a>
+                    <a href="" class="button" ng-click="calkParams.tb=18; selectedTB = 18; continue1=true" ng-class="{active:(selectedTB == 18)}">18</a>
+                    <a href="" class="button" ng-click="calkParams.tb=19; selectedTB = 19; continue1=true" ng-class="{active:(selectedTB == 19)}">19</a>
+                    <a href="" class="button" ng-click="calkParams.tb=20; selectedTB = 20; continue1=true" ng-class="{active:(selectedTB == 20)}">20</a>
                 </div>
 
                 <div class="tr" ng-show="continue1">
-                    <div class="td td1">Прямая ТБ</div>
-                    <div class="td">Из точки Т проведите вниз {{calkParams.tb}}</div>
-                </div>
-
-                <div class="tr" ng-show="continue1">
-                    <div class="td td1">Прямая ТБ</div>
-                    <div class="td">Из точки Т проведите вниз {{calkParams.tb}}</div>
+                    <strong>Прямая ТБ</strong>Из точки Т проведите вниз {{calkParams.tb}}
                 </div>
                 <div class="tr" ng-show="continue1">
-                    <div class="td td1">Точка Я1</div>
-                    <div class="td">От точки Я отложите влево {{3*calkParams.x}}</div>
+                    <strong>Прямая ТБ</strong>Из точки Т проведите вниз {{calkParams.tb}}
                 </div>
                 <div class="tr" ng-show="continue1">
-                    <div class="td td1">Точка Т1</div>
-                    <div class="td">От точки Т отложите влево {{3*calkParams.x}}</div>
+                    <strong>Точка Я1</strong>От точки Я отложите влево {{3*calkParams.x}}
                 </div>
                 <div class="tr" ng-show="continue1">
-                    <div class="td">Соедините прямоугольник Т-Т1-Я1-Я</div>
+                    <strong>Точка Т1</strong>От точки Т отложите влево {{3*calkParams.x}}
                 </div>
                 <div class="tr" ng-show="continue1">
-                    <div class="td td1">Точка Я2</div>
-                    <div class="td">От точки Я отложите вправо {{2*calkParams.x}}</div>
+                    <span class="td">Соедините прямоугольник Т-Т1-Я1-Я</span>
                 </div>
                 <div class="tr" ng-show="continue1">
-                    <div class="td td1">Точка Т2</div>
-                    <div class="td">От точки Т отложите вправо {{2*calkParams.x}}</div>
+                    <strong>Точка Я2</strong>От точки Я отложите вправо {{2*calkParams.x}}
                 </div>
                 <div class="tr" ng-show="continue1">
-                    <div class="td">Соедините прямоугольник Т-Т2-Я2-Я</div>
+                    <strong>Точка Т2</strong>От точки Т отложите вправо {{2*calkParams.x}}
                 </div>
                 <div class="tr" ng-show="continue1">
-                    <div class="td td1">Точка Я3</div>
-                    <div class="td">От Я2 отложите вправо {{calkParams.x}}</div>
+                    <span class="td">Соедините прямоугольник Т-Т2-Я2-Я</span>
                 </div>
                 <div class="tr" ng-show="continue1">
-                    <div class="td" td1>Точка Я4</div>
-                    <div class="td">От Я2 отложите влево {{calkParams.x}}</div>
+                    <strong>Точка Я3</strong>От Я2 отложите вправо {{calkParams.x}}
                 </div>
                 <div class="tr" ng-show="continue1">
-                    <div class="td">Проведите горизонтальную прямую между Т1-Я1 и Т2-Я2 через точку Б</div>
+                    <strong>Точка Я4</strong>От Я2 отложите влево {{calkParams.x}}
                 </div>
                 <div class="tr" ng-show="continue1">
-                    <div class="td td1">Точка К</div>
-                    <div class="td">От точки Б отложите {{calkParams.di - calkParams.tb}}</div>
+                    <span class="td">Проведите горизонтальную прямую между Т1-Я1 и Т2-Я2 через точку Б</span>
                 </div>
                 <div class="tr" ng-show="continue1">
-                    <div class="td td1">Точка К1</div>
-                    <div class="td">От точки К отложите влево {{2*calkParams.x-1}}</div>
+                    <strong>Точка К</strong>От точки Б отложите {{calkParams.di - calkParams.tb}}
                 </div>
                 <div class="tr" ng-show="continue1">
-                    <div class="td td1">Точка К2</div>
-                    <div class="td">От точки К отложите вправо {{2*calkParams.x-1}}</div>
+                    <strong>Точка К1</strong>От точки К отложите влево {{2*calkParams.x-1}}
                 </div>
                 <div class="tr" ng-show="continue1">
-                    <div class="td td1">Точка N1</div>
-                    <div class="td">От точки N отложите влево {{2*calkParams.x-1.5}}</div>
+                    <strong>Точка К2</strong>От точки К отложите вправо {{2*calkParams.x-1}}
                 </div>
                 <div class="tr" ng-show="continue1">
-                    <div class="td td1">Точка N2</div>
-                    <div class="td">От точки N отложите вправо {{2*calkParams.x-1.5}}</div>
+                    <strong>Точка N1</strong>От точки N отложите влево {{2*calkParams.x-1.5}}
                 </div>
                 <div class="tr" ng-show="continue1">
-                    <div class="td">Соедините N1-K1 по прямой</div>
+                    <strong>Точка N2</strong>От точки N отложите вправо {{2*calkParams.x-1.5}}
                 </div>
                 <div class="tr" ng-show="continue1">
-                    <div class="td">Соедините N2-K2 по прямой</div>
+                    <span class="td">Соедините N1-K1 по прямой</span>
                 </div>
                 <div class="tr" ng-show="continue1">
-                    <div class="td">Соедините K1-Б1 по прямой</div>
+                    <span class="td">Соедините N2-K2 по прямой</span>
                 </div>
                 <div class="tr" ng-show="continue1">
-                    <div class="td">Требуется ли делать вытачки?</div>
-                    <div class="td">
-                        <a href="" class="button" ng-click="continue2=true; end=false" ng-class="{active:continue2}">Да</a>
-                        <a href="" class="button" ng-click="end=true; continue2=false" ng-class="{active:end}">Нет</a>
-                    </div>
+                    <span class="td">Соедините K1-Б1 по прямой</span>
+                </div>
+                <div class="tr" ng-show="continue1">
+                    <strong style="width: 225px">Требуется ли делать вытачки?</strong>
+                    <a href="" class="button" ng-click="continue2=true; end=false" ng-class="{active:continue2}">Да</a>
+                    <a href="" class="button" ng-click="end=true; continue2=false" ng-class="{active:end}">Нет</a>
                 </div>
                 <div class="tr" ng-show="continue2">
-                    <div class="td">Выберите длинну вытачки</div>
-                    <div class="td">
-                        <input ng-model="calkParams.dv" type="number">
-                    </div>
+                    <strong style="width: 200px">Выберите длину вытачки</strong><input ng-model="calkParams.dv" type="number">
                 </div>
                 <div class="tr" ng-show="continue2">
-                    От точки Т2 отложите влево {{calkParams.pot/2 + calkParams.dv}}
+                    <span class="td">От точки Т2 отложите влево {{calkParams.pot/2 + calkParams.dv}}</span>
                 </div>
                 <div class="tr" ng-show="end">
-                    Построение закончено
+                    <strong style="width: 200px;">Построение закончено</strong>
                 </div>
-
             </div>
         </products>
     </div>
-    <!--div main-view id="mainView"></div-->
 </div>
 <div id="footer" calc-results>
 </div>
