@@ -458,7 +458,6 @@
                 });
 
                 $scope.showMe = function(who) {
-                    console.log(who);
                     if(who == 'prev') {
                         return curStep > 1;
                     } else if(who == 'next') {
@@ -481,6 +480,32 @@
                 }
 
                 resetCalkParams();
+
+                var viewParams = {
+                    continue: false,
+                    continue1: false,
+                    continue2: false,
+                    end: false
+                };
+
+                $scope.$watch('selectedProd', function() {
+                    for(i in viewParams) {
+                        $scope.resetView(i);
+                    }
+                    resetCalkParams();
+                });
+
+                $scope.checkView = function(param) {
+                    return viewParams[param];
+                };
+
+                $scope.setView = function(param) {
+                    viewParams[param] = true;
+                };
+
+                $scope.resetView = function(param) {
+                    viewParams[param] = false;
+                };
 
                 $scope.$watch('dimensions.current.name', function() {
                     resetCalkParams()
@@ -527,6 +552,12 @@
                 }
             },
             template: '<div ng-show="canShow({{index}}) && onEnd()" ng-transclude></div>'
+        }
+    });
+
+    app.filter('round', function() {
+        return function(input) {
+            return Math.round(input);
         }
     });
 
