@@ -44,18 +44,7 @@
                 <select-dimension dimensions="dimensions" ng-show="showSubScreen=='select'"></select-dimension>
             </div>
         </span>
-
-    <div id="products">
-        <a href="" class="product" ng-click="(selectedProd = 'panes')" ng-class="{active:(selectedProd == 'panes')}">Брюки</a>
-        <a href="" class="product" ng-click="(selectedProd = 'skirt')" ng-class="{active:(selectedProd == 'skirt')}">Юбка</a>
-        <a href="" class="product" ng-click="(selectedProd = 'dress')" ng-class="{active:(selectedProd == 'dress')}">Платье</a>
-        <a href="" class="product" ng-click="(selectedProd = 'shirt')" ng-class="{active:(selectedProd == 'shirt')}">Рубашка</a>
-
-        <!--Выкройка брюк-->
-        <products class="products" ng-show="(selectedProd == 'panes')">
-
-        </products>
-    </div>
+        <products></products>
 </div>
 <div id="footer" calc-results>
 </div>

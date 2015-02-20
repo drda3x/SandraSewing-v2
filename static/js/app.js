@@ -402,136 +402,33 @@
             restrict: 'E',
             transclude: true,
             controller: function($scope, $element) {
+                $scope.product_types = [
+                    {code: 'panes', label: 'Брюки', selected: false},
+                    {code: 'skirt', label: 'Юбка', selected: false},
+                    {code: 'dress', label: 'Платье', selected: false},
+                    {code: 'shirt', label: 'Рубашка', selected: false}
+                ];
 
-                var curStep = 1,
-                    stepsCount = 0,
-                    steps = [],
-                    notEnd = true;
+                $scope.controls = [
+                    {code: 'x', product: 'panes', values: ['X', '2X', '3X']},
+                    {code: 'tb', product: 'panes', values: [17, 18, 19, 20]}
+                ];
 
-                this.addStep = function(step) {
-                    steps.push(step);
-                };
-
-                this.canShow = function(index) {
-                    return index == curStep;
-                };
-
-                this.checkEnd = function() {
-                    return !(notEnd)
-                };
-
-                this.stepsCounter = function(index) {
-                    if(steps[stepsCount] && index != steps[stepsCount].index) {
-                        stepsCount++;
-                    }
-                };
-
-                $scope.specialButtons = [];
-
-                function setSpecialButtons() {
-                    if(steps[curStep].special != undefined) {
-                        if(steps[curStep].special.hasOwnProperty('buttons')) {
-                            $scope.specialButtons = steps[curStep].special.buttons;
-                        }
-                    } else {
-                        $scope.specialButtons = []
-                    }
-                };
-
-                $scope.nextStep = function() {
-                    setSpecialButtons();
-                    curStep++;
-                };
-
-                $scope.endOfAlgorithm = function() {
-                    notEnd = false;
-                };
-
-                $scope.prevStep = function() {
-                    curStep--;
-                    setSpecialButtons();
-                    notEnd = true;
-                };
-
-                $scope.$watch('selectedProd', function() {
-                    curStep = 1;
-                });
-
-                $scope.showMe = function(who) {
-                    if(who == 'prev') {
-                        return curStep > 1;
-                    } else if(who == 'next') {
-                        return curStep < stepsCount && $scope.specialButtons.length == 0 && notEnd;
-                    } else if(who == 'yes' || who == 'no') {
-                        return $scope.specialButtons.length > 0
-                    }
-                };
-
-                $scope.calkParams = {};
-
-                function resetCalkParams() {
-                    var temp = {};
-
-                    for(var i= 0, j= $scope.dimensions.current.values.length; i<j; i++) {
-                        temp[$scope.dimensions.current.values[i].name] = $scope.dimensions.current.values[i].value;
-                    }
-
-                    $scope.calkParams = temp;
-                }
-
-                resetCalkParams();
-
-                var viewParams = {
-                    continue: false,
-                    continue1: false,
-                    continue2: false,
-                    continue3: false,
-                    end: false
-                };
-
-                $scope.$watch('selectedProd', function() {
-                    for(i in viewParams) {
-                        $scope.resetView(i);
-                    }
-                    resetCalkParams();
-                });
-
-                $scope.checkView = function(param) {
-                    return viewParams[param];
-                };
-
-                $scope.setView = function(param) {
-                    viewParams[param] = true;
-                };
-
-                $scope.resetView = function(param) {
-                    viewParams[param] = false;
-                };
-
-                $scope.$watch('dimensions.current.name', function() {
-                    resetCalkParams()
-                });
-
-                /*$scope.clearMainWindow = function() {
-                    $scope.continue = false;
-                    $scope.continue1 = false;
-                    $scope.continue2 = false;
-                    $scope.continue3 = false;
-                };*/
-
-                $scope.tja = function() {
-                    var seatHeight = $scope.calkParams.pob / 2 + 1;
-                    if($scope.dimensions.current.type == 'woman') return seatHeight - 2;
-
-                    return seatHeight
+                $scope.selectType = function(type) {
+                    $scope.product_types.forEach(function(element) {
+                         if(element.code == type.code) {
+                             element.selected = true;
+                         } else {
+                             element.selected = false;
+                         }
+                    });
                 }
             },
-            template: '<div id="center" ng-transclude></div>' +
-                '<div>' +
-                    '<a href="" ng-show="showMe(\'prev\')" ng-click="prevStep()" class="button">Назад</a>' +
-                    '<a href="" ng-show="showMe(\'next\')" ng-click="nextStep()" class="button">Вперед</a>' +
-                    '<a href="" ng-show="showMe(\'yes\')" ng-click="nextStep()" class="button">Да</a>' +
-                    '<a href="" ng-show="showMe(\'no\')" ng-click="nextStep(); endOfAlgorithm()" class="button">Нет</a>' +
+            template:
+                '<div id="products">' +
+                '<div class="product_types_container"><a class="product" ng-repeat="type in product_types" href="" ng-click="selectType(type)" ng-class="{active:type.selected}">{{type.label}}</a></div>' +
+                '<div></div>' +
+                '<div></div>'
                 '</div>'
         }
     });

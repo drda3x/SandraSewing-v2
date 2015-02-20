@@ -243,7 +243,10 @@ ul {
 
 #products {
     margin: 15px auto;
-    width: 425px;
+}
+
+.product_types_container {
+    text-align: center;
 }
 
 .product {
