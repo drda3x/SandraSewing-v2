@@ -485,6 +485,7 @@
                     continue: false,
                     continue1: false,
                     continue2: false,
+                    continue3: false,
                     end: false
                 };
 
@@ -511,10 +512,18 @@
                     resetCalkParams()
                 });
 
-                $scope.clearMainWindow = function() {
+                /*$scope.clearMainWindow = function() {
                     $scope.continue = false;
                     $scope.continue1 = false;
                     $scope.continue2 = false;
+                    $scope.continue3 = false;
+                };*/
+
+                $scope.tja = function() {
+                    var seatHeight = $scope.calkParams.pob / 2 + 1;
+                    if($scope.dimensions.current.type == 'woman') return seatHeight - 2;
+
+                    return seatHeight
                 }
             },
             template: '<div id="center" ng-transclude></div>' +

@@ -92,6 +92,12 @@ ul {
     padding: 4px 10px;
 }
 
+.button_small {
+    border: 2px solid;
+    margin: 2px;
+    padding: 0px 9px;
+}
+
 .button:hover {
     background-color: #dddddd;
 }
