@@ -414,13 +414,30 @@
                     {code: 'tb', product: ['panes', 'skirt', 'dress', 'shirt'], label: 'ТБ', values: [17, 18, 19, 20]}
                 ];
 
-                $scope.setControlSelected = function(control, value) {
+                $scope.selectControl = function(control, value) {
                     control.selected = value;
                 };
 
                 $scope.checkControlSelected = function(control, value) {
                     return control.selected == value;
                 };
+
+                function resetCalcParams() {
+                    var temp = {};
+
+                    $scope.dimensions.current.values.forEach(function(val) {
+                        temp[val.name] = val.value;
+                    });
+
+                    $scope.calcParams = temp;
+                }
+
+                resetCalcParams();
+
+                $scope.$watch('dimensions.current', function() {
+                    resetControlSelected();
+                    resetCalcParams();
+                });
 
                 function resetControlSelected() {
                     $scope.controls.forEach(function(control) {
@@ -434,7 +451,7 @@
                     });
                     type.selected = true;
                     showControl(type);
-                    resetControlSelected()
+                    resetControlSelected();
                 };
 
                 function showControl(type) {
