@@ -410,26 +410,55 @@
                 ];
 
                 $scope.controls = [
-                    {code: 'x', product: 'panes', values: ['X', '2X', '3X']},
-                    {code: 'tb', product: 'panes', values: [17, 18, 19, 20]}
+                    {code: 'x', product: 'panes', label: 'X', values: ['X', '2X', '3X']},
+                    {code: 'tb', product: ['panes', 'skirt', 'dress', 'shirt'], label: 'ТБ', values: [17, 18, 19, 20]}
                 ];
+
+                $scope.setControlSelected = function(control, value) {
+                    control.selected = value;
+                };
+
+                $scope.checkControlSelected = function(control, value) {
+                    return control.selected == value;
+                };
+
+                function resetControlSelected() {
+                    $scope.controls.forEach(function(control) {
+                        control.selected = null;
+                    });
+                }
 
                 $scope.selectType = function(type) {
                     $scope.product_types.forEach(function(element) {
-                         if(element.code == type.code) {
-                             element.selected = true;
-                         } else {
-                             element.selected = false;
-                         }
+                         element.selected = false;
+                    });
+                    type.selected = true;
+                    showControl(type);
+                    resetControlSelected()
+                };
+
+                function showControl(type) {
+                    $scope.controls.forEach(function(control) {
+                        if(control.product instanceof Array) {
+                            control.show = _in(control.product, type.code);
+                        } else {
+                            control.show = (control.product == type.code);
+                        }
                     });
                 }
+
+                function _in(array, val) {
+                    var i = array.length - 1;
+
+                    while(i >= 0) {
+                        if (array[i] == val) return true;
+                        i--;
+                    }
+                    return false;
+                }
             },
-            template:
-                '<div id="products">' +
-                '<div class="product_types_container"><a class="product" ng-repeat="type in product_types" href="" ng-click="selectType(type)" ng-class="{active:type.selected}">{{type.label}}</a></div>' +
-                '<div></div>' +
-                '<div></div>'
-                '</div>'
+            templateUrl: './templates/main_window.html',
+            replace: true
         }
     });
 

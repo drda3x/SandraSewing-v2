@@ -1,0 +1,11 @@
+<div id="products">
+    <div class="main_window_left">
+        <div class="control" ng-repeat="control in controls" ng-show="control.show">
+            <h4>{{control.label}}</h4>
+            <a ng-repeat="value in control.values" href="" class="control_button" ng-click="setControlSelected(control, value)" ng-class="{active:checkControlSelected(control, value)}">{{value}}</a>
+        </div>
+    </div>
+    <div class="main_window_right">
+        <div class="product_types_container"><a class="product" ng-repeat="type in product_types" href="" ng-click="selectType(type)" ng-class="{active:type.selected}">{{type.label}}</a></div>
+        </div>
+</div>
