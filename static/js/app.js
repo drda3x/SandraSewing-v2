@@ -13,7 +13,7 @@
             {name: 'pob', label: 'ПОБ', min: 40, max: 60},
             {name: 'pot', label: 'ПОТ', min: 17, max: 50},
             {name: 'shg', label: 'ШГ', min: 15, max: 25},
-            {name: 'vg', label: 'ВГ', max: 40, min: 30},
+            {name: 'vg', label: 'ВГ', max: 40, min: 25},
             {name: 'dpt', label: 'ДПТ', min: 20, max: 45},
             {name: 'shs', label: 'ШС', min: 15, max: 25},
             {name: 'dst', label: 'ДСТ', min: 20, max: 45},
@@ -30,7 +30,7 @@
             {name: 'pot', label: 'ПОТ', max: 47, min: 29},
             {name: 'shg', label: 'ШГ', max: 23, min: 15},
             {name: 'tsg', label: 'ЦГ', max: 12, min: 7},
-            {name: 'vg', label: 'ВГ', max: 40, min: 30},
+            {name: 'vg', label: 'ВГ', max: 40, min: 20},
             {name: 'dpt', label: 'ДПТ', max: 53, min: 35},
             {name: 'vpkp', label: 'ВПКП', max: 30, min: 18},
             {name: 'shs', label: 'ШС', max: 25, min: 14},
@@ -485,7 +485,7 @@
                     // todo переделать
                     var context = this,
                         formuls = {
-                            tya: (context.dimensions.current.type == 'man') ? context.calcParams.pob / 2 + 1 : context.calcParams.pob / 2 - 1,
+                            tya: (context.dimensions.current.type == 'man') ? context.calcParams.pob / 2 + 3 : context.calcParams.pob / 2 - 1,
                             tuckBackLen: (function() {
                                 var x = context.calcParams.x,
                                     tb = context.calcParams.tb,
