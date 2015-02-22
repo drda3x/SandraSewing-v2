@@ -432,8 +432,9 @@
                 $scope.controls = [
                     createControl('panes', 'x', 'X', ['X', '2X', '3X']),
                     createControl(['panes', 'skirt', 'dress', 'shirt'], 'tb', 'ТБ', [17, 18, 19, 20]),
-                    createControl('panes', 'tuck', 'Длина вытачки', [8, 9, 10]),
-                    createControl('panes', 'codpiece', 'Гульфик', ['будет', 'не будет'])
+                    createControl('panes', 'tuck', 'Длина вытачки на передней половинке', [8, 9, 10]),
+                    createControl('panes', 'codpiece', 'Гульфик', ['будет', 'не будет']),
+                    createControl('panes', 'tuck_back', 'Длина вытачки на задней половинке', ['7 (если будет карман)', 12, 13, 14])
                 ];
 
                 $scope.selectControl = function(control, value) {
@@ -445,26 +446,60 @@
                     return control.selected == value;
                 };
 
+                function getControl(name) {
+                    for(var i= $scope.controls.length - 1; i>=0; i--) {
+                        if($scope.controls[i].code == name) return $scope.controls[i]
+                    }
+
+                    return NaN;
+                }
+
                 function getControlValue(control) {
                     var context = $scope.calcParams,
                         formuls = {
-                            x: {
-                                'X': context.pob/10,
-                                '2X': 11*context.pob/100,
-                                '3X': 23*context.pob/200
+                            x: function(param) {
+                                var f = {
+                                    'X': context.pob/10,
+                                    '2X': 11*context.pob/100,
+                                    '3X': 23*context.pob/200
+                                };
+
+                                return f[param];
                             },
-                            codpiece: {
-                                'будет': true,
-                                'не будет': false
+                            codpiece: function(param) {
+                                return param == 'будет'
+                            },
+                            tuck_back: function() {
+                                return parseInt(control.selected, 10)
                             }
                         };
 
                     try {
-                        return formuls[control.code][control.selected];
+                        return formuls[control.code](control.selected);
                     } catch(e) {
                         return control.selected;
                     }
                 }
+
+                $scope.calculateValue = function(valName) {
+                    // todo переделать
+                    var context = this,
+                        formuls = {
+                            tya: (context.dimensions.current.type == 'man') ? context.calcParams.pob / 2 + 1 : context.calcParams.pob / 2 - 1,
+                            tuckBackLen: (function() {
+                                var x = context.calcParams.x,
+                                    tb = context.calcParams.tb,
+                                    di = context.calcParams.di,
+                                    pot = context.calcParams.pot;
+
+                                return Math.round((Math.sqrt(Math.pow(2*x - x/2 + (3*x+tb*( (-0.5*x-1)/(3*tb-di) )), 2) + Math.pow(x / 2, 2)) - pot / 2 ) / 2)
+                            })()
+                        };
+
+                    if(!formuls.hasOwnProperty(valName)) return NaN;
+
+                    return formuls[valName];
+                };
 
                 function resetCalcParams() {
                     var temp = {};
@@ -489,11 +524,31 @@
                     });
                 }
 
+                var currentType = null;
+
+                $scope.showAlgorithm = function(type) {
+                    return currentType == type;
+                };
+
+                $scope.showStep = function(_controls) {
+
+                    var controls = (_controls instanceof Array) ? _controls : [_controls];
+
+                    for(var i= 0, j= controls.length; i<j; i++) {
+                        if(!$scope.calcParams.hasOwnProperty(controls[i]) || _in([false, null, undefined], $scope.calcParams[controls[i]])) {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                };
+
                 $scope.selectType = function(type) {
                     $scope.product_types.forEach(function(element) {
                          element.selected = false;
                     });
                     type.selected = true;
+                    currentType = type.code;
                     showControl(type);
                     resetControlSelected();
                     resetCalcParams();

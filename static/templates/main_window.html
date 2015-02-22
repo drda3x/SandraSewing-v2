@@ -7,5 +7,184 @@
     </div>
     <div class="main_window_right">
         <div class="product_types_container"><a class="product" ng-repeat="type in product_types" href="" ng-click="selectType(type)" ng-class="{active:type.selected}">{{type.label}}</a></div>
+        <div class="table" ng-show="showAlgorithm('panes')">
+            <h4 class="step_header" ng-show="showStep(['x', 'tb'])">Построение передней половинки брюк</h4>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <strong>Прямая ТN</strong>Проведите вертикальную прямую высотой {{calcParams.di}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <strong>Прямая ТЯ</strong>Из точки Т проведите вниз {{calculateValue('tya')}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <strong>Прямая ТБ</strong>Из точки Т проведите вниз {{calcParams.tb}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <strong>Прямая ТЯ</strong>Из точки Т проведите вниз {{calcParams.tb}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <strong>Точка Я1</strong>От точки Я отложите влево {{3*calcParams.x|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <strong>Точка Т1</strong>От точки Т отложите влево {{3*calcParams.x|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <span class="td">Соедините прямоугольник Т-Т1-Я1-Я</span>
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <strong>Точка Я2</strong>От точки Я отложите вправо {{2*calcParams.x|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <strong>Точка Т2</strong>От точки Т отложите вправо {{2*calcParams.x|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <span class="td">Соедините прямоугольник Т-Т2-Я2-Я</span>
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <strong>Точка Б1</strong>Из точки Б проведите горизонтальную прямую до пересечения с Я1-Т1
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <strong>Точка Б2</strong>Из точки Б проведите горизонтальную прямую до пересечения с Я2-Т2
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <strong>Точка Я3</strong>От Я2 отложите вправо {{calcParams.x|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <strong>Точка Я4</strong>От Я2 отложите вверх {{calcParams.x|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <span class="td">Проведите горизонтальную прямую между Т1-Я1 и Т2-Я2 через точку Б</span>
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <strong>Точка К</strong>От точки Б отложите {{calcParams.di - calcParams.tb|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <strong>Точка К1</strong>От точки К отложите влево {{2*calcParams.x-1|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <strong>Точка К2</strong>От точки К отложите вправо {{2*calcParams.x-1|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <strong>Точка N1</strong>От точки N отложите влево {{2*calcParams.x-1.5|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <strong>Точка N2</strong>От точки N отложите вправо {{2*calcParams.x-1.5|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <span class="td">Соедините N1-K1 по прямой</span>
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <span class="td">Соедините N2-K2 по прямой</span>
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <span class="td">Соедините K1-Б1 по прямой</span>
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <span class="td">Соедините К2-Я3 с прогибом</span>
+            </div>
+
+            <h4 class="step_header" ng-show="showStep(['x', 'tb', 'tuck'])">Построение вытачки на передней половинке брюк</h4>
+            <div class="tr" ng-show="showStep(['x', 'tb', 'tuck'])">
+                <strong>Точка Т3</strong>От точки Т2 отложите влево {{calcParams.pot/2|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb', 'tuck'])">
+                <span class="td">Плавно соедините т. Т3 и т.Б1</span>
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb', 'tuck'])">
+                <strong>Точка В3</strong>Източки Т отложите вниз {{calcParams.tuck}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb', 'tuck'])">
+                <strong>Точка В1</strong>От точки Т отложите влево {{(3*calcParams.x - 2*calcParams.x)/2|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb', 'tuck'])">
+                <strong>Точка В2</strong>От точки Т отложите вправо {{(3*calcParams.x - 2*calcParams.x)/2|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb', 'tuck'])">
+                <span class="td">Соедините прямые В1-В3 и В2-В3</span>
+            </div>
+
+            <h4 class="step_header" ng-show="showStep(['x', 'tb', 'codpiece'])">Построение гульфика</h4>
+            <div class="tr" ng-show="showStep(['x', 'tb', 'codpiece'])">
+                <strong>Точка Г1</strong>От точки Т2 отложите вправо 3
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb', 'codpiece'])">
+                <strong>Точка Г2</strong>От точки Я4 отложите вправо 3
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb', 'codpiece'])">
+                <span class="td">Соедините точки Г1 и Г2</span>
+            </div>
+
+            <h4 class="step_header" ng-show="showStep(['x', 'tb'])">Построение задней половинки брюк</h4>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <strong>Точка Я5</strong>От точки Я3 отложите вправо {{calcParams.x|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <strong>Точка Т4</strong>От точки Т2 отложите влево и вверх {{calcParams.x/2|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <strong>Точка Б3</strong>От точки Б2 отложите вверх {{calcParams.x/2|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <span class="td">Соедините точки Т4 и Б3 с прогибом</span>
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <span class="td">Соедините точки Б3 и Я5 с прогибом</span>
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <strong>Точка К3</strong>От точки К1 отложите влево {{calcParams.x/2|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <strong>Точка К4</strong>От точки К2 отложите вправо {{calcParams.x/2|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <strong>Точка N3</strong>От точки N1 отложите влево {{calcParams.x/2|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <strong>Точка N4</strong>От точки N2 отложите влево {{calcParams.x/2|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <span class="td">Соедините точки N3-K3 и N4-K4 по прямой</span>
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <span class="td">Соедините точки K4-Я5 с прогибом</span>
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <span class="td">Соедините точки K4-Я5 с прогибом</span>
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <strong>Точка Б6</strong>От Я5 отложите 1-1.5
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <span class="td">Плавно соедините точки Б6 и Б3</span>
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <strong>Точка Т5</strong>Соединить точки К3 и Б1 и продлить прямую до линии Т, точка Т5 - точка <span style="margin-left: 116px">пересечения</span>
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb'])">
+                <span class="td">Соедините Т4 и Т5</span>
+            </div>
+
+            <h4 class="step_header" ng-show="showStep(['x', 'tb', 'tuck_back'])">Построение вытачки на задней половинке брюк</h4>
+            <div class="tr" ng-show="showStep(['x', 'tb', 'tuck_back'])">
+                <strong>Точка Т6</strong>От точки Т4 вдоль прямой Т4-Т5 отложите {{calcParams.pot/2|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb', 'tuck_back'])">
+                <strong>Точка В4</strong>От точки Т4 вдоль прямой Т4-Т5 отложите {{calcParams.pot/4|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb', 'tuck_back'])">
+                <strong>Точка В5</strong>От точки В4 перпендикулярно прямой Т4-Т5 отложите вниз {{calcParams.tuck_back}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb', 'tuck_back'])">
+                <strong>Точка В6</strong>От точки В4 водоль прямой Т4-Т5 отложите вверх {{calculateValue('tuckBackLen')/2}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb', 'tuck_back'])">
+                <strong>Точка В7</strong>От точки В4 водоль прямой Т4-Т5 отложите вниз {{calculateValue('tuckBackLen')/2}}
+            </div>
+            <div class="tr" ng-show="showStep(['x', 'tb', 'tuck_back'])">
+                <span class="td">Соедините точки В5-В6 и В5-В7</span>
+            </div>
         </div>
+        <div class="table" ng-show="showAlgorithm('skirt')"></div>
+        <div class="table" ng-show="showAlgorithm('dress')"></div>
+        <div class="table" ng-show="showAlgorithm('shirt')"></div>
+    </div>
 </div>

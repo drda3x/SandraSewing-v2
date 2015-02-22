@@ -4,7 +4,7 @@
 }
 
 body {
-    height: 633px;
+    height: 630px;
     margin: 0px auto;
     padding: 0px;
     position: relative;
@@ -393,7 +393,7 @@ ul {
     display: inline-block;
     height: inherit;
     vertical-align: top;
-    width: 635px;
+    width: 710px;
 }
 
 .control_button {
@@ -412,4 +412,28 @@ ul {
 
 .control h4 {
     border-bottom: 1px solid;
+}
+
+.step_header {
+    border-bottom: 1px solid;
+    width: 98%;
+}
+
+.table {
+    height: 90%;
+    margin-left: 10px;
+    overflow-y: scroll;
+}
+
+.tr {
+    margin: 7px 0px 15px;
+}
+
+.td {
+    margin: 0px 0px 0px 117px;
+}
+
+strong {
+    display: inline-block;
+    width: 115px;
 }
