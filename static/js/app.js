@@ -403,21 +403,42 @@
             transclude: true,
             controller: function($scope, $element) {
 
+                function createControl(product, code, label, values) {
+                    return {
+                        product: product,
+                        code: code,
+                        label: label,
+                        values: values,
+                        selected: null,
+                        show: false
+                    };
+                }
+
+                function createProductType(code, label) {
+                    return {
+                        code: code,
+                        label: label,
+                        selected: false
+                    }
+                }
+
                 $scope.product_types = [
-                    {code: 'panes', label: 'Брюки', selected: false},
-                    {code: 'skirt', label: 'Юбка', selected: false},
-                    {code: 'dress', label: 'Платье', selected: false},
-                    {code: 'shirt', label: 'Рубашка', selected: false}
+                    createProductType('panes', 'Брюки'),
+                    createProductType('skirt', 'Юбка'),
+                    createProductType('dress', 'Платье'),
+                    createProductType('shirt', 'Рубашка')
                 ];
 
                 $scope.controls = [
-                    {code: 'x', product: 'panes', label: 'X', values: ['X', '2X', '3X']},
-                    {code: 'tb', product: ['panes', 'skirt', 'dress', 'shirt'], label: 'ТБ', values: [17, 18, 19, 20]}
+                    createControl('panes', 'x', 'X', ['X', '2X', '3X']),
+                    createControl(['panes', 'skirt', 'dress', 'shirt'], 'tb', 'ТБ', [17, 18, 19, 20]),
+                    createControl('panes', 'tuck', 'Длина вытачки', [8, 9, 10]),
+                    createControl('panes', 'codpiece', 'Гульфик', ['будет', 'не будет'])
                 ];
 
                 $scope.selectControl = function(control, value) {
                     control.selected = value;
-                    console.log(getControlValue(control));
+                    $scope.calcParams[control.code] = getControlValue(control);
                 };
 
                 $scope.checkControlSelected = function(control, value) {
@@ -425,14 +446,18 @@
                 };
 
                 function getControlValue(control) {
-                    var context = $scope.calcParams
+                    var context = $scope.calcParams,
                         formuls = {
-                        x: {
-                            'X': context.pob/10,
-                            '2X': 11*context.pob/100,
-                            '3X': 23*context.pob/200
-                        }
-                    };
+                            x: {
+                                'X': context.pob/10,
+                                '2X': 11*context.pob/100,
+                                '3X': 23*context.pob/200
+                            },
+                            codpiece: {
+                                'будет': true,
+                                'не будет': false
+                            }
+                        };
 
                     try {
                         return formuls[control.code][control.selected];
@@ -471,6 +496,7 @@
                     type.selected = true;
                     showControl(type);
                     resetControlSelected();
+                    resetCalcParams();
                 };
 
                 function showControl(type) {

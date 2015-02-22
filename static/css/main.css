@@ -385,6 +385,7 @@ ul {
     border-right: 2px solid;
     display: inline-block;
     height: inherit;
+    overflow-y: scroll;
     width: 240px;
 }
 
