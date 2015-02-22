@@ -402,6 +402,7 @@
             restrict: 'E',
             transclude: true,
             controller: function($scope, $element) {
+
                 $scope.product_types = [
                     {code: 'panes', label: 'Брюки', selected: false},
                     {code: 'skirt', label: 'Юбка', selected: false},
@@ -416,11 +417,29 @@
 
                 $scope.selectControl = function(control, value) {
                     control.selected = value;
+                    console.log(getControlValue(control));
                 };
 
                 $scope.checkControlSelected = function(control, value) {
                     return control.selected == value;
                 };
+
+                function getControlValue(control) {
+                    var context = $scope.calcParams
+                        formuls = {
+                        x: {
+                            'X': context.pob/10,
+                            '2X': 11*context.pob/100,
+                            '3X': 23*context.pob/200
+                        }
+                    };
+
+                    try {
+                        return formuls[control.code][control.selected];
+                    } catch(e) {
+                        return control.selected;
+                    }
+                }
 
                 function resetCalcParams() {
                     var temp = {};
