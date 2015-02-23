@@ -7,6 +7,8 @@
     </div>
     <div class="main_window_right">
         <div class="product_types_container"><a class="product" ng-repeat="type in product_types" href="" ng-click="selectType(type)" ng-class="{active:type.selected}">{{type.label}}</a></div>
+
+        <!--Брюки-->
         <div class="table" ng-show="showAlgorithm('panes')">
             <h4 class="step_header" ng-show="showStep(['x', 'tb'])">Построение передней половинки брюк</h4>
             <div class="tr" ng-show="showStep(['x', 'tb'])">
@@ -183,8 +185,115 @@
                 <span class="td">Соедините точки В5-В6 и В5-В7</span>
             </div>
         </div>
-        <div class="table" ng-show="showAlgorithm('skirt')"></div>
+
+        <!--Юбка-->
+        <div class="table" ng-show="showAlgorithm('skirt')">
+            <h4 class="step_header" ng-show="showStep(['tb'])">Построение заднего полотнища юбки</h4>
+            <div class="tr" ng-show="showStep(['tb'])">
+                <strong>Прямая ТN</strong>Проведите вертикальную прямую высотой {{calcParams.di}}
+            </div>
+            <div class="tr" ng-show="showStep(['tb'])">
+                <strong>Точка Т1</strong>От точки Т отложите вправо {{calcParams.pob/2|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['tb'])">
+                <strong>Точка N1</strong>От точки Т1 отложите вниз {{calcParams.di}}
+            </div>
+            <div class="tr" ng-show="showStep(['tb'])">
+                <span class="td">Соедините прямоугольник Т-Т1-N1-N</span>
+            </div>
+            <div class="tr" ng-show="showStep(['tb'])">
+                <strong>Точка Б</strong>От точки Т отложите вниз {{calcParams.tb}}
+            </div>
+            <div class="tr" ng-show="showStep(['tb'])">
+                <strong>Точка Б1</strong>Из точки Б проведите горизонтальную линию до пересечения с прямой T1-N1
+            </div>
+
+            <h4 class="step_header" ng-show="showStep(['tb', 'tuck'])">Верхний срез и вытачка заднего полотнища юбки</h4>
+            <div class="tr" ng-show="showStep(['tb', 'tuck'])">
+                <strong>Точка Т2</strong>От точки Т отложите вправо {{calcParams.pot/2|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['tb', 'tuck'])">
+                <strong>Точка Т3</strong>От точки Т отложите вправо {{calcParams.pot/4|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['tb', 'tuck'])">
+                <strong>Точка Б2</strong>От точки Т3 перпендикулярно Б-Б1 отложите {{calcParams.tb-5|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['tb', 'tuck'])">
+                <span class="td">От точки Т3 отложите влево и вправо по {{(calcParams.pob/2 - calcParams.pot/2) / 2}}. Получившиеся точки соедините с Б2</span>
+            </div>
+            <h4 class="step_header" ng-show="showStep(['tb','side_cut'])">Построение бокового среза</h4>
+            <div class="tr" ng-show="showStep(['tb','side_cut'])">
+                <span class="td">Соедините точки Т2 и Б1, полученное расстояние разделите на пополам</span>
+            </div>
+            <div class="tr" ng-show="showStep(['tb','side_cut'])">
+                <span class="td">Из полученной точки отложите вправо 0.5</span>
+            </div>
+
+            <h4 class="step_header" ng-show="showStep(['wl_low_back'])">Понижение линии талии сзади</h4>
+            <div class="tr" ng-show="showStep(['tb', 'wl_low_back'])">
+                <strong>Точка П1</strong>От точки Т {{calcParams.wl_low_back}}
+            </div>
+            <div class="tr" ng-show="showStep(['tb', 'wl_low_back'])">
+                <span class="td">Плавно соедините точки П1 и Т2</span>
+            </div>
+
+            <h4 class="step_header" ng-show="showStep(['tb'])">Построение переднего полотнища юбки</h4>
+            <div class="tr" ng-show="showStep(['tb'])">
+                <strong>Прямая ТN</strong>Проведите вертикальную прямую высотой {{calcParams.di}}
+            </div>
+            <div class="tr" ng-show="showStep(['tb'])">
+                <strong>Точка Т1</strong>От точки Т отложите вправо {{calcParams.pob/2 + 1|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['tb'])">
+                <strong>Точка N1</strong>От точки Т1 отложите вниз {{calcParams.di}}
+            </div>
+            <div class="tr" ng-show="showStep(['tb'])">
+                <span class="td">Соедините прямоугольник Т-Т1-N1-N</span>
+            </div>
+            <div class="tr" ng-show="showStep(['tb'])">
+                <strong>Точка Б</strong>От точки Т отложите вниз {{calcParams.tb}}
+            </div>
+            <div class="tr" ng-show="showStep(['tb'])">
+                <strong>Точка Б1</strong>Из точки Б проведите горизонтальную линию до пересечения с прямой T1-N1
+            </div>
+
+            <h4 class="step_header" ng-show="showStep(['tb', 'tuck'])">Верхний срез и вытачка переднего полотнища юбки</h4>
+            <div class="tr" ng-show="showStep(['tb', 'tuck'])">
+                <strong>Точка Т2</strong>От точки Т отложите вправо {{calcParams.pot/2|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['tb', 'tuck'])">
+                <strong>Точка Т3</strong>От точки Т отложите вправо {{calcParams.pot/4|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['tb', 'tuck'])">
+                <strong>Точка Т4</strong>От точки Т3 отложите вниз {{calcParams.tuck|round}}
+            </div>
+            <div class="tr" ng-show="showStep(['tb', 'tuck'])">
+                <span class="td">От точки Т3 отложите влево и вправо по {{(calcParams.pob/2 - calcParams.pot/2) / 2}}. Получившиеся точки соедините с Т4</span>
+            </div>
+
+            <h4 class="step_header" ng-show="showStep(['tb','wl_low_front'])">Понижение линии талии спереди</h4>
+            <div class="tr" ng-show="showStep(['tb', 'wl_low_front'])">
+                <strong>Точка П1</strong>От точки Т {{calcParams.wl_low_front}}
+            </div>
+            <div class="tr" ng-show="showStep(['tb', 'wl_low_front'])">
+                <span class="td">Плавно соедините точки П1 и Т2</span>
+            </div>
+
+            <h4 class="step_header" ng-show="showStep(['tb','narrow'])">Заужение</h4>
+            <div class="tr" ng-show="showStep(['tb', 'narrow'])">
+                <span class="td">По нижнему краю добиться размера {{calcParams.pob/20|round}}</span>
+            </div>
+
+            <h4 class="step_header" ng-show="showStep(['tb','belt'])">Пояс</h4>
+            <div class="tr" ng-show="showStep(['tb', 'belt'])">
+                <span class="td">Раскроить пояс шириной 8см и длиной {{calcParams.pot*2 + calcParams.belt}}</span>
+            </div>
+        </div>
+
+        <!--Платье-->
         <div class="table" ng-show="showAlgorithm('dress')"></div>
+
+        <!--Рубашка-->
         <div class="table" ng-show="showAlgorithm('shirt')"></div>
     </div>
 </div>

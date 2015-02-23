@@ -432,9 +432,14 @@
                 $scope.controls = [
                     createControl('panes', 'x', 'X', ['X', '2X', '3X']),
                     createControl(['panes', 'skirt', 'dress', 'shirt'], 'tb', 'ТБ', [17, 18, 19, 20]),
-                    createControl('panes', 'tuck', 'Длина вытачки на передней половинке', [8, 9, 10]),
+                    createControl(['panes', 'skirt'], 'tuck', 'Длина вытачки на передней половинке', [8, 9, 10]),
                     createControl('panes', 'codpiece', 'Гульфик', ['будет', 'не будет']),
-                    createControl('panes', 'tuck_back', 'Длина вытачки на задней половинке', ['7 (если будет карман)', 12, 13, 14])
+                    createControl('panes', 'tuck_back', 'Длина вытачки на задней половинке', ['7 (если будет карман)', 12, 13, 14]),
+                    createControl('skirt', 'side_cut', 'Боковой срез', ['будет', 'не будет']),
+                    createControl('skirt', 'wl_low_back', 'Понижение линии талии сзади', [0.5, 1, 1.5, 2, 2.5, 3]),
+                    createControl('skirt', 'wl_low_front', 'Понижение линии талии спереди', [0.5, 1, 1.5, 2]),
+                    createControl('skirt', 'belt', 'Пояс (длина ОТ +)', [0, 5, 6, 7, 8, 9, 10]),
+                    createControl('skirt', 'narrow', 'Заужение', ['будет', 'не будет'])
                 ];
 
                 $scope.selectControl = function(control, value) {
@@ -471,6 +476,12 @@
                             },
                             tuck_back: function() {
                                 return parseInt(control.selected, 10)
+                            },
+                            side_cut: function(param) {
+                                return param == 'будет'
+                            },
+                            narrow: function(param) {
+                                return param == 'будет'
                             }
                         };
 
@@ -568,7 +579,7 @@
                     var i = array.length - 1;
 
                     while(i >= 0) {
-                        if (array[i] == val) return true;
+                        if (array[i] === val) return true;
                         i--;
                     }
                     return false;
