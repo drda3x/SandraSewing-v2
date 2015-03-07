@@ -6,7 +6,9 @@
         </div>
     </div>
     <div class="main_window_right">
-        <div class="product_types_container"><a class="product" ng-repeat="type in product_types" href="" ng-click="selectType(type)" ng-class="{active:type.selected}">{{type.label}}</a></div>
+        <div class="product_types_container">
+            <a class="product" ng-repeat="type in product_types" href="" ng-click="selectType(type)" ng-class="{active:type.selected}">{{type.label}}</a>
+        </div>
 
         <!--Брюки-->
         <div class="table" ng-show="showAlgorithm('panes')">
@@ -291,7 +293,9 @@
         </div>
 
         <!--Платье-->
-        <div class="table" ng-show="showAlgorithm('dress')"></div>
+        <div class="table" ng-show="showAlgorithm('dress')">
+            <h4 class="step_header" ng-show="showStep(['x', 'tb'])">Конструирование лифа</h4>
+        </div>
 
         <!--Рубашка-->
         <div class="table" ng-show="showAlgorithm('shirt')"></div>
