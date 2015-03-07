@@ -439,7 +439,15 @@
                     createControl('skirt', 'wl_low_back', 'Понижение линии талии сзади', [0.5, 1, 1.5, 2, 2.5, 3]),
                     createControl('skirt', 'wl_low_front', 'Понижение линии талии спереди', [0.5, 1, 1.5, 2]),
                     createControl('skirt', 'belt', 'Пояс (длина ОТ +)', [0, 5, 6, 7, 8, 9, 10]),
-                    createControl('skirt', 'narrow', 'Заужение', ['будет', 'не будет'])
+                    createControl('skirt', 'narrow', 'Заужение', ['будет', 'не будет']),
+                    createControl('dress', 'pg', 'Припуск на груди (ПГ)', [0, 2, 2.5, 3]),
+                    createControl('dress', 'pt', 'Припуск на талии (ПТ)', [0, 1, 1.5, 2]),
+                    createControl('dress', 'pb', 'Припуск по бедрам (ПБ)', [0, 1, 1.5, 2]),
+                    createControl('dress', 'pshgs', 'Припуск к ширине горловины спинки (ПГС)', [0, 1]),
+                    createControl('dress', 'pspr', 'Припуск к скуску проймы (ПСПР)', [0, 2, 2.5, 3]),
+                    createControl('dress', 'ptsg', 'Припуск к центру груди (ПЦГ)', [0, 0.5, 1]),
+                    createControl('dress', 'pvg', 'Припуск к высоте груди (ПВГ)', [0, 0.5, 1]),
+                    createControl('dress', 'pop', 'Припуск к обхвату плеча (ПОП)', [0, 3, 3.5, 4])
                 ];
 
                 $scope.selectControl = function(control, value) {
